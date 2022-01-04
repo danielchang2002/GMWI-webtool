@@ -3,6 +3,7 @@ import { getScore } from "./gmhi.js";
 // get a reference to the inputElement in any way you choose
 const inputElement = document.getElementById("inputElement");
 const submit = document.getElementById("submit");
+const result = document.getElementById("result");
 
 submit.onclick = (e) => {
   // inputElement.onchange = (e) => {
@@ -23,5 +24,6 @@ submit.onclick = (e) => {
     const text = reader.result;
     const score = getScore(text);
     console.log(score);
+    result.innerHTML = "GMHI score: " + score.toFixed(2);
   };
 };

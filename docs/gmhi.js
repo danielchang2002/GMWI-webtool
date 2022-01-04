@@ -19,6 +19,7 @@ const psi = (sample, known) => {
       shannon -= ab * Math.log(ab);
     }
   }
+  // shannon = 1;
   return (richness / num) * shannon + 0.00001;
 };
 
@@ -27,10 +28,16 @@ export const getObj = (text) => {
   const species = list.filter(
     (line) => line.includes("s__") && !line.includes("t__")
   );
+  const species_name = (line) => /s__(\w)*/.exec(line)[0];
+  const abundance = (line) => parseFloat(/(\d)+\.(\d)+/.exec(line)[0]) / 100;
+  // const reducer = (prev, curr) => ({
+  //   ...prev,
+  //   [curr.split("|").pop().split("\t")[0]]:
+  //     parseFloat(curr.split("\t")[2]) / 100,
+  // });
   const reducer = (prev, curr) => ({
     ...prev,
-    [curr.split("|").pop().split("\t")[0]]:
-      parseFloat(curr.split("\t")[2]) / 100,
+    [species_name(curr)]: abundance(curr),
   });
   const obj = species.reduce(reducer, {});
   return obj;
