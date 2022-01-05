@@ -1,9 +1,12 @@
 import { getScore } from "./gmhi.js";
+import { plot_histogram } from "./graph.js";
 
 // get a reference to the inputElement in any way you choose
 const inputElement = document.getElementById("inputElement");
 const submit = document.getElementById("submit");
 const result = document.getElementById("result");
+
+plot_histogram(-100000);
 
 submit.onclick = (e) => {
   // inputElement.onchange = (e) => {
@@ -25,5 +28,6 @@ submit.onclick = (e) => {
     const score = getScore(text);
     console.log(score);
     result.innerHTML = "GMHI score: " + score.toFixed(2);
+    plot_histogram(score);
   };
 };
