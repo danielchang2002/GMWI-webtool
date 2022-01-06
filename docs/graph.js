@@ -110,8 +110,23 @@ function Histogram(
     .data(bins)
     .join("rect")
     .attr("x", (d) => xScale(d.x0) + insetLeft)
-    .attr("fill", (d) => {
-      return d.x0 <= score && score <= d.x1 ? "red" : color;
+    .attr("fill", (data) => {
+      if (data.x0 <= score && score <= data.x1) {
+        return "rgb(64,224,208)";
+      }
+      const color = function color(x0) {
+        let red, green;
+        if (x0 < 0) {
+          red = 255;
+          green = 255 - Math.abs((255 * x0) / 5);
+        } else {
+          green = 255;
+          red = 255 - Math.abs((255 * x0) / 5);
+        }
+        return "rgb(" + red + ", " + green + ", 0)";
+      };
+
+      return color(data.x0);
     })
     .attr("width", (d) =>
       Math.max(0, xScale(d.x1) - xScale(d.x0) - insetLeft - insetLeft)
