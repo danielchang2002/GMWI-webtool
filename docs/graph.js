@@ -111,7 +111,7 @@ function Histogram(
     .join("rect")
     .attr("x", (d) => xScale(d.x0) + insetLeft)
     .attr("fill", (data) => {
-      if (data.x0 <= score && score <= data.x1) {
+      if (data.x0 <= score && score < data.x1) {
         return "rgb(64,224,208)";
       }
       const color = function color(x0) {

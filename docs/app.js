@@ -26,7 +26,12 @@ submit.onclick = (e) => {
   reader.onload = function (e) {
     const text = reader.result;
     const score = getScore(text);
-    console.log(score);
+    if (score == null) {
+      const message = "Please upload valid MetaPhlAn output file";
+      // result.innerHTML = "Please upload valid MetaPhlAn output file";
+      window.alert(message);
+      return;
+    }
     result.innerHTML = "GMHI score: " + score.toFixed(2);
     plot_histogram(score);
   };
