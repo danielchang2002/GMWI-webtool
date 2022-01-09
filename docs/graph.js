@@ -1,4 +1,5 @@
-import { values } from "./gmhi_scores.js";
+import { dict } from "./data/gmhi_scores.js";
+import { colors } from "./data/colors.js";
 
 export function plot_histogram(score) {
   const ele = document.getElementById("d3-container");
@@ -6,7 +7,8 @@ export function plot_histogram(score) {
   ele.innerHTML = "";
 
   // const values = Array.from({ length: 1000 }, () => d3.randomNormal(0, 1)());
-  const hist = Histogram(values, score, {
+  const gmhi_scores = dict["all"];
+  const hist = Histogram(gmhi_scores, score, {
     color: "steelblue",
     xLabel: "GMHI score",
   });
@@ -34,7 +36,7 @@ function Histogram(
     marginLeft = 40, // left margin, in pixels
     width = 640, // outer width of chart, in pixels
     height = 400, // outer height of chart, in pixels
-    insetLeft = 0.5, // inset left edge of bar
+    insetLeft = 0, // inset left edge of bar
     insetRight = 0.5, // inset right edge of bar
     xType = type, // type of x-scale
     xDomain = domain, // [xmin, xmax]
@@ -114,23 +116,13 @@ function Histogram(
       if (data.x0 <= score && score < data.x1) {
         return "rgb(64,224,208)";
       }
-      const color = function color(x0) {
-        let red, green;
-        if (x0 < 0) {
-          red = 255;
-          green = 255 - Math.abs((255 * x0) / 5);
-        } else {
-          green = 255;
-          red = 255 - Math.abs((255 * x0) / 5);
-        }
-        return "rgb(" + red + ", " + green + ", 0)";
-      };
-
-      return color(data.x0);
+      const color = colors[Math.round((data.x0 + 5) * 5)];
+      return `rgb(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255})`;
     })
     .attr("width", (d) =>
       Math.max(0, xScale(d.x1) - xScale(d.x0) - insetLeft - insetLeft)
     )
+    .attr("stroke", "black")
     .attr("y", (d) => yScale(d3.sum(d, (i) => Y[i])))
     .attr("height", (d) => yScale(0) - yScale(d3.sum(d, (i) => Y[i])))
     .append("title")

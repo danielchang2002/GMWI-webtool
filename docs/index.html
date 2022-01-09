@@ -20,6 +20,9 @@
         <script type="module" src="app.js" defer></script>
       </head>
       <body>
+        <!-- <div class="slidecontainer">
+          <input type="range" min="0" max="100" value="50" class="slider" id="myRange">
+        </div> -->
         <div class=text-center>
           <!-- <form method=post enctype=multipart/form-data class="form-signin" action="analysis"> -->
           <form class="form-signin" action="javascript:void(0);">
@@ -28,8 +31,8 @@
             <br>
             <input type="submit" id="submit" class="btn btn-lg btn-primary btn-block" value="Analyze">
             <br>
-            <h1 id="result" class="h3 mb-3 font-weight-normal"></h1>
           </form>
+            <div id="result" class=""></div>
             <div id="d3-container" />
           </div>
             <p class="mt-5 mb-3 text-muted">
