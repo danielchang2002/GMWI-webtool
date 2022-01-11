@@ -1,6 +1,8 @@
+// driver code
+
 import { get_table } from "./utils.js";
 // import { plot_histogram } from "./histogram.js";
-import { plot_histogram } from "./histogram2.js";
+import { get_histogram } from "./histogram2.js";
 import { plot_bar } from "./bars.js";
 import { parse_file } from "./utils.js";
 import { gmhi_score } from "./gmhi.js";
@@ -26,6 +28,7 @@ submit.onclick = (e) => {
       return;
     }
     result.innerHTML = get_table(species);
+
     plot_histogram(gmhi_score(species));
   };
 };

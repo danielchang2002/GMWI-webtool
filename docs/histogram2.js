@@ -1,7 +1,4 @@
-import { dict } from "./data/gmhi_scores.js";
-import { colors } from "./data/colors.js";
-
-export function plot_histogram(score) {
+export function get_histogram(score) {
   const ele = document.getElementById("d3-container");
 
   ele.innerHTML = "";
