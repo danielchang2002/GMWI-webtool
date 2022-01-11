@@ -1,8 +1,8 @@
-import { health_abundant, health_scarce } from "./data/trainingResults.js";
+import { gmhi_model } from "./data.js";
 
 export const gmhi_score = (obj) => {
-  const psi_mh = psi(obj, health_abundant);
-  const psi_mn = psi(obj, health_scarce);
+  const psi_mh = psi(obj, gmhi_model["health_abundant"]);
+  const psi_mn = psi(obj, gmhi_model["health_scarce"]);
   return Math.log10(psi_mh / psi_mn).toFixed(4);
 };
 

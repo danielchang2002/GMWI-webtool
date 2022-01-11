@@ -1,5 +1,7 @@
 import { get_table } from "./utils.js";
-import { plot_histogram } from "./graph.js";
+// import { plot_histogram } from "./histogram.js";
+import { plot_histogram } from "./histogram2.js";
+import { plot_bar } from "./bars.js";
 import { parse_file } from "./utils.js";
 import { gmhi_score } from "./gmhi.js";
 
@@ -25,7 +27,5 @@ submit.onclick = (e) => {
     }
     result.innerHTML = get_table(species);
     plot_histogram(gmhi_score(species));
-    const phylum = parse_file(text, "phylum");
-    plot_bars(obj);
   };
 };

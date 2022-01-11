@@ -6,21 +6,17 @@ export function plot_histogram(score) {
 
   ele.innerHTML = "";
 
-  // const values = Array.from({ length: 1000 }, () => d3.randomNormal(0, 1)());
   const gmhi_scores = dict["all"];
   const hist = Histogram(gmhi_scores, score, {
     color: "steelblue",
-    xLabel: "GMHI score",
+    xLabel: "score",
   });
   ele.appendChild(hist);
 }
 
-// Copyright 2021 Observable, Inc.
-// Released under the ISC license.
-// https://observablehq.com/@d3/histogram
 function Histogram(
   data,
-  score, // gmhi score
+  score, // index score
   {
     value = (d) => d, // convenience alias for x
     domain, // convenience alias for xDomain
