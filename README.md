@@ -1,2 +1,3 @@
-# GMHI website
-Code for static web-app that runs GMHI
+# GMHI Web-tool
+
+An interactive web-app that analyzes a gut microbiome sample
