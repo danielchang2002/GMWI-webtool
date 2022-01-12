@@ -53,15 +53,18 @@ export const get_table = (obj) => {
   </thead>` +
     Object.keys(indicies).reduce((prev, curr) => {
       const score = indicies[curr](obj);
+      const healthy = index_data[curr]["healthy"];
+      const unhealthy = index_data[curr]["unhealthy"];
+      const all = healthy.concat(unhealthy);
       return (
         prev +
         `
   <tr>
     <th scope="row">${curr}</th>
     <td>${score}</td>
-    <td>${get_percentile(index_data[curr]["u_perc"], score)}</td>
-    <td>${get_percentile(index_data[curr]["h_perc"], score)}</td>
-    <td>${get_percentile(index_data[curr]["a_perc"], score)}</td>
+    <td>${get_percentile(unhealthy, score)}</td>
+    <td>${get_percentile(healthy, score)}</td>
+    <td>${get_percentile(all, score)}</td>
   </tr>
   `
       );
@@ -71,15 +74,7 @@ export const get_table = (obj) => {
 };
 
 export const get_percentile = (values, score) =>
-  values
-    .reduce((prev, curr, i, arr) => {
-      if (score < curr && i != 0) {
-        const last = arr[i - 1];
-        const diff = curr - last;
-        const this_diff = score - curr;
-        arr.splice(1); // exit
-        return prev + (this_diff / diff) * 2.5;
-      }
-      return prev + 2.5;
-    }, 0)
-    .toFixed(2);
+  (
+    (100 * values.reduce((prev, curr) => prev + (score > curr ? 1 : 0), 0)) /
+    values.length
+  ).toFixed(2);

@@ -104,7 +104,9 @@ function Histogram(
       if (data.x0 <= score && score < data.x1) {
         return "rgb(64,224,208)";
       }
-      const color = colors[Math.round((data.x0 + 5) * 5)];
+      const distance_from_left =
+        (data.x0 - xDomain[0]) / (xDomain[1] - xDomain[0]);
+      const color = colors[Math.round(distance_from_left * 50)];
       return `rgb(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255})`;
     })
     .attr("width", (d) =>

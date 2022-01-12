@@ -1,9 +1,10 @@
 // driver code
 
-import { get_table } from "./utils.js";
+import { get_table, get_percentile } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { parse_file } from "./utils.js";
-// import { scores } from "./test.js";
+import { index_data } from "./data.js";
+import { indicies } from "./indicies.js";
 
 // get element references
 const inputElement = document.getElementById("inputElement");
@@ -12,14 +13,7 @@ const result = document.getElementById("result");
 const histogram = document.getElementById("d3-container");
 
 // plot histogram before scoring
-d3.csv(
-  "https://raw.githubusercontent.com/danielchang2002/GMHI-webtool/main/data/gmhi.json",
-  (data) => {
-    console.log(data);
-    const scores = data["healthy"].concat(data["unhealthy"]);
-    plot_histogram(histogram, 1, scores);
-  }
-);
+// plot_histogram(histogram, 1, index_data["GMHI"]["healthy"]);
 
 submit.onclick = (e) => {
   const file = inputElement.files[0];
@@ -33,8 +27,17 @@ submit.onclick = (e) => {
       window.alert(message);
       return;
     }
-    result.innerHTML = get_table(species);
+    // result.innerHTML = get_table(species);
+    const index = Object.keys(indicies)[Math.floor(Math.random() * 5)];
+    const pop = ["healthy", "unhealthy"][Math.floor(Math.random() * 2)];
+    const data = index_data[index][pop];
+    const score = indicies[index](species);
+    const perc = get_percentile(data, score);
+    result.innerHTML = `
+    ${index} score: ${score} <br/>
+    ${perc}<sup>th</sup> percentile out of ${pop} group:  <br/>
+    `;
 
-    // plot_histogram(gmhi_score(species));
+    plot_histogram(histogram, score, data);
   };
 };
