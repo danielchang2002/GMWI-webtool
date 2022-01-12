@@ -1,5 +1,5 @@
-import { gmhi_score } from "./gmhi.js ";
-import { features } from "./data/features.js";
+import { indicies } from "./indicies.js";
+import { index_data, gmhi_model } from "./data.js";
 
 const next_rank = { k: "p", p: "c", c: "o", o: "f", f: "g", g: "s", s: "t" };
 const get_filter_function = (rank) => (line) =>
@@ -26,7 +26,7 @@ export const parse_file = (text, rank) => {
     if (ab < min_val) {
       return { ...prev };
     }
-    if (rank == "species" && !features.has(name)) {
+    if (rank == "species" && !gmhi_model["features"].has(name)) {
       return { ...prev };
     }
     return {
@@ -36,29 +36,6 @@ export const parse_file = (text, rank) => {
   };
   const obj = filtered.reduce(reducer, {});
   return obj;
-};
-
-export const get_inv_simpsons = (obj) =>
-  (
-    1 / Object.keys(obj).reduce((prev, curr) => prev + obj[curr] * obj[curr], 0)
-  ).toFixed(2);
-
-export const get_shannon = (obj) =>
-  Object.keys(obj)
-    .reduce((prev, curr) => prev - obj[curr] * Math.log(obj[curr]), 0)
-    .toFixed(2);
-
-export const get_richness = (obj) => Object.keys(obj).length;
-
-export const get_evenness = (obj) =>
-  (get_shannon(obj) / Math.log(313)).toFixed(4);
-
-const indicies = {
-  GMHI: { function: gmhi_score, data: gmhi_dict },
-  Shannon: { function: get_shannon, data: shannon_dict },
-  Richness: { function: get_richness, data: richness_dict },
-  "Inverse Simpson": { function: get_inv_simpsons, data: simp_dict },
-  Evenness: { function: get_evenness, data: even_dict },
 };
 
 export const get_table = (obj) => {
@@ -75,16 +52,16 @@ export const get_table = (obj) => {
   </tr>
   </thead>` +
     Object.keys(indicies).reduce((prev, curr) => {
-      const score = indicies[curr]["function"](obj);
+      const score = indicies[curr](obj);
       return (
         prev +
         `
   <tr>
     <th scope="row">${curr}</th>
     <td>${score}</td>
-    <td>${get_percentile(indicies[curr]["data"]["unhealthy"], score)}</td>
-    <td>${get_percentile(indicies[curr]["data"]["healthy"], score)}</td>
-    <td>${get_percentile(indicies[curr]["data"]["all"], score)}</td>
+    <td>${get_percentile(index_data[curr]["u_perc"], score)}</td>
+    <td>${get_percentile(index_data[curr]["h_perc"], score)}</td>
+    <td>${get_percentile(index_data[curr]["a_perc"], score)}</td>
   </tr>
   `
       );
@@ -94,7 +71,15 @@ export const get_table = (obj) => {
 };
 
 export const get_percentile = (values, score) =>
-  (
-    (100 * values.reduce((prev, curr) => prev + (score > curr ? 1 : 0), 0)) /
-    values.length
-  ).toFixed(2);
+  values
+    .reduce((prev, curr, i, arr) => {
+      if (score < curr && i != 0) {
+        const last = arr[i - 1];
+        const diff = curr - last;
+        const this_diff = score - curr;
+        arr.splice(1); // exit
+        return prev + (this_diff / diff) * 2.5;
+      }
+      return prev + 2.5;
+    }, 0)
+    .toFixed(2);

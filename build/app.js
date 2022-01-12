@@ -1,19 +1,19 @@
 // driver code
 
 import { get_table } from "./utils.js";
-// import { plot_histogram } from "./histogram.js";
-import { get_histogram } from "./histogram2.js";
-import { plot_bar } from "./bars.js";
+import { plot_histogram } from "./histogram.js";
 import { parse_file } from "./utils.js";
-import { gmhi_score } from "./gmhi.js";
+import { scores } from "./test.js";
+import { index_data } from "./data.js";
 
 // get element references
 const inputElement = document.getElementById("inputElement");
 const submit = document.getElementById("submit");
 const result = document.getElementById("result");
+const histogram = document.getElementById("d3-container");
 
 // plot histogram before scoring
-plot_histogram(-100000);
+plot_histogram(histogram, 1, scores);
 
 submit.onclick = (e) => {
   const file = inputElement.files[0];
@@ -29,6 +29,6 @@ submit.onclick = (e) => {
     }
     result.innerHTML = get_table(species);
 
-    plot_histogram(gmhi_score(species));
+    // plot_histogram(gmhi_score(species));
   };
 };

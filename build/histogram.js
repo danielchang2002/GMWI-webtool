@@ -1,13 +1,8 @@
-export function get_histogram(score) {
-  const ele = document.getElementById("d3-container");
+import { colors } from "./data.js";
 
+export function plot_histogram(ele, score, gmhi_scores) {
   ele.innerHTML = "";
-
-  const gmhi_scores = dict["all"];
-  const hist = Histogram(gmhi_scores, score, {
-    color: "steelblue",
-    xLabel: "score",
-  });
+  const hist = Histogram(gmhi_scores, score);
   ele.appendChild(hist);
 }
 
@@ -34,7 +29,7 @@ function Histogram(
     xType = type, // type of x-scale
     xDomain = domain, // [xmin, xmax]
     xRange = [marginLeft, width - marginRight], // [left, right]
-    xLabel = label, // a label for the x-axis
+    xLabel = "score", // a label for the x-axis
     xFormat = format, // a format specifier string for the x-axis
     yType = d3.scaleLinear, // type of y-scale
     yDomain, // [ymin, ymax]
