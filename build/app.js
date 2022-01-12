@@ -4,7 +4,6 @@ import { get_table } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { parse_file } from "./utils.js";
 import { scores } from "./test.js";
-import { index_data } from "./data.js";
 
 // get element references
 const inputElement = document.getElementById("inputElement");
