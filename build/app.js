@@ -3,7 +3,7 @@
 import { get_table } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { parse_file } from "./utils.js";
-import { scores } from "./test.js";
+// import { scores } from "./test.js";
 
 // get element references
 const inputElement = document.getElementById("inputElement");
@@ -12,7 +12,14 @@ const result = document.getElementById("result");
 const histogram = document.getElementById("d3-container");
 
 // plot histogram before scoring
-plot_histogram(histogram, 1, scores);
+d3.csv(
+  "https://raw.githubusercontent.com/danielchang2002/GMHI-webtool/main/data/gmhi.json",
+  (data) => {
+    console.log(data);
+    const scores = data["healthy"].concat(data["unhealthy"]);
+    plot_histogram(histogram, 1, scores);
+  }
+);
 
 submit.onclick = (e) => {
   const file = inputElement.files[0];
