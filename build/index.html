@@ -25,12 +25,20 @@
         <main class="form-signin">
           <form action="javascript:void(0)">
             <h1 class="h3 mb-3 fw-normal">Gut Microbiome Health Index 🦠</h1>
-        
+
+            <div class="form-group">
+              <label for="metaphlan">Insert or upload MetaPhlAn output</label>
+              <br/>
+              <a href="#" id="example">Insert example data</a>
+              <br/>
+              <textarea class="form-control" id="inputText" rows="3"></textarea>
+            </div> 
+
+            <br/>
+
             <div class="form-floating">
-              <!-- <input type="file" name=metaphlan2 id="floatingInput" class="form-control" required> -->
               <div class="mb-3">
-                <!-- <label for="formFile" class="form-label">Default file input example</label> -->
-                <input class="form-control" type="file" id="inputElement" name=metaphlan2>
+                <input class="form-control" type="file" id="inputFile" name=metaphlan2>
               </div>
             </div>
 
@@ -53,7 +61,7 @@
             <br/>
             <br/>
         
-            <button id="submit" class="w-100 btn btn-lg btn-primary" type="submit">Analyze</button>
+            <!-- <button id="submit" class="w-100 btn btn-lg btn-primary" type="submit">Analyze</button> -->
             <p class="mt-5 mb-3 text-muted">
               <a href="https://github.com/danielchang2002/gmhi-website" target="_blank"><i class="fa fa-github" aria-hidden="true"></i> source</a>
             </p>
