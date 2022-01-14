@@ -12,8 +12,9 @@ const inputText = document.getElementById("inputText");
 const index_box = document.getElementById("indexBox");
 const pop_box = document.getElementById("popBox");
 const result = document.getElementById("result");
-const histogram = document.getElementById("d3-container");
+const histogram = document.getElementById("histogram");
 const ex_butt = document.getElementById("example");
+const rem_butt = document.getElementById("remove");
 
 const update_visuals = (e) => {
   const text = inputText.value;
@@ -24,11 +25,11 @@ const update_visuals = (e) => {
       ? index_data[index]["healthy"].concat(index_data[index]["unhealthy"])
       : index_data[index][pop];
   const species = parse_file(text, "species");
-  console.log(species);
   if (JSON.stringify(species) == "{}") {
     // const message = "Please upload valid MetaPhlAn output file";
     // window.alert(message);
     // return;
+    result.innerHTML = "";
     plot_histogram(histogram, -10000, data);
     return;
   }
@@ -51,6 +52,7 @@ inputFile.onchange = (e) => {
     const text = reader.result;
     inputText.value = text;
     update_visuals();
+    inputFile.value = "";
   };
 };
 
@@ -59,5 +61,9 @@ pop_box.onchange = update_visuals;
 inputText.oninput = update_visuals;
 ex_butt.onclick = () => {
   inputText.value = example;
+  update_visuals();
+};
+rem_butt.onclick = () => {
+  inputText.value = "";
   update_visuals();
 };
