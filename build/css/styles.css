@@ -1,25 +1,61 @@
-header {
-  border-bottom: solid 1px rgba(0, 0, 0, 0.4);
-  background-color: #183d4e;
-  color: white;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  position: relative;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  margin-bottom: 60px; /* Margin bottom by footer height */
-}
 .footer {
-  border-top: solid 2px #eee;
-  position: absolute;
+  color: #ccc;
+  position: fixed;
+  left: 0;
   bottom: 0;
   width: 100%;
-  height: 60px; /* Set the fixed height of the footer here */
-  line-height: 60px; /* Vertically center the text there */
-  background-color: #f7f7f7;
+  text-align: center;
+}
+
+.bottom-link {
+  color: inherit;
+}
+
+#example {
+  color: #a00 !important;
+  text-decoration: underline;
+}
+
+* {
+  box-shadow: none !important;
+}
+
+header {
+  margin-bottom: 100px;
+}
+
+.setting {
+  margin-bottom: 80px;
+}
+
+/* latex font */
+
+@font-face {
+  font-family: "Latin Modern";
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.woff2")
+      format("woff2"),
+    url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.woff")
+      format("woff"),
+    url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.ttf")
+      format("truetype");
+}
+
+@font-face {
+  font-family: "Latin Modern";
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.woff2")
+      format("woff2"),
+    url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.woff")
+      format("woff"),
+    url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.ttf")
+      format("truetype");
+}
+
+body {
+  font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
 }

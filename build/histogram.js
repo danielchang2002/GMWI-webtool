@@ -1,9 +1,27 @@
 import { colors } from "./data.js";
 
-export function plot_histogram(ele, score, gmhi_scores) {
+export function plot_histogram(ele, score, data, index, pop, perc) {
+  const label = {
+    GMHI: "Gut Microbiome Health Index (GMHI)",
+    Shannon: "Shannon Diversity Index",
+    Richness: "Species Richness",
+    Evenness: "Species Evenness",
+    "Inverse Simpson": "Inverse Simpson Diversity",
+  };
   ele.innerHTML = "";
-  const hist = Histogram(gmhi_scores, score);
+  const hist = Histogram(data, score, {
+    xLabel: label[index],
+  });
   ele.appendChild(hist);
+  const num = { healthy: 2754, nonhealthy: 2272, all: 5026 };
+  const popDesc = `${num[pop]} ${
+    pop == "all" ? "healthy and nonhealthy" : pop
+  } patients.`;
+  let string = `<br/><br/><b>Figure 1. </b> ${label[index]} scores of the gut microbiomes of ${popDesc}`;
+  if (score != null) {
+    string += ` The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc} <sup>th</sup> percentile of a population of ${popDesc}`;
+  }
+  ele.innerHTML += string;
 }
 
 function Histogram(
@@ -18,10 +36,10 @@ function Histogram(
     x = value, // given d in data, returns the (quantitative) x-value
     y = () => 1, // given d in data, returns the (quantitative) weight
     thresholds = 40, // approximate number of bins to generate, or threshold function
-    marginTop = 20, // top margin, in pixels
+    marginTop = 10, // top margin, in pixels
     marginRight = 30, // right margin, in pixels
-    marginBottom = 30, // bottom margin, in pixels
-    marginLeft = 40, // left margin, in pixels
+    marginBottom = 50, // bottom margin, in pixels
+    marginLeft = 60, // left margin, in pixels
     width = 640, // outer width of chart, in pixels
     height = 400, // outer height of chart, in pixels
     insetLeft = 0, // inset left edge of bar
@@ -34,7 +52,7 @@ function Histogram(
     yType = d3.scaleLinear, // type of y-scale
     yDomain, // [ymin, ymax]
     yRange = [height - marginBottom, marginTop], // [bottom, top]
-    yLabel = "↑ Frequency", // a label for the y-axis
+    yLabel = "Patient Count", // a label for the y-axis
     yFormat, // a format specifier string for the y-axis
     color = "currentColor", // bar fill color
   } = {}
@@ -53,7 +71,7 @@ function Histogram(
   // Compute default domains.
   if (xDomain === undefined) xDomain = [bins[0].x0, bins[bins.length - 1].x1];
   if (yDomain === undefined)
-    yDomain = [0, d3.max(bins, (I) => d3.sum(I, (i) => Y[i]))];
+    yDomain = [0, 1.2 * d3.max(bins, (I) => d3.sum(I, (i) => Y[i]))];
 
   // Construct scales and axes.
   const xScale = xType(xDomain, xRange);
@@ -67,8 +85,8 @@ function Histogram(
 
   const svg = d3
     .create("svg")
-    .attr("width", width)
-    .attr("height", height)
+    // .attr("width", width)
+    // .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
     .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
@@ -76,6 +94,7 @@ function Histogram(
     .append("g")
     .attr("transform", `translate(${marginLeft},0)`)
     .call(yAxis)
+    .style("font-family", "latin-modern")
     .call((g) => g.select(".domain").remove())
     .call((g) =>
       g
@@ -83,15 +102,7 @@ function Histogram(
         .clone()
         .attr("x2", width - marginLeft - marginRight)
         .attr("stroke-opacity", 0.1)
-    )
-    .call((g) =>
-      g
-        .append("text")
-        .attr("x", -marginLeft)
-        .attr("y", 10)
-        .attr("fill", "currentColor")
-        .attr("text-anchor", "start")
-        .text(yLabel)
+        .style("stroke-dasharray", "3, 3")
     );
 
   svg
@@ -101,7 +112,7 @@ function Histogram(
     .join("rect")
     .attr("x", (d) => xScale(d.x0) + insetLeft)
     .attr("fill", (data) => {
-      if (data.x0 <= score && score < data.x1) {
+      if (score != null && data.x0 <= score && score < data.x1) {
         return "rgb(64,224,208)";
       }
       const distance_from_left =
@@ -124,15 +135,48 @@ function Histogram(
     .append("g")
     .attr("transform", `translate(0,${height - marginBottom})`)
     .call(xAxis)
-    .call((g) =>
-      g
-        .append("text")
-        .attr("x", width - marginRight)
-        .attr("y", 27)
-        .attr("fill", "currentColor")
-        .attr("text-anchor", "end")
-        .text(xLabel)
-    );
+    .style("font-family", "latin-modern");
+
+  // add x label
+  svg
+    .append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "middle")
+    .attr("x", width / 2)
+    .attr("y", height - 10)
+    .text(xLabel);
+
+  // add y label
+  svg
+    .append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .attr("x", -height / 2)
+    .attr("y", 20)
+    .text(yLabel)
+    .attr("transform", function (d) {
+      return "rotate(-90)";
+    });
+
+  // add border box
+  svg
+    .append("rect")
+    .attr("x", marginLeft)
+    .attr("y", marginTop)
+    .attr("height", height - marginTop - marginBottom)
+    .attr("width", width - marginLeft - marginRight)
+    .style("stroke", "black")
+    .style("fill", "none")
+    .style("stroke-width", 1);
+
+  // add title
+  // svg
+  //   .append("text")
+  //   .attr("class", "title")
+  //   .attr("text-anchor", "middle")
+  //   .attr("x", width / 2)
+  //   .attr("y", marginTop / 2)
+  //   .text(title);
 
   return svg.node();
 }

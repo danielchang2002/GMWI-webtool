@@ -11,10 +11,9 @@ const inputFile = document.getElementById("inputFile");
 const inputText = document.getElementById("inputText");
 const index_box = document.getElementById("indexBox");
 const pop_box = document.getElementById("popBox");
-const result = document.getElementById("result");
+const title = document.getElementById("title");
 const histogram = document.getElementById("histogram");
 const ex_butt = document.getElementById("example");
-const rem_butt = document.getElementById("remove");
 
 const update_visuals = (e) => {
   const text = inputText.value;
@@ -22,24 +21,17 @@ const update_visuals = (e) => {
   const pop = pop_box.value;
   const data =
     pop === "all"
-      ? index_data[index]["healthy"].concat(index_data[index]["unhealthy"])
+      ? index_data[index]["healthy"].concat(index_data[index]["nonhealthy"])
       : index_data[index][pop];
   const species = parse_file(text, "species");
+
   if (JSON.stringify(species) == "{}") {
-    // const message = "Please upload valid MetaPhlAn output file";
-    // window.alert(message);
-    // return;
-    result.innerHTML = "";
-    plot_histogram(histogram, -10000, data);
+    plot_histogram(histogram, null, data, index, pop, null);
     return;
   }
   const score = indicies[index](species);
   const perc = get_percentile(data, score);
-  result.innerHTML = `
-    ${index} score: ${score} <br/>
-    ${perc}<sup>th</sup> percentile
-    `;
-  plot_histogram(histogram, score, data);
+  plot_histogram(histogram, score, data, index, pop, perc);
 };
 
 update_visuals();
@@ -61,9 +53,5 @@ pop_box.onchange = update_visuals;
 inputText.oninput = update_visuals;
 ex_butt.onclick = () => {
   inputText.value = example;
-  update_visuals();
-};
-rem_butt.onclick = () => {
-  inputText.value = "";
   update_visuals();
 };
