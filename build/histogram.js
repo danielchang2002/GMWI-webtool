@@ -9,10 +9,15 @@ export function plot_histogram(ele, score, data, index, pop, perc) {
     "Inverse Simpson": "Inverse Simpson Diversity",
   };
   ele.innerHTML = "";
-  const hist = Histogram(data, score, {
+  const hist = Histogram(data, score, perc, {
     xLabel: label[index],
   });
   ele.appendChild(hist);
+  const caption = get_caption(pop, index, score, perc, label);
+  ele.innerHTML += caption;
+}
+
+const get_caption = (pop, index, score, perc, label) => {
   const num = { healthy: 2754, nonhealthy: 2272, all: 5026 };
   const popDesc = `${num[pop]} ${
     pop == "all" ? "healthy and nonhealthy" : pop
@@ -21,12 +26,13 @@ export function plot_histogram(ele, score, data, index, pop, perc) {
   if (score != null) {
     string += ` The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc} <sup>th</sup> percentile of a population of ${popDesc}`;
   }
-  ele.innerHTML += string;
-}
+  return string;
+};
 
 function Histogram(
   data,
   score, // index score
+  percentile,
   {
     value = (d) => d, // convenience alias for x
     domain, // convenience alias for xDomain
@@ -41,7 +47,7 @@ function Histogram(
     marginBottom = 50, // bottom margin, in pixels
     marginLeft = 60, // left margin, in pixels
     width = 640, // outer width of chart, in pixels
-    height = 400, // outer height of chart, in pixels
+    height = 500, // outer height of chart, in pixels
     insetLeft = 0, // inset left edge of bar
     insetRight = 0.5, // inset right edge of bar
     xType = type, // type of x-scale
@@ -68,10 +74,12 @@ function Histogram(
     .thresholds(thresholds)
     .value((i) => X[i])(I);
 
+  const binSize = (width - marginRight - marginLeft) / bins.length;
+
   // Compute default domains.
   if (xDomain === undefined) xDomain = [bins[0].x0, bins[bins.length - 1].x1];
   if (yDomain === undefined)
-    yDomain = [0, 1.2 * d3.max(bins, (I) => d3.sum(I, (i) => Y[i]))];
+    yDomain = [0, 1.4 * d3.max(bins, (I) => d3.sum(I, (i) => Y[i]))];
 
   // Construct scales and axes.
   const xScale = xType(xDomain, xRange);
@@ -105,6 +113,9 @@ function Histogram(
         .style("stroke-dasharray", "3, 3")
     );
 
+  let a_x = -1;
+  let a_y = -1;
+
   svg
     .append("g")
     .selectAll("rect")
@@ -113,12 +124,18 @@ function Histogram(
     .attr("x", (d) => xScale(d.x0) + insetLeft)
     .attr("fill", (data) => {
       if (score != null && data.x0 <= score && score < data.x1) {
-        return "rgb(64,224,208)";
+        a_x = xScale(data.x0) + 0.5 * binSize;
+        a_y = yScale(d3.sum(data, (i) => Y[i]));
+        return "rgb(8,232,222)";
       }
+      // if we have a score to focus on, greyify other bars
+      const mult = score == null ? 1 : 0.75;
       const distance_from_left =
         (data.x0 - xDomain[0]) / (xDomain[1] - xDomain[0]);
       const color = colors[Math.round(distance_from_left * 50)];
-      return `rgb(${color[0] * 255}, ${color[1] * 255}, ${color[2] * 255})`;
+      return `rgb(${mult * color[0] * 255}, ${mult * color[1] * 255}, ${
+        mult * color[2] * 255
+      })`;
     })
     .attr("width", (d) =>
       Math.max(0, xScale(d.x1) - xScale(d.x0) - insetLeft - insetLeft)
@@ -177,6 +194,32 @@ function Histogram(
   //   .attr("x", width / 2)
   //   .attr("y", marginTop / 2)
   //   .text(title);
+
+  if (score != null) {
+    svg
+      .append("path")
+      .attr(
+        "d",
+        d3.line()([
+          [a_x, a_y - 5],
+          [a_x, a_y - 0.2 * height],
+        ])
+      )
+      .attr("stroke", "black");
+
+    svg
+      .append("path")
+      .attr("d", d3.symbol().type(d3.symbolTriangle).size(20))
+      .attr("fill", "black")
+      .attr("transform", `translate(${a_x}, ${a_y - 8}) rotate(180)`);
+
+    svg
+      .append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", a_x)
+      .attr("y", a_y - 0.2 * height - binSize)
+      .text(`${score}, ${percentile}th pct`);
+  }
 
   return svg.node();
 }

@@ -7,8 +7,16 @@
   text-align: center;
 }
 
+/* #sideButton {
+  position: fixed;
+} */
+
 .bottom-link {
   color: inherit;
+}
+
+red {
+  color: #a00 !important;
 }
 
 #example {
@@ -26,6 +34,10 @@ header {
 
 .setting {
   margin-bottom: 80px;
+}
+
+.fig {
+  margin-bottom: 100px;
 }
 
 /* latex font */

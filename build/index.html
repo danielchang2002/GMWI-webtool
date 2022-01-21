@@ -16,19 +16,22 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
+
   <link rel="stylesheet" href="css/styles.css">
-  <!-- <link rel="stylesheet" href="https://latex.now.sh/style.css"> -->
 
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦠</text></svg>">
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"
+    integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script type="module" src="app.js" defer></script>
 </head>
 
 <body>
 
   <!-- start sidebar button -->
-  <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling"
+  <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" id="sideButton"
     aria-controls="offcanvasScrolling">
     <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 24 24" width="48">
       <path d="M0 0h24v24H0V0z" fill="none" />
@@ -94,8 +97,8 @@
           <h1 class="display-6 text-center">Gut Microbiome Health Index</h1>
         </header>
 
-        <div id="histogram" />
-
+        <div id="histogram" class="fig" />
+        <div class="fig" id="bar"></div>
       </div>
     </div>
   </div>
