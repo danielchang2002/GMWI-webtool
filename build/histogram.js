@@ -24,7 +24,7 @@ const get_caption = (pop, index, score, perc, label) => {
   } patients.`;
   let string = `<br/><br/><b>Figure 1. </b> ${label[index]} scores of the gut microbiomes of ${popDesc}`;
   if (score != null) {
-    string += ` The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc} <sup>th</sup> percentile of a population of ${popDesc}`;
+    string += ` The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc}<sup>th</sup> percentile of a population of ${popDesc}`;
   }
   return string;
 };
@@ -116,6 +116,15 @@ function Histogram(
   let a_x = -1;
   let a_y = -1;
 
+  // score for the purposes of plotting
+  let plot_score = null;
+  if (score != null) {
+    const min_score = Math.min.apply(null, data);
+    const max_score = Math.max.apply(null, data);
+    plot_score = Math.max(min_score, score);
+    plot_score = Math.min(plot_score, max_score);
+  }
+
   svg
     .append("g")
     .selectAll("rect")
@@ -123,7 +132,7 @@ function Histogram(
     .join("rect")
     .attr("x", (d) => xScale(d.x0) + insetLeft)
     .attr("fill", (data) => {
-      if (score != null && data.x0 <= score && score < data.x1) {
+      if (plot_score != null && data.x0 <= plot_score && plot_score < data.x1) {
         a_x = xScale(data.x0) + 0.5 * binSize;
         a_y = yScale(d3.sum(data, (i) => Y[i]));
         return "rgb(8,232,222)";
@@ -147,6 +156,7 @@ function Histogram(
     .text((d, i) =>
       [`${d.x0} ≤ x < ${d.x1}`, yFormat(d3.sum(d, (i) => Y[i]))].join("\n")
     );
+
 
   svg
     .append("g")
@@ -186,23 +196,21 @@ function Histogram(
     .style("fill", "none")
     .style("stroke-width", 1);
 
-  // add title
-  // svg
-  //   .append("text")
-  //   .attr("class", "title")
-  //   .attr("text-anchor", "middle")
-  //   .attr("x", width / 2)
-  //   .attr("y", marginTop / 2)
-  //   .text(title);
-
   if (score != null) {
+    const bottom_x = a_x;
+    const bottom_y = a_y - 5;
+
+    const top_x_arrow = bottom_x;
+    const top_x_box = Math.min(Math.max(bottom_x, 100), width - 100);
+    const top_y = Math.max(bottom_y - 0.2 * height, 60);
+
     svg
       .append("path")
       .attr(
         "d",
         d3.line()([
-          [a_x, a_y - 5],
-          [a_x, a_y - 0.2 * height],
+          [bottom_x, bottom_y],
+          [top_x_arrow, top_y],
         ])
       )
       .attr("stroke", "black");
@@ -213,12 +221,28 @@ function Histogram(
       .attr("fill", "black")
       .attr("transform", `translate(${a_x}, ${a_y - 8}) rotate(180)`);
 
+      svg.append('rect')
+        .attr('x', top_x_box - 80)
+        .attr('y', top_y - 45)
+        .attr('width', 160)
+        .attr('height', 42)
+        .attr('stroke', 'black')
+        .attr('fill', 'white')
+        .attr('opacity', 0.5)
+
     svg
       .append("text")
       .attr("text-anchor", "middle")
-      .attr("x", a_x)
-      .attr("y", a_y - 0.2 * height - binSize)
-      .text(`${score}, ${percentile}th pct`);
+      .attr("x", top_x_box)
+      .attr("y", top_y - 28)
+      .text(`Sample score: ${score}`);
+
+    svg
+      .append("text")
+      .attr("text-anchor", "middle")
+      .attr("x", top_x_box)
+      .attr("y", top_y - 10)
+      .text(`${percentile}th percentile`)
   }
 
   return svg.node();

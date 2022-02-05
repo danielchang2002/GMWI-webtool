@@ -13,6 +13,7 @@ const index_box = document.getElementById("indexBox");
 const pop_box = document.getElementById("popBox");
 const title = document.getElementById("title");
 const histogram = document.getElementById("histogram");
+const bar = document.getElementById("bar");
 const ex_butt = document.getElementById("example");
 
 const update_visuals = (e) => {
@@ -32,6 +33,7 @@ const update_visuals = (e) => {
   const score = indicies[index](species);
   const perc = get_percentile(data, score);
   plot_histogram(histogram, score, data, index, pop, perc);
+  plot_bar(bar);
 };
 
 update_visuals();
