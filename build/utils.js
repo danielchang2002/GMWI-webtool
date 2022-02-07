@@ -78,3 +78,8 @@ export const get_percentile = (values, score) =>
     (100 * values.reduce((prev, curr) => prev + (score > curr ? 1 : 0), 0)) /
     values.length
   ).toFixed(2);
+
+  // for sample
+export const get_taxon_bar_list = (taxons) => {
+  return Object.keys(taxons).map(key => ({pop : "Sample", taxon : key, abundance : taxons[key]}));
+}

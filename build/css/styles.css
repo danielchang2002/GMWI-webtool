@@ -1,15 +1,21 @@
+
 .footer {
   color: #ccc;
-  position: fixed;
+  /* position: fixed; */
   left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
 }
 
-/* #sideButton {
-  position: fixed;
-} */
+#sideButton {
+  position: sticky !important;
+  top: 0 !important;
+}
+
+.tick {
+  font-family : "Latin Modern" !important;
+}
 
 .bottom-link {
   color: inherit;
@@ -70,4 +76,5 @@ header {
 
 body {
   font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
+  overscroll-behavior-y: none;
 }

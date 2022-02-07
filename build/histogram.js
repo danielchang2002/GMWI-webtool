@@ -102,7 +102,6 @@ function Histogram(
     .append("g")
     .attr("transform", `translate(${marginLeft},0)`)
     .call(yAxis)
-    .style("font-family", "latin-modern")
     .call((g) => g.select(".domain").remove())
     .call((g) =>
       g
@@ -242,7 +241,11 @@ function Histogram(
       .attr("text-anchor", "middle")
       .attr("x", top_x_box)
       .attr("y", top_y - 10)
-      .text(`${percentile}th percentile`)
+      .text(`Percentile: ${percentile}`)
+      .append("tspan")
+      .text("th")
+      .attr("dy",-5)
+      .attr("font-size",11)
   }
 
   return svg.node();

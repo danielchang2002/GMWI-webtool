@@ -54,7 +54,7 @@
         <div class="setting">
           <h4><b>Input Data</b></h4>
           <p>Insert/upload MetaPhlAn output:</p>
-          <a href="#" class="" id="example">Example data</a>
+          <a href="#!" class="" id="example">Example data</a>
           <textarea class="form-control" id="inputText" rows="6"></textarea>
           <br />
           <input class="form-control" type="file" id="inputFile" name=metaphlan2>
@@ -63,6 +63,7 @@
         <!-- end input -->
 
         <!-- start histogram settings -->
+        <div class="setting">
         <h4><b>Figure 1.</b></h4>
         <label for="indexBox">Choose index:</label>
         <select id="indexBox" class="form-select" aria-label="">
@@ -79,7 +80,28 @@
           <option value="healthy">Healthy</option>
           <option value="nonhealthy">Nonhealthy</option>
         </select>
+        </div>
         <!-- end histogram settings -->
+
+        <!-- start bars settings -->
+        <h4><b>Figure 2.</b></h4>
+
+        <label for="rankBar">Choose taxonomic rank:</label>
+        <select id="rankBar" class="form-select" aria-label="Default select example">
+          <option value="phylum">Phylum</option>
+          <option value="class">Class</option>
+          <option value="order">Order</option>
+          <option value="family">Family</option>
+        </select>
+        <br/>
+
+        <label for="popBoxBar">Choose comparison population:</label>
+        <select id="popBoxBar" class="form-select" aria-label="Default select example">
+          <option value="all">All</option>
+          <option value="healthy">Healthy</option>
+          <option value="nonhealthy">Nonhealthy</option>
+        </select>
+        <!-- end bars settings -->
 
       </div>
     </div>
@@ -97,7 +119,7 @@
           <h1 class="display-6 text-center">Gut Microbiome Health Index</h1>
         </header>
 
-        <div id="histogram" class="fig" />
+        <div id="histogram" class="fig"></div>
         <div id="bar" class="fig"></div>
       </div>
     </div>
