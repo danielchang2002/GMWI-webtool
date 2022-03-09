@@ -228,29 +228,8 @@ function StackedBarChart(data, rank, {
       .style("stroke", "black")
       .style("stroke-width", 1);
       const text = taxons[i] != "Others" ? taxons[i].slice(3, taxons[i].length) : "Others";
-      svg.append("text").attr("x", x + 10).attr("y", y).text(text).style("font-size", "15px").attr("alignment-baseline","middle")
+      svg.append("text").attr("x", x + 10).attr("y", y + 2).text(text).style("font-size", "15px").attr("alignment-baseline","middle")
     }
-
-  svg
-    .append("text")
-    .attr("text-anchor", "middle")
-    .attr("x", x_start + 28)
-    .attr("y", y_start - 30)
-    .text(rank.slice(0, 1).toUpperCase() + rank.slice(1, rank.length))
-    .style("font-size", "20px")
-    .style("font-weight", "bold")
-
-  svg.append("rect")
-  .attr("fill", "none")
-  .attr("x", x_start - 20)
-  .attr("y", y_start - 50)
-  .attr("width", 210)
-  .attr("height", space * taxons.length + 40)
-  .style("stroke", "black")
-  .style("stroke-width", 1);
-
-  
-
 
   return Object.assign(svg.node(), {scales: {color}});
 }

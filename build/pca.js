@@ -6,8 +6,7 @@ export function plot_pca(ele, data, sample, metric) {
   let projected;
   if (JSON.stringify(sample) === "{}") {
     projected = null;
-  }
-  else {
+  } else {
     // get feature vector
     const vector = get_vector(sample);
 
@@ -17,84 +16,118 @@ export function plot_pca(ele, data, sample, metric) {
 
     // project data
     const components = pca_data["components"];
-    projected = math.multiply(normalized, components)
+    projected = math.multiply(normalized, components);
   }
 
-  const scatter = Scatterplot(data, projected, metric, {
-    x: d => d[0],
-    y: d => d[1],
+  const color_arr = get_color_arr(metric);
+
+  const scatter = Scatterplot(data, projected, color_arr, metric, {
+    x: (d) => d[0],
+    y: (d) => d[1],
     stroke: "steelblue",
     fill: "steelblue",
-    width: 640,
-    height: 600
-  })
+    width: 740,
+    height: 600,
+  });
 
-  ele.appendChild(scatter)
+  ele.appendChild(scatter);
   const caption = get_caption(metric, sample);
   ele.innerHTML += caption;
 }
 
 const get_vector = (species) => {
   const features = Array.from(gmhi_model["features"]);
-  const vector = math.matrix(features.map(feat => 
-    feat in species ? 1 : 0
-  ));
+  const vector = math.matrix(features.map((feat) => (feat in species ? 1 : 0)));
   return vector;
-}
-
-const get_caption = (metric, sample) => {
-  let string;
-  if (JSON.stringify(sample) === "{}") {
-    string = `<br/><br/><b>Figure 3. </b> Principal component analysis (PCA) `
-  }
-  else {
-    string = `<br/><br/><b>Figure 3. </b> Principal component analysis (PCA) `
-  }
-  return string;
-
 };
 
-const get_color = (i, metric) => {
-  return pca_data["meta"]["Phenotype"][i] === 1 ? "steelblue" : "orange";
-}
+const get_caption = (metric, sample) => {
+  const nonhealthy_color = metric === "Phenotype" ? "(orange)" : "(other colors)";
+  let string = `<br/><br/><b>Figure 3. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients.`;
+  if (JSON.stringify(sample) !== "{}") {
+    string += " The input sample is highlighted.";
+  }
+  return string;
+};
 
-function Scatterplot(data, sample, metric, {
-  x = ([x]) => x, // given d in data, returns the (quantitative) x-value
-  y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
-  r = 3, // (fixed) radius of dots, in pixels
-  title, // given d in data, returns the title
-  marginTop = 20, // top margin, in pixels
-  marginRight = 30, // right margin, in pixels
-  marginBottom = 40, // bottom margin, in pixels
-  marginLeft = 60, // left margin, in pixels
-  inset = r * 2, // inset the default range, in pixels
-  insetTop = inset, // inset the default y-range
-  insetRight = inset, // inset the default x-range
-  insetBottom = inset, // inset the default y-range
-  insetLeft = inset, // inset the default x-range
-  width = 640, // outer width, in pixels
-  height = 400, // outer height, in pixels
-  xType = d3.scaleLinear, // type of x-scale
-  xDomain, // [xmin, xmax]
-  xRange = [marginLeft + insetLeft, width - marginRight - insetRight], // [left, right]
-  yType = d3.scaleLinear, // type of y-scale
-  yDomain, // [ymin, ymax]
-  yRange = [height - marginBottom - insetBottom, marginTop + insetTop], // [bottom, top]
-  xLabel, // a label for the x-axis
-  yLabel, // a label for the y-axis
-  xFormat, // a format specifier string for the x-axis
-  yFormat, // a format specifier string for the y-axis
-  fill = "none", // fill color for dots
-  stroke = "currentColor", // stroke color for the dots
-  strokeWidth = 1.5, // stroke width for dots
-  halo = "#fff", // color of label halo 
-  haloWidth = 3 // padding around the labels
-} = {}) {
+const get_color_arr = (metric) => {
+  // const meta = pca_data["meta"][metric];
+  if (metric === "Phenotype") {
+    return ["orange", "steelblue"]
+    // return (i) => (meta[i] === 1 ? "steelblue" : "orange");
+  }
+
+  if (metric === "Phenotype_all") {
+    return [
+      "rgb(166.0,206.0,227.0)",
+      "rgb(166.0,206.0,227.0)",
+      "rgb(31.0,120.0,180.0)",
+      "rgb(178.0,223.0,138.0)",
+      "steelblue",
+      "rgb(251.0,154.0,153.0)",
+      "rgb(251.0,154.0,153.0)",
+      "rgb(227.0,26.0,28.0)",
+      "rgb(253.0,191.0,111.0)",
+      "rgb(255.0,127.0,0.0)",
+      "rgb(202.0,178.0,214.0)",
+      "rgb(202.0,178.0,214.0)",
+      "rgb(106.0,61.0,154.0)",
+      "rgb(255.0,255.0,153.0)",
+      "rgb(177.0,89.0,40.0)",
+      "rgb(177.0,89.0,40.0)",
+    ];
+  }
+
+  // const min = Math.min(pca_data["meta"][metric]);
+  // const max = Math.max(pca_data["meta"][metric]);
+};
+
+function Scatterplot(
+  data,
+  sample,
+  color_arr,
+  metric,
+  {
+    x = ([x]) => x, // given d in data, returns the (quantitative) x-value
+    y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
+    r = 3, // (fixed) radius of dots, in pixels
+    title, // given d in data, returns the title
+    marginTop = 20, // top margin, in pixels
+    marginRight = 130, // right margin, in pixels
+    marginBottom = 40, // bottom margin, in pixels
+    marginLeft = 60, // left margin, in pixels
+    inset = r * 2, // inset the default range, in pixels
+    insetTop = inset, // inset the default y-range
+    insetRight = inset, // inset the default x-range
+    insetBottom = inset, // inset the default y-range
+    insetLeft = inset, // inset the default x-range
+    width = 640, // outer width, in pixels
+    height = 400, // outer height, in pixels
+    xType = d3.scaleLinear, // type of x-scale
+    xDomain, // [xmin, xmax]
+    xRange = [marginLeft + insetLeft, width - marginRight - insetRight], // [left, right]
+    yType = d3.scaleLinear, // type of y-scale
+    yDomain, // [ymin, ymax]
+    yRange = [height - marginBottom - insetBottom, marginTop + insetTop], // [bottom, top]
+    xLabel, // a label for the x-axis
+    yLabel, // a label for the y-axis
+    xFormat, // a format specifier string for the x-axis
+    yFormat, // a format specifier string for the y-axis
+    fill = "none", // fill color for dots
+    stroke = "currentColor", // stroke color for the dots
+    strokeWidth = 1.5, // stroke width for dots
+    halo = "#fff", // color of label halo
+    haloWidth = 3, // padding around the labels
+  } = {}
+) {
+
+  const meta = pca_data["meta"][metric];
+
   // Compute values.
   const X = d3.map(data, x);
   const Y = d3.map(data, y);
   const T = title == null ? null : d3.map(data, title);
-  const I = d3.range(X.length).filter(i => !isNaN(X[i]) && !isNaN(Y[i]));
+  const I = d3.range(X.length).filter((i) => !isNaN(X[i]) && !isNaN(Y[i]));
 
   // Compute default domains.
   if (xDomain === undefined) xDomain = d3.extent(X);
@@ -108,81 +141,83 @@ function Scatterplot(data, sample, metric, {
   const xAxis = d3.axisBottom(xScale).ticks(width / 80, xFormat);
   const yAxis = d3.axisLeft(yScale).ticks(height / 50, yFormat);
 
-  const svg = d3.create("svg")
-      .attr("width", width)
-      .attr("height", height)
-      .attr("viewBox", [0, 0, width, height])
-      .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+  const svg = d3
+    .create("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height])
+    .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
 
-  svg.append("g")
-      .attr("transform", `translate(0,${height - marginBottom})`)
-      .call(xAxis)
-      .call(g => g.select(".domain").remove())
-      .call(g => g.selectAll(".tick line").clone()
-          .attr("y2", marginTop + marginBottom - height)
-          .attr("stroke-opacity", 0.1))
-      .call(g => g.append("text")
-          .attr("x", width)
-          .attr("y", marginBottom - 4)
-          .attr("fill", "currentColor")
-          .attr("text-anchor", "end")
-          .text(xLabel));
+  svg
+    .append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(xAxis)
+    .call((g) => g.select(".domain").remove())
+    .call((g) =>
+      g
+        .selectAll(".tick line")
+        .clone()
+        .attr("y2", marginTop + marginBottom - height)
+        .attr("stroke-opacity", 0.1)
+    )
+    .call((g) =>
+      g
+        .append("text")
+        .attr("x", width)
+        .attr("y", marginBottom - 4)
+        .attr("fill", "currentColor")
+        .attr("text-anchor", "end")
+        .text(xLabel)
+    );
 
-  svg.append("g")
-      .attr("transform", `translate(${marginLeft},0)`)
-      .call(yAxis)
-      .call(g => g.select(".domain").remove())
-      .call(g => g.selectAll(".tick line").clone()
-          .attr("x2", width - marginLeft - marginRight)
-          .attr("stroke-opacity", 0.1))
-      .call(g => g.append("text")
-          .attr("x", -marginLeft)
-          .attr("y", 10)
-          .attr("fill", "currentColor")
-          .attr("text-anchor", "start")
-          .text(yLabel));
+  svg
+    .append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(yAxis)
+    .call((g) => g.select(".domain").remove())
+    .call((g) =>
+      g
+        .selectAll(".tick line")
+        .clone()
+        .attr("x2", width - marginLeft - marginRight)
+        .attr("stroke-opacity", 0.1)
+    )
+    .call((g) =>
+      g
+        .append("text")
+        .attr("x", -marginLeft)
+        .attr("y", 10)
+        .attr("fill", "currentColor")
+        .attr("text-anchor", "start")
+        .text(yLabel)
+    );
 
-  // if (T) svg.append("g")
-  //     .attr("font-family", "sans-serif")
-  //     .attr("font-size", 10)
-  //     .attr("stroke-linejoin", "round")
-  //     .attr("stroke-linecap", "round")
-  //   .selectAll("text")
-  //   .data(I)
-  //   .join("text")
-  //     .attr("dx", 7)
-  //     .attr("dy", "0.35em")
-  //     .attr("x", i => xScale(X[i]))
-  //     .attr("y", i => yScale(Y[i]))
-  //     .text(i => T[i])
-  //     .call(text => text.clone(true))
-  //     .attr("fill", "none")
-  //     .attr("stroke", halo)
-  //     .attr("stroke-width", haloWidth);
-
-  svg.append("g")
+  svg
+    .append("g")
     .selectAll("circle")
     .data(I)
     .join("circle")
-      .attr("fill", i => get_color(i, metric))
-      .style("opacity", 0.8)
-      .attr("cx", i => xScale(X[i]))
-      .attr("cy", i => yScale(Y[i]))
-      .attr("r", r);
+    .attr("fill", i => color_arr[meta[i]])
+    .style("opacity", 0.8)
+    .attr("cx", (i) => xScale(X[i]))
+    .attr("cy", (i) => yScale(Y[i]))
+    .attr("r", r);
 
+  if (sample !== null) {
+    const cx = xScale(sample._data[0]);
+    const cy = yScale(sample._data[1]);
 
-  if (sample !== null) svg.append("g")
-      // .attr("fill", "rgb(8,232,222)")
-      .attr("fill", "red")
+    svg
+      .append("g")
+      .attr("fill", "rgb(8,232,222)")
       .style("opacity", 1)
-      // .attr("stroke", "red")
-      // .attr("stroke-width", strokeWidth)
-    .selectAll("circle")
+      .selectAll("circle")
       .data([0])
-    .join("circle")
-      .attr("cx", i => xScale(sample._data[0]))
-      .attr("cy", i => yScale(sample._data[1]))
+      .join("circle")
+      .attr("cx", cx)
+      .attr("cy", cy)
       .attr("r", r * 3);
+  }
 
   // border box
   svg
@@ -215,6 +250,36 @@ function Scatterplot(data, sample, metric, {
     .attr("transform", function (d) {
       return "rotate(-90)";
     });
+
+  // add legend
+
+  const x_start = width - marginRight + 30;
+  const y_start = marginTop + 100;
+
+  const encoding = pca_data["meta"]["encodings"][metric];
+
+  const space = 20;
+  const size = 10;
+
+
+  for (let i = 0; i < color_arr.length; i++) {
+    const x = x_start;
+    const y = y_start + i * space;
+    svg.append("rect").attr("x", x - size).attr("y", y - 0.5 * size).attr("width", size).attr("height", size).style("fill", color_arr[i])
+    .style("stroke", "black")
+    .style("stroke-width", 1);
+    const text = encoding[i];
+    svg.append("text").attr("x", x + 10).attr("y", y + 2).text(text).style("font-size", "15px").attr("alignment-baseline","middle")
+  }
+
+  if (sample !== null) {
+    const x = x_start;
+    const y = y_start - space;
+    svg.append("circle").attr("cx", x - 5).attr("cy", y).attr("r", r * 3).style("fill", "rgb(8,232,222)")
+    const text = "Input Sample";
+    svg.append("text").attr("x", x + 10).attr("y", y + 2).text(text).style("font-size", "15px").attr("alignment-baseline","middle")
+  }
+
 
   return svg.node();
 }
