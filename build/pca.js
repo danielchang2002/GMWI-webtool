@@ -42,7 +42,8 @@ const get_vector = (species) => {
 };
 
 const get_caption = (metric, sample) => {
-  const nonhealthy_color = metric === "Phenotype" ? "(orange)" : "(other colors)";
+  const nonhealthy_color =
+    metric === "Phenotype" ? "(orange)" : "(other colors)";
   let string = `<br/><br/><b>Figure 3. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients.`;
   if (JSON.stringify(sample) !== "{}") {
     string += " The input sample is highlighted.";
@@ -53,28 +54,29 @@ const get_caption = (metric, sample) => {
 const get_color_arr = (metric) => {
   // const meta = pca_data["meta"][metric];
   if (metric === "Phenotype") {
-    return ["orange", "steelblue"]
+    return ["orange", "steelblue"];
     // return (i) => (meta[i] === 1 ? "steelblue" : "orange");
   }
 
   if (metric === "Phenotype_all") {
     return [
-      "rgb(166.0,206.0,227.0)",
-      "rgb(166.0,206.0,227.0)",
-      "rgb(31.0,120.0,180.0)",
-      "rgb(178.0,223.0,138.0)",
+      "rgb(231.0,229.0,0)",
+      "rgb(174.0,199.0,232.0)",
+      "rgb(255.0,127.0,14.0)",
+      "rgb(44.0,160.0,44.0)",
+      // "rgb(152.0,223.0,138.0)",
       "steelblue",
-      "rgb(251.0,154.0,153.0)",
-      "rgb(251.0,154.0,153.0)",
-      "rgb(227.0,26.0,28.0)",
-      "rgb(253.0,191.0,111.0)",
-      "rgb(255.0,127.0,0.0)",
-      "rgb(202.0,178.0,214.0)",
-      "rgb(202.0,178.0,214.0)",
-      "rgb(106.0,61.0,154.0)",
-      "rgb(255.0,255.0,153.0)",
-      "rgb(177.0,89.0,40.0)",
-      "rgb(177.0,89.0,40.0)",
+      "rgb(214.0,39.0,40.0)",
+      "rgb(148.0,103.0,189.0)",
+      "rgb(197.0,176.0,213.0)",
+      "rgb(140.0,86.0,75.0)",
+      "rgb(227.0,119.0,194.0)",
+      "rgb(247.0,182.0,210.0)",
+      "rgb(127.0,127.0,127.0)",
+      "rgb(188.0,189.0,34.0)",
+      "rgb(219.0,219.0,141.0)",
+      "rgb(23.0,190.0,207.0)",
+      "rgb(158.0,218.0,229.0)",
     ];
   }
 
@@ -120,7 +122,6 @@ function Scatterplot(
     haloWidth = 3, // padding around the labels
   } = {}
 ) {
-
   const meta = pca_data["meta"][metric];
 
   // Compute values.
@@ -197,7 +198,7 @@ function Scatterplot(
     .selectAll("circle")
     .data(I)
     .join("circle")
-    .attr("fill", i => color_arr[meta[i]])
+    .attr("fill", (i) => color_arr[meta[i]])
     .style("opacity", 0.8)
     .attr("cx", (i) => xScale(X[i]))
     .attr("cy", (i) => yScale(Y[i]))
@@ -261,25 +262,46 @@ function Scatterplot(
   const space = 20;
   const size = 10;
 
-
   for (let i = 0; i < color_arr.length; i++) {
     const x = x_start;
     const y = y_start + i * space;
-    svg.append("rect").attr("x", x - size).attr("y", y - 0.5 * size).attr("width", size).attr("height", size).style("fill", color_arr[i])
-    .style("stroke", "black")
-    .style("stroke-width", 1);
+    svg
+      .append("rect")
+      .attr("x", x - size)
+      .attr("y", y - 0.5 * size)
+      .attr("width", size)
+      .attr("height", size)
+      .style("fill", color_arr[i])
+      .style("stroke", "black")
+      .style("stroke-width", 1);
     const text = encoding[i];
-    svg.append("text").attr("x", x + 10).attr("y", y + 2).text(text).style("font-size", "15px").attr("alignment-baseline","middle")
+    svg
+      .append("text")
+      .attr("x", x + 10)
+      .attr("y", y + 2)
+      .text(text)
+      .style("font-size", "15px")
+      .attr("alignment-baseline", "middle");
   }
 
   if (sample !== null) {
     const x = x_start;
     const y = y_start - space;
-    svg.append("circle").attr("cx", x - 5).attr("cy", y).attr("r", r * 3).style("fill", "rgb(8,232,222)")
+    svg
+      .append("circle")
+      .attr("cx", x - 5)
+      .attr("cy", y)
+      .attr("r", r * 3)
+      .style("fill", "rgb(8,232,222)");
     const text = "Input Sample";
-    svg.append("text").attr("x", x + 10).attr("y", y + 2).text(text).style("font-size", "15px").attr("alignment-baseline","middle")
+    svg
+      .append("text")
+      .attr("x", x + 10)
+      .attr("y", y + 2)
+      .text(text)
+      .style("font-size", "15px")
+      .attr("alignment-baseline", "middle");
   }
-
 
   return svg.node();
 }
