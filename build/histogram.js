@@ -168,7 +168,7 @@ function Histogram(
     .append("text")
     .attr("class", "x label")
     .attr("text-anchor", "middle")
-    .attr("x", width / 2)
+    .attr("x", marginLeft + (width - marginLeft - marginRight) / 2)
     .attr("y", height - 10)
     .text(xLabel);
 
@@ -178,7 +178,7 @@ function Histogram(
     .attr("class", "y label")
     .attr("text-anchor", "middle")
     .attr("x", -height / 2)
-    .attr("y", 20)
+    .attr("y", 15)
     .text(yLabel)
     .attr("transform", function (d) {
       return "rotate(-90)";

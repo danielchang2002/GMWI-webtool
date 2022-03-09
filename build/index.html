@@ -23,6 +23,7 @@
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>">
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"
     integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -55,7 +56,7 @@
         <!-- start input -->
         <div class="setting">
           <h4><b>Input Data</b></h4>
-          <p>Insert/upload MetaPhlAn output:</p>
+          <p>Insert/upload MetaPhlAn2 output:</p>
           <a href="#!" class="" id="example">Example data</a>
           <textarea class="form-control" id="inputText" rows="6"></textarea>
           <br />
@@ -67,7 +68,7 @@
         <!-- start histogram settings -->
         <div class="setting">
         <h4><b>Figure 1.</b></h4>
-        <label for="indexBox">Choose index:</label>
+        <label for="indexBox">Index:</label>
         <select id="indexBox" class="form-select" aria-label="">
           <option value="GMHI">GMHI</option>
           <option value="Richness">Richness</option>
@@ -76,7 +77,7 @@
           <option value="Inverse Simpson">Inverse Simpson</option>
         </select>
         <br />
-        <label for="popBox">Choose comparison population:</label>
+        <label for="popBox">Comparison population:</label>
         <select id="popBox" class="form-select" aria-label="Default select example">
           <option value="all">All</option>
           <option value="healthy">Healthy</option>
@@ -89,7 +90,7 @@
         <div class="setting">
         <h4><b>Figure 2.</b></h4>
 
-        <label for="rankBar">Choose taxonomic rank:</label>
+        <label for="rankBar">Taxonomic rank:</label>
         <select id="rankBar" class="form-select" aria-label="Default select example">
           <option value="phylum">Phylum</option>
           <option value="class">Class</option>
@@ -98,7 +99,7 @@
         </select>
         <br/>
 
-        <label for="popBoxBar">Choose comparison population:</label>
+        <label for="popBoxBar">Comparison population:</label>
         <select id="popBoxBar" class="form-select" aria-label="Default select example">
           <option value="all">All</option>
           <option value="healthy">Healthy</option>
@@ -106,6 +107,26 @@
         </select>
         </div>
         <!-- end bars settings -->
+
+
+        <!-- start pca settings -->
+        <div class="setting">
+        <h4><b>Figure 3.</b></h4>
+
+        <label for="compMetric">Color by:</label>
+        <select id="compMetric" class="form-select" aria-label="Default select example">
+          <option value="Phenotype">Health Status</option>
+          <option value="Phenotype_all">Phenotype</option>
+          <option value="Age">Age</option>
+          <option value="BMI">BMI</option>
+          <option value="TRIG">Triglyceride</option>
+          <option value="HDLC">HDLC</option>
+          <option value="LDLC">LDLC</option>
+        </select>
+        <br/>
+
+      </div>
+        <!-- end pca settings -->
 
       </div>
     </div>
@@ -125,6 +146,7 @@
 
         <div id="histogram" class="fig"></div>
         <div id="bar" class="fig"></div>
+        <div id="pca" class="fig"></div>
       </div>
     </div>
   </div>
