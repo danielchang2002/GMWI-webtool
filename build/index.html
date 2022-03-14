@@ -28,6 +28,7 @@
     integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script type="module" src="app.js" defer></script>
+
 </head>
 
 <body>
@@ -43,7 +44,7 @@
   <!-- end sidebar button -->
 
   <!-- start sidebar -->
-  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+  <div class="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
     id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
     <!-- <div class="offcanvas-header">
       <h5 class="display-6" id="offcanvasScrollingLabel"></h5>
@@ -56,18 +57,26 @@
         <!-- start input -->
         <div class="setting">
           <h4><b>Input Data</b></h4>
-          <p>Insert/upload MetaPhlAn2 output:</p>
+          <p>Insert/upload MetaPhlAn output:</p>
           <a href="#!" class="" id="example">Example data</a>
           <textarea class="form-control" id="inputText" rows="6"></textarea>
           <br />
           <input class="form-control" type="file" id="inputFile" name=metaphlan2>
+          <br />
+          <label for="sampleBox">Select sample:</label>
+          <select id="sampleBox" class="form-select" aria-label="">
+            <option value=-1>None</option>
+          </select>
+          <br />
+          <button type="button" id="submit" class="btn btn-outline-primary">Submit</button>
+          <button type="button" id="clear" class="btn btn-outline-danger">Clear</button>
           <br />
         </div>
         <!-- end input -->
 
         <!-- start histogram settings -->
         <div class="setting">
-        <h4><b>Figure 1.</b></h4>
+        <h4><b>Ecological Index</b></h4>
         <label for="indexBox">Index:</label>
         <select id="indexBox" class="form-select" aria-label="">
           <option value="GMHI">GMHI</option>
@@ -88,7 +97,7 @@
 
         <!-- start bars settings -->
         <div class="setting">
-        <h4><b>Figure 2.</b></h4>
+        <h4><b>Taxonomic Distribution</b></h4>
 
         <label for="rankBar">Taxonomic rank:</label>
         <select id="rankBar" class="form-select" aria-label="Default select example">
@@ -111,7 +120,7 @@
 
         <!-- start pca settings -->
         <div class="setting">
-        <h4><b>Figure 3.</b></h4>
+        <h4><b>PCA</b></h4>
 
         <label for="compMetric">Color by:</label>
         <select id="compMetric" class="form-select" aria-label="Default select example">
@@ -135,7 +144,7 @@
 
 
   <!-- start main stuff -->
-  <div class="container">
+  <div class="container" id="main">
     <div class="row justify-content-center">
       <div class="col-md-7">
 

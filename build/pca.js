@@ -44,7 +44,7 @@ const get_vector = (species) => {
 const get_caption = (metric, sample) => {
   const nonhealthy_color =
     metric === "Phenotype" ? "(orange)" : "(other colors)";
-  let string = `<br/><br/><b>Figure 3. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients.`;
+  let string = `<br/><br/><b>PCA. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients.`;
   if (JSON.stringify(sample) !== "{}") {
     string += " The input sample is highlighted.";
   }

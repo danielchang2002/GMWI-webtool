@@ -61,11 +61,12 @@ export function plot_bar(ele, data, sample, rank) {
 const get_caption = (pop, rank, sample) => {
   const desc = {"Average Healthy" : "2754 healthy", "Average Nonhealthy": "2272 nonhealthy", "Average": "5026 healthy and nonhealthy"}
   let string;
+  const figname = "Taxonomic Distribution"
   if (sample.length == 0) {
-    string = `<br/><br/><b>Figure 2. </b> Distribution of the average relative abundances of the gut microbiomes of ${desc[pop]} patients at the ${rank} level.`;
+    string = `<br/><br/><b>${figname}. </b> Distribution of the average relative abundances of the gut microbiomes of ${desc[pop]} patients at the ${rank} level.`;
   }
   else {
-    string = `<br/><br/><b>Figure 2. </b> Distribution of the relative abundances of the input sample (left) and average relative abundances of the gut microbiomes of ${desc[pop]} patients (right) at the ${rank} level.`;
+    string = `<br/><br/><b>${figname}. </b> Distribution of the relative abundances of the input sample (left) and average relative abundances of the gut microbiomes of ${desc[pop]} patients (right) at the ${rank} level.`;
   }
   return string;
 };

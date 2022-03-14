@@ -22,7 +22,7 @@ const get_caption = (pop, index, score, perc, label) => {
   const popDesc = `${num[pop]} ${
     pop == "all" ? "healthy and nonhealthy" : pop
   } patients.`;
-  let string = `<br/><br/><b>Figure 1. </b> ${label[index]} scores of the gut microbiomes of ${popDesc}`;
+  let string = `<br/><br/><b>Ecological Index. </b> ${label[index]} scores of the gut microbiomes of ${popDesc}`;
   if (score != null) {
     string += ` The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc}<sup>th</sup> percentile of a population of ${popDesc}`;
   }
