@@ -7111,7 +7111,7 @@ export const bar_data = {
   },
 };
 
-export const example = `#SampleID	Metaphlan2_Analysis
+export const example = `#SampleID	my_healthy_poop_sample
 k__Bacteria	100.0
 k__Bacteria|p__Proteobacteria	36.80492
 k__Bacteria|p__Bacteroidetes	26.71502
