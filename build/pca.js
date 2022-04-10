@@ -33,6 +33,39 @@ export function plot_pca(ele, data, sample, metric) {
   ele.appendChild(scatter);
   const caption = get_caption(metric, sample);
   ele.innerHTML += caption;
+
+  const phens = pca_data["meta"]["encodings"][metric];
+
+  // Hover effects
+  for (const phen of phens) {
+    d3.select(`#${phen}_square`)
+    .on("mouseover", function(){handle_mouseover(phen, phens)})
+    .on("mouseout", function(){handle_mouseout(phen, phens)})
+
+    // d3.select(`#${phen}_dot`)
+    // .on("mouseover", function(){handle_mouseover(phen, phens)})
+    // .on("mouseout", function(){handle_mouseout(phen, phens)})
+  }
+
+}
+
+const handle_mouseover = (phen, phens) => {
+    for (const p of phens) {
+      if (p === phen) {
+        d3.selectAll(`#${p}_dot`).attr("style", "opacity: 1;")
+      }
+      else {
+        d3.selectAll(`#${p}_dot`).attr("style", "opacity: 0.1;")
+        d3.selectAll(`#${p}_square`).attr("opacity", "0.5")
+      }
+    }
+}
+
+const handle_mouseout = (phen, phens) => {
+    for (const p of phens) {
+      d3.selectAll(`#${p}_dot`).attr("style", "opacity: 0.8;")
+      d3.selectAll(`#${p}_square`).attr("opacity", "1")
+    }
 }
 
 const get_vector = (species) => {
@@ -123,6 +156,7 @@ function Scatterplot(
   } = {}
 ) {
   const meta = pca_data["meta"][metric];
+  const encoding = pca_data["meta"]["encodings"][metric];
 
   // Compute values.
   const X = d3.map(data, x);
@@ -193,6 +227,7 @@ function Scatterplot(
         .text(yLabel)
     );
 
+
   svg
     .append("g")
     .selectAll("circle")
@@ -202,7 +237,8 @@ function Scatterplot(
     .style("opacity", 0.8)
     .attr("cx", (i) => xScale(X[i]))
     .attr("cy", (i) => yScale(Y[i]))
-    .attr("r", r);
+    .attr("r", r)
+    .attr("id", (i) => `${encoding[meta[i]]}_dot`);
 
   if (sample !== null) {
     const cx = xScale(sample._data[0]);
@@ -257,8 +293,6 @@ function Scatterplot(
   const x_start = width - marginRight + 30;
   const y_start = marginTop + 100;
 
-  const encoding = pca_data["meta"]["encodings"][metric];
-
   const space = 20;
   const size = 10;
 
@@ -273,7 +307,10 @@ function Scatterplot(
       .attr("height", size)
       .style("fill", color_arr[i])
       .style("stroke", "black")
-      .style("stroke-width", 1);
+      .style("stroke-width", 1)
+      .attr("id", `${encoding[i]}_square`);
+
+
     const text = encoding[i];
     svg
       .append("text")

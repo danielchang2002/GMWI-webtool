@@ -51,7 +51,7 @@ const update_hist = () => {
 };
 
 // updates figure 2
-const update_bar = () => {
+export const update_bar = () => {
   const text = inputText.value;
   const pop_bar = pop_box_bar.value;
   const rank = rank_bar.value;
