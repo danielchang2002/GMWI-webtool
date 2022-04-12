@@ -1,181 +1,310 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/danielchang2002/GMHI/main/build/preview.png"
+    />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <meta property="og:image" content="https://raw.githubusercontent.com/danielchang2002/GMHI/main/build/preview.png">
+    <title>Gut Microbiome Health Index</title>
 
-  <title>Gut Microbiome Health Index</title>
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
 
-  <!-- Bootstrap core CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+    <!-- popper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.6.0/umd/popper.min.js" integrity="sha512-BmM0/BQlqh02wuK5Gz9yrbe7VyIVwOzD1o40yi1IsTjriX/NGF37NyXHfmFzIlMmoSIBXgqDiG1VNU6kB5dBbA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
 
-  <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
 
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>">
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"
-    integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script type="module" src="app.js" defer></script>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💩</text></svg>"
+    />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"
+      integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="module" src="app.js" defer></script>
+  </head>
 
-</head>
+  <body>
+    <!-- start sidebar button -->
+    <button
+      class="btn"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasScrolling"
+      id="sideButton"
+      aria-controls="offcanvasScrolling"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="48"
+        viewBox="0 0 24 24"
+        width="48"
+      >
+        <path d="M0 0h24v24H0V0z" fill="none" />
+        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
+      </svg>
+    </button>
+    <!-- end sidebar button -->
 
-<body>
-
-  <!-- start sidebar button -->
-  <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" id="sideButton"
-    aria-controls="offcanvasScrolling">
-    <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 24 24" width="48">
-      <path d="M0 0h24v24H0V0z" fill="none" />
-      <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z" />
-    </svg>
-  </button>
-  <!-- end sidebar button -->
-
-  <!-- start sidebar -->
-  <div class="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-    <!-- <div class="offcanvas-header">
+    <!-- start sidebar -->
+    <div
+      class="offcanvas offcanvas-start show"
+      data-bs-scroll="true"
+      data-bs-backdrop="false"
+      tabindex="-1"
+      id="offcanvasScrolling"
+      aria-labelledby="offcanvasScrollingLabel"
+    >
+      <!-- <div class="offcanvas-header">
       <h5 class="display-6" id="offcanvasScrollingLabel"></h5>
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div> -->
-    <button type="button" class="btn-close text-reset align-self-end" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    <div class="offcanvas-body">
-      <div class="container">
+      <button
+        type="button"
+        class="btn-close text-reset align-self-end"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+      <div class="offcanvas-body">
+        <div class="container">
+          <!-- start input -->
+          <div class="setting">
+            <h4><b>Input Data </b></h4>
+            <p>
+              Insert/upload MetaPhlAn output
 
-        <!-- start input -->
-        <div class="setting">
-          <h4><b>Input Data</b></h4>
-          <p>Insert/upload MetaPhlAn output:</p>
-          <a href="#!" class="" id="example">Example data</a>
-          <textarea class="form-control" id="inputText" rows="6"></textarea>
-          <br />
-          <input class="form-control" type="file" id="inputFile" name=metaphlan2>
-          <br />
-          <label for="sampleBox">Select sample:</label>
-          <select id="sampleBox" class="form-select" aria-label="">
-            <option value=-1>None</option>
-          </select>
-          <br />
-          <button type="button" id="submit" class="btn btn-outline-primary">Submit</button>
-          <button type="button" id="clear" class="btn btn-outline-danger">Clear</button>
-          <br />
-        </div>
-        <!-- end input -->
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0,-1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
 
-        <!-- start histogram settings -->
-        <div class="setting">
-        <h4><b>Ecological Index</b></h4>
-        <label for="indexBox">Index:</label>
-        <select id="indexBox" class="form-select" aria-label="">
-          <option value="GMHI">GMHI</option>
-          <option value="Richness">Richness</option>
-          <option value="Evenness">Evenness</option>
-          <option value="Shannon">Shannon</option>
-          <option value="Inverse Simpson">Inverse Simpson</option>
-        </select>
-        <br />
-        <label for="popBox">Comparison population:</label>
-        <select id="popBox" class="form-select" aria-label="Default select example">
-          <option value="all">All</option>
-          <option value="healthy">Healthy</option>
-          <option value="nonhealthy">Nonhealthy</option>
-        </select>
-        </div>
-        <!-- end histogram settings -->
+            </p>
+            <a href="#!" class="" id="example">Example data</a>
+            <textarea class="form-control" id="inputText" rows="6"></textarea>
+            <br />
+            <input
+              class="form-control"
+              type="file"
+              id="inputFile"
+              name="metaphlan2"
+            />
+            <br />
+            <label for="sampleBox">Select sample
 
-        <!-- start bars settings -->
-        <div class="setting">
-        <h4><b>Taxonomic Distribution</b></h4>
-
-        <label for="rankBar">Taxonomic rank:</label>
-        <select id="rankBar" class="form-select" aria-label="Default select example">
-          <option value="phylum">Phylum</option>
-          <option value="class">Class</option>
-          <option value="order">Order</option>
-          <option value="family">Family</option>
-        </select>
-        <br/>
-
-        <label for="popBoxBar">Comparison population:</label>
-        <select id="popBoxBar" class="form-select" aria-label="Default select example">
-          <option value="all">All</option>
-          <option value="healthy">Healthy</option>
-          <option value="nonhealthy">Nonhealthy</option>
-        </select>
-        </div>
-        <!-- end bars settings -->
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
 
 
-        <!-- start pca settings -->
-        <div class="setting">
-        <h4><b>PCA</b></h4>
+            </label>
+            <select id="sampleBox" class="form-select" aria-label="">
+              <option value="-1">None</option>
+            </select>
+            <br />
+            <button type="button" id="submit" class="btn btn-outline-primary">
+              Submit
+            </button>
+            <button type="button" id="clear" class="btn btn-outline-danger">
+              Clear
+            </button>
+            <br />
+          </div>
+          <!-- end input -->
 
-        <label for="compMetric">Color by:</label>
-        <select id="compMetric" class="form-select" aria-label="Default select example">
-          <option value="Phenotype">Health Status</option>
-          <option value="Phenotype_all">Phenotype</option>
-          <!-- <option value="Age">Age</option>
+          <!-- start histogram settings -->
+          <div class="setting">
+            <h4><b>Ecological Index
+            </b></h4>
+            <label for="indexBox">Index
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -2)"  title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </label>
+            <select id="indexBox" class="form-select" aria-label="">
+              <option value="GMHI">GMHI</option>
+              <option value="Richness">Richness</option>
+              <option value="Evenness">Evenness</option>
+              <option value="Shannon">Shannon</option>
+              <option value="Inverse Simpson">Inverse Simpson</option>
+            </select>
+            <br />
+            <label for="popBox">Comparison population
+
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0,-1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+
+            </label>
+            <select
+              id="popBox"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option value="all">All</option>
+              <option value="healthy">Healthy</option>
+              <option value="nonhealthy">Nonhealthy</option>
+            </select>
+          </div>
+          <!-- end histogram settings -->
+
+          <!-- start bars settings -->
+          <div class="setting">
+            <h4><b>Taxonomic Distribution</b></h4>
+
+            <label for="rankBar">Taxonomic rank
+
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0,-2)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </label>
+
+            </label>
+            <select
+              id="rankBar"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option value="phylum">Phylum</option>
+              <option value="class">Class</option>
+              <option value="order">Order</option>
+              <option value="family">Family</option>
+            </select>
+            <br />
+
+            <label for="popBoxBar">Comparison population
+
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"  transform="translate(0, -1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </label>
+
+            </label>
+            <select
+              id="popBoxBar"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option value="all">All</option>
+              <option value="healthy">Healthy</option>
+              <option value="nonhealthy">Nonhealthy</option>
+            </select>
+          </div>
+          <!-- end bars settings -->
+
+          <!-- start pca settings -->
+          <div class="setting">
+            <h4><b>PCA</b></h4>
+
+            <label for="compMetric">Color by
+
+              <!-- tooltip -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true"  transform="translate(0, -1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </label>
+
+            </label>
+            <select
+              id="compMetric"
+              class="form-select"
+              aria-label="Default select example"
+            >
+              <option value="Phenotype">Health Status</option>
+              <option value="Phenotype_all">Phenotype</option>
+              <!-- <option value="Age">Age</option>
           <option value="BMI">BMI</option>
           <option value="TRIG">Triglyceride</option>
           <option value="HDLC">HDLC</option>
           <option value="LDLC">LDLC</option> -->
-        </select>
-        <br/>
-
-      </div>
-        <!-- end pca settings -->
-
-      </div>
-    </div>
-  </div>
-  <!-- end sidebar -->
-
-
-  <!-- start main stuff -->
-  <div class="container" id="main">
-    <div class="row justify-content-center">
-      <div class="col-md-7">
-
-        <!-- title -->
-        <header class="">
-          <h1 class="display-6 text-center">Gut Microbiome Health Index</h1>
-        </header>
-
-        <div id="histogram" class="fig"></div>
-        <div id="bar" class="fig"></div>
-        <div id="pca" class="fig"></div>
+            </select>
+            <br />
+          </div>
+          <!-- end pca settings -->
+        </div>
       </div>
     </div>
-  </div>
-  <!-- end main stuff -->
+    <!-- end sidebar -->
 
-  <!-- start footer  -->
-  <footer class="footer">
-    <div class="container text-center">
-      <p class="text-muted">
-        <a style="text-decoration:none" href="https://github.com/danielchang2002/GMHI" class="bottom-link"
-          target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-github" viewBox="0 0 16 16">
-            <path
-              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-          </svg> source</a>
-      </p>
+    <!-- start main stuff -->
+    <div class="container" id="main">
+      <div class="row justify-content-center">
+        <div class="col-md-7">
+          <!-- title -->
+          <header class="">
+            <h1 class="display-6 text-center">Gut Microbiome Health Index</h1>
+          </header>
+
+          <div id="histogram" class="fig"></div>
+          <div id="bar" class="fig"></div>
+          <div id="pca" class="fig"></div>
+        </div>
+      </div>
     </div>
-  </footer>
-  <!-- end footer -->
+    <!-- end main stuff -->
 
-</body>
-
+    <!-- start footer  -->
+    <footer class="footer">
+      <div class="container text-center">
+        <p class="text-muted">
+          <a
+            style="text-decoration: none"
+            href="https://github.com/danielchang2002/GMHI"
+            class="bottom-link"
+            target="_blank"
+            ><svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-github"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              />
+            </svg>
+            source</a
+          >
+        </p>
+      </div>
+    </footer>
+    <!-- end footer -->
+  </body>
 </html>

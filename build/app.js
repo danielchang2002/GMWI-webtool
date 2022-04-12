@@ -131,3 +131,10 @@ ex_butt.onclick = () => {
 };
 
 metric_form.onchange = update_pca;
+
+
+// tooltips
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})

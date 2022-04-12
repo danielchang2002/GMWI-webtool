@@ -38,7 +38,7 @@ export function plot_pca(ele, data, sample, metric) {
 
   // Hover effects
   for (const phen of phens) {
-    d3.select(`#${phen}_square`)
+    d3.select(`#${phen}_square-text`)
     .on("mouseover", function(){handle_mouseover(phen, phens)})
     .on("mouseout", function(){handle_mouseout(phen, phens)})
 
@@ -57,6 +57,8 @@ const handle_mouseover = (phen, phens) => {
       else {
         d3.selectAll(`#${p}_dot`).attr("style", "opacity: 0.1;")
         d3.selectAll(`#${p}_square`).attr("opacity", "0.5")
+        // d3.selectAll(`#${p}_square`).attr("filter", "brightness(50%)");
+        d3.selectAll(`#${p}_square-text`).attr("opacity", "0.5");
       }
     }
 }
@@ -65,6 +67,8 @@ const handle_mouseout = (phen, phens) => {
     for (const p of phens) {
       d3.selectAll(`#${p}_dot`).attr("style", "opacity: 0.8;")
       d3.selectAll(`#${p}_square`).attr("opacity", "1")
+      // d3.selectAll(`#${p}_square`).attr("filter", "brightness(100%)")
+      d3.selectAll(`#${p}_square-text`).attr("opacity", "1");
     }
 }
 
@@ -318,7 +322,8 @@ function Scatterplot(
       .attr("y", y + 2)
       .text(text)
       .style("font-size", "15px")
-      .attr("alignment-baseline", "middle");
+      .attr("alignment-baseline", "middle")
+      .attr("id", `${encoding[i]}_square-text`);
   }
 
   if (sample !== null) {

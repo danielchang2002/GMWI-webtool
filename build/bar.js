@@ -2,9 +2,57 @@ import { update_bar } from "./app.js";
 
 export function plot_bar(ele, data, sample, rank) {
   ele.innerHTML = "";
+
+  let xDomain = [data[0].pop];
+  if (sample.length != 0) {
+    xDomain = ["Sample"].concat(xDomain);
+  }
+
+  const [final_data, taxons] = preprocess(data, sample);
+  console.log(final_data, taxons);
+
+  const bar = StackedBarChart(final_data, rank, {
+    x: (d) => d.pop,
+    y: (d) => d.abundance,
+    z: (d) => d.taxon,
+    xDomain,
+    zDomain: taxons,
+    colors: d3.schemeSpectral[taxons.length],
+    width: 740,
+    height: 500,
+  });
+
+  ele.appendChild(bar);
+  const caption = get_caption(data[0].pop, rank, sample);
+  ele.innerHTML += caption;
+
+  // hover events
+  for (const tax of final_data.map((ele) => ele["taxon"])) {
+    d3.selectAll(`#${tax}_bar`)
+      .on("mouseover", function () {
+        handle_mouseover(tax, taxons);
+      })
+      .on("mouseout", function () {
+        handle_mouseout(tax, taxons);
+      });
+
+    // d3.selectAll(`#${tax}_square`)
+    // .on("mouseover", function(){handle_mouseover(tax, taxons)})
+    // .on("mouseout", function(){handle_mouseout(tax, taxons)});
+
+    d3.selectAll(`#${tax}_square-text`)
+      .on("mouseover", function () {
+        handle_mouseover(tax, taxons);
+      })
+      .on("mouseout", function () {
+        handle_mouseout(tax, taxons);
+      });
+  }
+}
+
+const preprocess = (data, sample) => {
   let final_data;
   let taxons;
-  let xDomain = [data[0].pop];
   if (sample.length == 0) {
     const data_copy = [...data];
     data_copy.sort(sort_func);
@@ -32,12 +80,23 @@ export function plot_bar(ele, data, sample, rank) {
     data_copy.sort(sort_func);
     sample_copy.sort(sort_func);
 
+    // get the 10 most abundant taxons from the sample
     const num_taxons = Math.min(10, sample_copy.length);
     const reduced_sample = sample_copy.slice(0, num_taxons);
 
+    // retrieve those same taxons from the dataset (average)
     taxons = reduced_sample.map((ele) => ele.taxon);
-    const reduced_data = data_copy.filter((ele) => taxons.includes(ele.taxon));
+    let reduced_data = data_copy.filter((ele) => taxons.includes(ele.taxon));
+    const reduced_data_taxons = reduced_data.map((ele) => ele.taxon);
 
+    // If dataset does not contain one of the taxons that the sample has
+    // Add a dummy sample to dataset
+    reduced_data = reduced_data.concat(
+      taxons.filter((ele) => !reduced_data_taxons.includes(ele))
+        .map((taxon) => ({pop : data_copy[0]["pop"], taxon, abundance : 0}))
+    );
+
+    // Add a dummy taxon, others, such that the sum of each column is 1
     const sample_sum = reduced_sample.reduce(
       (prev, curr) => prev + curr.abundance,
       0
@@ -56,59 +115,38 @@ export function plot_bar(ele, data, sample, rank) {
       { pop: reduced_data[0].pop, taxon: "Others", abundance: 1 - data_sum },
     ];
 
+    // Get the final dataset
     final_data = reduced_data_filled.concat(reduced_sample_filled);
     taxons = taxons.concat(["Others"]);
-    xDomain = ["Sample"].concat(xDomain);
   }
-
-  const bar = StackedBarChart(final_data, rank, {
-    x: (d) => d.pop,
-    y: (d) => d.abundance,
-    z: (d) => d.taxon,
-    xDomain,
-    zDomain: taxons,
-    colors: d3.schemeSpectral[taxons.length],
-    width: 740,
-    height: 500,
-  });
-
-  ele.appendChild(bar);
-  const caption = get_caption(data[0].pop, rank, sample);
-  ele.innerHTML += caption;
-
-
-  // hover events
-  for (const tax of final_data.map((ele) => ele['taxon'])) {
-    d3.selectAll(`#${tax}_bar`)
-    .on("mouseover", function(){handle_mouseover(tax, taxons)})
-    .on("mouseout", function(){handle_mouseout(tax, taxons)});
-
-    d3.selectAll(`#${tax}_square`)
-    .on("mouseover", function(){handle_mouseover(tax, taxons)})
-    .on("mouseout", function(){handle_mouseout(tax, taxons)});
-  }
-
-}
+  return [final_data, taxons];
+};
 
 const handle_mouseover = (taxon, taxons) => {
   // highlight taxon
   for (const tax of taxons) {
     if (tax !== taxon) {
-      d3.selectAll(`#${tax}_bar`).attr("opacity", "0.5")
-      d3.selectAll(`#${tax}_square`).attr("opacity", "0.5")
+      // d3.selectAll(`#${tax}_bar`).attr("opacity", "0.5")
+      // d3.selectAll(`#${tax}_square`).attr("opacity", "0.5")
+      d3.selectAll(`#${tax}_bar`).attr("filter", "brightness(50%)");
+      d3.selectAll(`#${tax}_square`).attr("filter", "brightness(50%)");
+      d3.selectAll(`#${tax}_square-text`).attr("opacity", "0.5");
     }
   }
-  d3.selectAll(`#${taxon}_text`).attr("opacity", "1")
-}
+  d3.selectAll(`#${taxon}_text`).attr("opacity", "1");
+};
 
 const handle_mouseout = (taxon, taxons) => {
   // unhighlight taxon
   for (const tax of taxons) {
-    d3.selectAll(`#${tax}_bar`).attr("opacity", "1")
-    d3.selectAll(`#${tax}_square`).attr("opacity", "1")
+    // d3.selectAll(`#${tax}_bar`).attr("opacity", "1")
+    // d3.selectAll(`#${tax}_square`).attr("opacity", "1")
+    d3.selectAll(`#${tax}_bar`).attr("filter", "brightness(100%)");
+    d3.selectAll(`#${tax}_square`).attr("filter", "brightness(100%)");
+    d3.selectAll(`#${tax}_square-text`).attr("opacity", "1");
   }
-  d3.selectAll(`#${taxon}_text`).attr("opacity", "0")
-}
+  d3.selectAll(`#${taxon}_text`).attr("opacity", "0");
+};
 
 const get_caption = (pop, rank, sample) => {
   const desc = {
@@ -261,7 +299,7 @@ function StackedBarChart(
     .attr("y", ([y1, y2]) => Math.min(yScale(y1), yScale(y2)))
     .attr("height", ([y1, y2]) => Math.abs(yScale(y1) - yScale(y2)))
     .attr("width", xScale.bandwidth())
-    .attr("id", ({i}) => `${data[i]["taxon"]}_bar`)
+    .attr("id", ({ i }) => `${data[i]["taxon"]}_bar`);
 
   if (title) bar.append("title").text(({ i }) => title(i));
 
@@ -324,16 +362,21 @@ function StackedBarChart(
       .attr("y", y + 2)
       .text(text)
       .style("font-size", "15px")
-      .attr("alignment-baseline", "middle");
+      .attr("alignment-baseline", "middle")
+      .attr("id", `${taxons[i]}_square-text`);
 
     const x_tool = x;
     const y_tool = y_start + (1.2 * taxons.length - 1) * space + 20;
 
     // tooltip
 
-    const average = data.filter((ele) => ele['pop'] !== "Sample" && ele['taxon'] == taxons[i])
+    const average = data.filter(
+      (ele) => ele["pop"] !== "Sample" && ele["taxon"] == taxons[i]
+    );
 
-    const average_text = `${average[0]['pop']}: ${(average[0]['abundance'] * 100).toFixed(2)}%`;
+    const average_text = `${average[0]["pop"]}: ${(
+      average[0]["abundance"] * 100
+    ).toFixed(2)}%`;
 
     svg
       .append("text")
@@ -345,13 +388,15 @@ function StackedBarChart(
       .attr("opacity", "0")
       .attr("id", `${taxons[i]}_text`);
 
-    const sample = data.filter((ele) => ele['pop'] === "Sample" && ele['taxon'] == taxons[i]);
+    const sample = data.filter(
+      (ele) => ele["pop"] === "Sample" && ele["taxon"] == taxons[i]
+    );
 
     if (sample.length === 0) {
       continue;
     }
 
-    const sample_text = `Sample: ${(sample[0]['abundance'] * 100).toFixed(2)}%`;
+    const sample_text = `Sample: ${(sample[0]["abundance"] * 100).toFixed(2)}%`;
 
     svg
       .append("text")
@@ -362,9 +407,7 @@ function StackedBarChart(
       .attr("alignment-baseline", "middle")
       .attr("opacity", "0")
       .attr("id", `${taxons[i]}_text`);
-
   }
-
 
   return Object.assign(svg.node(), { scales: { color } });
 }
