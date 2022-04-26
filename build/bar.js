@@ -9,7 +9,7 @@ export function plot_bar(ele, data, sample, rank) {
   }
 
   const [final_data, taxons] = preprocess(data, sample);
-  console.log(final_data, taxons);
+  // console.log(final_data, taxons);
 
   const bar = StackedBarChart(final_data, rank, {
     x: (d) => d.pop,

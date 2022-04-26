@@ -84,7 +84,12 @@ const update_sample_box = () => {
   // Look at all sample names in file
   const text = inputText.value;
   const sample_names = text.split("\n")[0].split("\t").slice(1);
-  for (let i = 0; i < sample_names.length; i++) {
+
+  // Make sure that there is a one to one correspondence between sample names and actual abundance columns
+  const num_cols_per_line = text.split("\n").map((line) => line.split("\t").length).slice(0, -1);
+  const num_cols = Math.min(... num_cols_per_line);
+
+  for (let i = 0; i < Math.min(sample_names.length, num_cols - 1); i++) {
     const opt = document.createElement('option');
     opt.value = i;
     opt.text = sample_names[i];
@@ -107,9 +112,22 @@ inputFile.onchange = (e) => {
   };
 };
 
+inputText.oninput = (e) => {
+    update_sample_box();
+} 
+
 clear_button.onclick = (e) => {
   inputText.value = "";
+
+  // Make drop down boxes go back to default
+  const elements = document.getElementsByTagName('select');
+  for (var i = 0; i < elements.length; i++) {
+      elements[i].selectedIndex = 0;
+  }
+
   update_sample_box();
+
+  update_visuals();
 };
 
 submit_button.onclick = (e) => {
@@ -117,20 +135,20 @@ submit_button.onclick = (e) => {
 };
 
 // Trigger plot update for side bar forms
-index_box.onchange = update_hist;
-pop_box.onchange = update_hist;
+// index_box.onchange = update_hist;
+// pop_box.onchange = update_hist;
 
-pop_box_bar.onchange = update_bar;
-rank_bar.onchange = update_bar;
+// pop_box_bar.onchange = update_bar;
+// rank_bar.onchange = update_bar;
 
-inputText.oninput = update_sample_box;
+// inputText.oninput = update_sample_box;
+
+// metric_form.onchange = update_pca;
 
 ex_butt.onclick = () => {
   inputText.value = example;
   update_sample_box();
 };
-
-metric_form.onchange = update_pca;
 
 
 // tooltips
