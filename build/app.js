@@ -3,6 +3,7 @@
 import { get_percentile } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { plot_bar } from "./bar.js";
+import { plot_hphm } from "./hphm.js";
 import { plot_pca } from "./pca.js";
 import { parse_file, get_taxon_bar_list } from "./utils.js";
 import { index_data, example, bar_data, pca_data } from "./data.js";
@@ -17,6 +18,7 @@ const pop_box_bar = document.getElementById("popBoxBar");
 const metric_form = document.getElementById("compMetric");
 const rank_bar = document.getElementById("rankBar");
 const title = document.getElementById("title");
+const hphm = document.getElementById("hphm");
 const histogram = document.getElementById("histogram");
 const histogram_caption = document.getElementById("histogram_caption");
 const bar = document.getElementById("bar");
@@ -31,6 +33,7 @@ const update_visuals = (e) => {
   update_hist();
   update_bar();
   update_pca();
+  update_hphm();
 };
 
 // updates figure 1
@@ -69,6 +72,13 @@ const update_pca = () => {
   const metric = metric_form.value;
   plot_pca(pca, pca_data["scatter"], species, metric);
 };
+
+const update_hphm = () => {
+  const text = inputText.value;
+  const species = sampleBox.value == -1 ? {}
+    : parse_file(text, "species", parseInt(sampleBox.value));
+  plot_hphm(hphm, species)
+}
 
 const update_sample_box = () => {
   // Delete existing options

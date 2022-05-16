@@ -97,3 +97,72 @@ body {
   font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
   overscroll-behavior-y: none;
 }
+
+
+/* table stuff */
+
+/* Better tables */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: auto;
+  max-width: 100%;
+  border-top: 2.27px solid black;
+  border-bottom: 2.27px solid black;
+  /* display: block; */
+  overflow-x: auto; /* does not work because element is not block */
+  /* white-space: nowrap; */
+  counter-increment: caption;
+}
+/* add bottom border on column table headings  */
+table tr > th[scope='col'] {
+  border-bottom: 1.36px solid black;
+}
+/* add right border on row table headings  */
+table tr > th[scope='row'] {
+  border-right: 1.36px solid black;
+}
+table > tbody > tr:first-child > td,
+table > tbody > tr:first-child > th {
+  border-top: 1.36px solid black;
+}
+table > tbody > tr:last-child > td,
+table > tbody > tr:last-child > th {
+  border-bottom: 1.36px solid black;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem;
+  line-height: 1.1;
+}
+/* Table caption */
+caption {
+  text-align: left;
+  font-size: 0.923em;
+  /* border-bottom: 2pt solid #000; */
+  padding: 0 0.25em 0.25em;
+  width: 100%;
+  margin-left: 0;
+}
+
+caption::before {
+  content: 'Table ' counter(caption) '. ';
+  font-weight: bold;
+}
+
+/* allow scroll on the x-axis */
+.scroll-wrapper {
+  overflow-x: auto;
+}
+
+/* if a table is wrapped in a scroll wrapper,
+  the table cells shouldn't wrap */
+.scroll-wrapper > table td {
+  white-space: nowrap;
+}
+
+td {
+  text-align: center;
+}
