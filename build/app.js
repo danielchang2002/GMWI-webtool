@@ -28,6 +28,7 @@ const pca = document.getElementById("pca");
 const ex_butt = document.getElementById("example");
 const clear_button = document.getElementById("clear");
 const submit_button = document.getElementById("submit");
+const export_button = document.getElementById("export");
 const sampleBox = document.getElementById("sampleBox");
 
 // updates all plots
@@ -123,6 +124,9 @@ const update_sample_box = () => {
     opt.text = sample_names[i];
     sampleBox.add(opt);
   }
+
+  // Make the first sample be selected by default
+  sampleBox.value = sampleBox.options.length > 1 ? 0 : -1;
 }
 
 update_visuals();
@@ -184,3 +188,27 @@ var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggl
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })
+
+export_button.onclick = () => {
+  const text = inputText.value;
+  const samples = [...Array(sampleBox.options.length - 1).keys()].map(idx => (
+    parse_file(text, "species", idx)
+  ));
+  if (samples.length === 0 || JSON.stringify(samples[0]) === "{}") {
+    alert("Please Insert/upload MetaPhlAn output");
+    return;
+  }
+  const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
+  const sample_names = text.split("\n")[0].split("\t").slice(1);
+
+  const output = [...Array(sampleBox.options.length - 1).keys()].map((
+    i => `${sample_names[i]}, ${gmhi_scores[i]}\n`
+  ));
+  output[0] = "Sample, GMHI\n" + output[0];
+  console.log(output);
+
+  var blob = new Blob(output,
+  { type: "text/plain;charset=utf-8" });
+  saveAs(blob, "gmhi_scores.csv");
+
+}
