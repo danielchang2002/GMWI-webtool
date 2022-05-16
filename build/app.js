@@ -205,7 +205,6 @@ export_button.onclick = () => {
     i => `${sample_names[i]}, ${gmhi_scores[i]}\n`
   ));
   output[0] = "Sample, GMHI\n" + output[0];
-  console.log(output);
 
   var blob = new Blob(output,
   { type: "text/plain;charset=utf-8" });

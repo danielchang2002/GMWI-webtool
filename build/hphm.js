@@ -24,7 +24,7 @@ export function plot_hphm(ele, sample) {
   const num_hm = Object.keys(sample).filter(ele => hm.has(ele)).length;
   let caption = `<br/><br/><b>GMHI Species. </b> Presence/absence of health prevalent (green) and health scarce (red) species.`
   if (!empty) {
-    caption += ` The input sample has ${num_hp} health prevalent and ${num_hm} health scarce species.`
+    caption += ` The input sample has ${num_hp} out of 7 health prevalent and ${num_hm} out of 43 health scarce species.`
   }
   ele.innerHTML += caption;
 
