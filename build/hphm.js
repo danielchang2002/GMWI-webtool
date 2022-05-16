@@ -34,6 +34,6 @@ const get_rows = (features, sample, color, empty) => Array.from(features).map(s 
     `<tr>
       <th scope="row" style="color: ${color};">${s.split("s__")[1].replace("_", " ")}</th>
       <td>${empty ? "-" : (s in sample ? "✅" : "❌")}</td>
-      <td>${empty ? "-" : (s in sample ? sample[s].toFixed(5) : 0)}</td>
+      <td>${empty ? "-" : (s in sample ? (sample[s] * 100).toFixed(3) + "%" : "-")}</td>
     </tr>`
     )).join("")
