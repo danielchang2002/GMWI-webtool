@@ -34,7 +34,7 @@ merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 
 ## Demo
 
-[demo](images/demo.gif)
+![demo](images/demo.gif)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
