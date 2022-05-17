@@ -9,12 +9,12 @@ An interactive web-app that analyzes a gut microbiome sample
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
 [forks-url]: https://github.com/danielchang2002/GMHI/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/danielchang2002/GMHI.svg?style=for-the-badge
 [stars-url]: https://github.com/danielchang2002/GMHI/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/danielchang2002/GMHI.svg?style=for-the-badge
 [issues-url]: https://github.com/danielchang2002/GMHI/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/danielchang2002/GMHI.svg?style=for-the-badge
 [license-url]: https://github.com/danielchang2002/GMHI/blob/master/LICENSE.txt
 [product-screenshot]: images/screenshot.png
