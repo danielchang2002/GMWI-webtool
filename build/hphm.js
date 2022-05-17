@@ -32,7 +32,7 @@ export function plot_hphm(ele, sample) {
 
 const get_rows = (features, sample, color, empty) => Array.from(features).map(s => (
     `<tr>
-      <th scope="row" style="color: ${color};">${s.split("s__")[1].replace("_", " ")}</th>
+      <th scope="row" style="color: ${color};"><i>${s.split("s__")[1].replace("_", " ")}</i></th>
       <td>${empty ? "-" : (s in sample ? "✅" : "❌")}</td>
       <td>${empty ? "-" : (s in sample ? (sample[s] * 100).toFixed(3) + "%" : "-")}</td>
     </tr>`

@@ -83,7 +83,7 @@ const get_caption = (metric, sample) => {
     metric === "Phenotype" ? "(orange)" : "(other colors)";
   let string = `<br/><br/><b>PCA. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients.`;
   if (JSON.stringify(sample) !== "{}") {
-    string += " The input sample is highlighted.";
+    string += " The input sample (teal) is projected and highlighted.";
   }
   return string;
 };

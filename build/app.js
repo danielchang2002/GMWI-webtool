@@ -86,7 +86,7 @@ const update_hphm = () => {
 
 const update_abundant = () => {
   const text = inputText.value;
-  const ranks = ["phylum", "class", "order", "family", "genus", "species"]
+  const ranks = ["phylum", "class", "order", "family", "genus", "species"];
   
   let sample;
   if (text === "") {
@@ -199,15 +199,19 @@ export_button.onclick = () => {
     return;
   }
   const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
+  const richness = samples.map(sample => indicies['Richness'](sample));
+  const evenness = samples.map(sample => indicies['Evenness'](sample));
+  const shannon = samples.map(sample => indicies['Shannon'](sample));
+  const inverse_simpson = samples.map(sample => indicies['Inverse Simpson'](sample));
   const sample_names = text.split("\n")[0].split("\t").slice(1);
 
   const output = [...Array(sampleBox.options.length - 1).keys()].map((
-    i => `${sample_names[i]}, ${gmhi_scores[i]}\n`
+    i => `${sample_names[i]}, ${gmhi_scores[i]}, ${richness[i]}, ${evenness[i]}, ${shannon[i]}, ${inverse_simpson[i]}\n`
   ));
-  output[0] = "Sample, GMHI\n" + output[0];
+  output[0] = "Sample, GMHI, Richness, Evenness, Shannon, Inverse Simpson\n" + output[0];
 
   var blob = new Blob(output,
   { type: "text/plain;charset=utf-8" });
-  saveAs(blob, "gmhi_scores.csv");
+  saveAs(blob, "gmhi_analysis.csv");
 
 }

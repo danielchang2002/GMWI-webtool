@@ -2,7 +2,7 @@ import {percentiles} from "./data.js"
 
 
 export function plot_abundant(ele, sample) {
-  const empty = sample === null;
+  const empty = sample === null || JSON.stringify(sample[0]) === "{}";
   const ranks = ["phylum", "class", "order", "family", "genus", "species"];
 
   ele.innerHTML = (
