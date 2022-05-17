@@ -7,9 +7,7 @@
 
 ## Description
 
-An interactive web-app that analyzes MetaPhlAn outputs ran on gut microbiome samples.
-
-Deployed live [here](https://danielchang2002.github.io/GMHI)
+An [interactive web-app](https://danielchang2002.github.io/GMHI) that analyzes MetaPhlAn outputs ran on gut microbiome samples.
 
 ## Usage
 
@@ -31,6 +29,11 @@ merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 3. Upload (merged) MetaPhlAn output to [GMHI webtool](https://danielchang2002.github.io/GMHI/)
 
 4. Click display and look at the plots
+![](images/1.png)
+![](images/2.png)
+![](images/3.png)
+![](images/4.png)
+![](images/5.png)
 
 5. Export index information
 
