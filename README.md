@@ -1,9 +1,9 @@
-# GMHI Webtool 💩
+# [GMHI Webtool](https://danielchang2002.github.io/GMHI/) 💩
 
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](license-url)
 [![D3][d3]][d3-url]
 
 ## Description
