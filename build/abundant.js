@@ -73,9 +73,8 @@ const get_perc = (percs, abundance) => {
     first_larger_idx++;
   }
 
-  if (first_larger_idx === 0 || first_larger_idx === 10) {
-    perc = first_larger_idx * 10;
-  }
+  if (first_larger_idx === 0) {return 0;}
+  if (first_larger_idx === 11) {return 100;}
 
   const dist = (abundance - percs[first_larger_idx - 1]) / (percs[first_larger_idx] - percs[first_larger_idx - 1]);
   perc = 10 * (first_larger_idx - 1) + dist * 10;
