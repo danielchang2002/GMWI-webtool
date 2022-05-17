@@ -1,4 +1,4 @@
-# [GMHI Webtool](danielchang2002.github.io/GMHI) 💩
+# [GMHI Webtool](https://danielchang2002.github.io/GMHI) 💩
 
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -9,7 +9,7 @@
 
 An interactive web-app that analyzes MetaPhlAn outputs ran on gut microbiome samples.
 
-Deployed live [here](danielchang2002.github.io/GMHI)
+Deployed live [here](https://danielchang2002.github.io/GMHI)
 
 ## Usage
 
@@ -30,10 +30,9 @@ merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 
 3. Upload (merged) MetaPhlAn output to [GMHI webtool](https://danielchang2002.github.io/GMHI/)
 
-4. Look at the stuff
+4. Click display and look at the plots
 
-5. Export the diversity indicies
-
+5. Export index information
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
