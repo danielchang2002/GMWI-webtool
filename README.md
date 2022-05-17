@@ -16,5 +16,5 @@ An interactive web-app that analyzes a gut microbiome sample
 [issues-shield]: https://img.shields.io/github/issues/danielchang2002/GMHI.svg?style=for-the-badge
 [issues-url]: https://github.com/danielchang2002/GMHI/issues
 [license-shield]: https://img.shields.io/github/license/danielchang2002/GMHI.svg?style=for-the-badge
-[license-url]: https://github.com/danielchang2002/GMHI/blob/master/LICENSE.txt
+[license-url]: https://github.com/danielchang2002/GMHI/blob/master/LICENSE
 [product-screenshot]: images/screenshot.png
