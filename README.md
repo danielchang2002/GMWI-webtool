@@ -1,14 +1,15 @@
-# [GMHI Webtool](https://danielchang2002.github.io/GMHI/) 💩
+# [GMHI Webtool](danielchang2002.github.io/GMHI) 💩
 
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](license-url)
 [![D3][d3]][d3-url]
 
 ## Description
 
-An interactive web-app that analyzes MetaPhlAn gut microbiome samples.
+An interactive web-app that analyzes MetaPhlAn outputs ran on gut microbiome samples.
+
+Deployed live [here](danielchang2002.github.io/GMHI)
 
 ## Usage
 
@@ -27,7 +28,7 @@ metaphlan metagenome_n.fastq --input_type fastq -o profiled_metagenome_n.txt
 merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 ```
 
-3. Upload (merged) MetaPhlAn output to [GMHI webtool](https://danielchang2002.github.io/GMHI/) and click the display button
+3. Upload (merged) MetaPhlAn output to [GMHI webtool](https://danielchang2002.github.io/GMHI/)
 
 4. Look at the stuff
 
