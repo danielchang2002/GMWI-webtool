@@ -7,7 +7,7 @@
 
 ## Description
 
-An [interactive web-app](https://danielchang2002.github.io/GMHI) that analyzes MetaPhlAn outputs ran on gut microbiome samples.
+An [interactive web-app](https://danielchang2002.github.io/GMHI) that analyzes gut microbiome samples.
 
 ## Usage
 
