@@ -139,7 +139,7 @@ inputFile.onchange = (e) => {
     const text = reader.result;
     inputText.value = text;
     // update_visuals();
-    inputFile.value = "";
+    // inputFile.value = "";
     update_sample_box();
   };
 };
@@ -150,6 +150,7 @@ inputText.oninput = (e) => {
 
 clear_button.onclick = (e) => {
   inputText.value = "";
+  inputFile.value = "";
 
   // Make drop down boxes go back to default
   const elements = document.getElementsByTagName('select');
@@ -179,6 +180,7 @@ submit_button.onclick = (e) => {
 
 ex_butt.onclick = () => {
   inputText.value = example;
+  // inputFile.value = "example_MetaPhlAn_output.txt";
   update_sample_box();
 };
 
@@ -195,7 +197,7 @@ export_button.onclick = () => {
     parse_file(text, "species", idx)
   ));
   if (samples.length === 0 || JSON.stringify(samples[0]) === "{}") {
-    alert("Please Insert/upload MetaPhlAn output");
+    alert("Please upload MetaPhlAn output first");
     return;
   }
   const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
