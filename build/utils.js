@@ -1,6 +1,29 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
+export const get_carousel = (name, num_slides) => {
+  let carousel = `<div id="${name}_carousel" class="carousel slide carousel-dark" data-bs-ride="carousel", data-bs-interval="false">
+  <div class="carousel-inner">`;
+  for (let i = 0; i < num_slides; i++) {
+    carousel += `
+    <div class="carousel-item ${i === 0 ? "active" : ""}" id="${name}_${i}">
+      blank
+    </div>`;
+  }
+  carousel += `
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#${name}_carousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#${name}_carousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>`;
+  return carousel;
+}
+
 const next_rank = { k: "p", p: "c", c: "o", o: "f", f: "g", g: "s", s: "t" };
 const get_filter_function = (rank) => (line) =>
   line.includes(rank.charAt(0) + "__") &&

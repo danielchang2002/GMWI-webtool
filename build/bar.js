@@ -338,6 +338,15 @@ function StackedBarChart(
   const space = 20;
   const size = 10;
 
+  svg
+    .append("text")
+    .attr("x", x_start - 10)
+    .attr("y", y_start - 30)
+    .text(rank[0].toUpperCase() + rank.slice(1))
+    .style("font-size", "20px")
+    .attr("font-weight", "900")
+    .attr("alignment-baseline", "middle")
+
   for (let i = taxons.length - 1; i >= 0; i--) {
     const x = x_start;
     const y = y_start + (taxons.length - 1 - i) * space;

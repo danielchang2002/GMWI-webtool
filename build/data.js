@@ -8810,7 +8810,7 @@ export const bar_data = {
   },
 };
 
-export const example = `ID	my_healthy_poop_sample	my_unhealthy_poop_sample
+export const example = `ID	healthy_poop	unhealthy_poop
 k__Bacteria	100.0	100.0
 k__Bacteria|p__Actinobacteria	10.87438	1.27414
 k__Bacteria|p__Actinobacteria|c__Actinobacteria	10.87438	1.27414

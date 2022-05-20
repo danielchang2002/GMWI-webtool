@@ -1,6 +1,6 @@
 // driver code
 
-import { get_percentile } from "./utils.js";
+import { get_percentile, get_carousel } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { plot_bar } from "./bar.js";
 import { plot_hphm } from "./hphm.js";
@@ -46,39 +46,63 @@ const update_visuals = (e) => {
 
 // updates figure 1
 const update_hist = () => {
-  const text = inputText.value;
-  const index = index_box.value;
-  const pop = pop_box.value;
-  const data =
-    pop === "all"
-      ? index_data[index]["healthy"].concat(index_data[index]["nonhealthy"])
-      : index_data[index][pop];
-  const species = parse_file(text, "species", parseInt(sampleBox.value));
-  const score =
-    sampleBox.value == -1 ? null : indicies[index](species);
-  const perc =
-    sampleBox.value == -1 ? null : get_percentile(data, score);
-  plot_histogram(histogram, score, data, index, pop, perc);
+  const name = "hist";
+  const index_list = ["GMHI", "Richness", "Evenness", "Shannon", "Inverse Simpson"];
+  const num_slides = index_list.length;
+  const carousel = get_carousel(name, num_slides);
+  histogram.innerHTML = carousel;
+  for (let i = 0; i < num_slides; i++) {
+    const text = inputText.value;
+    const index = index_list[i];
+    const pop = pop_box.value;
+    const data =
+      pop === "all"
+        ? index_data[index]["healthy"].concat(index_data[index]["nonhealthy"])
+        : index_data[index][pop];
+    const species = parse_file(text, "species", parseInt(sampleBox.value));
+    const score =
+      sampleBox.value == -1 ? null : indicies[index](species);
+    const perc =
+      sampleBox.value == -1 ? null : get_percentile(data, score);
+    const ele = document.getElementById(`${name}_${i}`);
+    plot_histogram(ele, score, data, index, pop, perc);
+  }
 };
 
 // updates figure 2
 export const update_bar = () => {
+  const name = "bar";
+  const rank_list = ["phylum", "class", "order", "family"];
+  const num_slides = rank_list.length;
+  const carousel = get_carousel(name, num_slides);
+  bar.innerHTML = carousel;
   const text = inputText.value;
   const pop_bar = pop_box.value;
-  const rank = rank_bar.value;
-  const barData = bar_data[rank][pop_bar];
-  const sample_bar = sampleBox.value == -1 ? [] 
-    : get_taxon_bar_list(parse_file(text, rank, parseInt(sampleBox.value)));
-  plot_bar(bar, barData, sample_bar, rank);
+  for (let i = 0; i < num_slides; i++) {
+    const rank = rank_list[i];
+    const barData = bar_data[rank][pop_bar];
+    const sample_bar = sampleBox.value == -1 ? [] 
+      : get_taxon_bar_list(parse_file(text, rank, parseInt(sampleBox.value)));
+    const ele = document.getElementById(`${name}_${i}`);
+    plot_bar(ele, barData, sample_bar, rank);
+  }
 };
 
 // updates figure 3
 const update_pca = () => {
+  const name = "pca";
+  const metric_list = ["Phenotype", "Phenotype_all"];
+  const num_slides = metric_list.length;
+  const carousel = get_carousel(name, num_slides);
+  pca.innerHTML = carousel;
   const text = inputText.value;
   const species = sampleBox.value == -1 ? {}
     : parse_file(text, "species", parseInt(sampleBox.value));
-  const metric = metric_form.value;
-  plot_pca(pca, pca_data["scatter"], species, metric);
+  for (let i = 0; i < num_slides; i++) {
+    const metric = metric_list[i];
+    const ele = document.getElementById(`${name}_${i}`);
+    plot_pca(ele, pca_data["scatter"], species, metric);
+  }
 };
 
 const update_hphm = () => {
