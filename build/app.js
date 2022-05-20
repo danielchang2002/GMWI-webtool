@@ -30,6 +30,10 @@ const clear_button = document.getElementById("clear");
 const submit_button = document.getElementById("submit");
 const export_button = document.getElementById("export");
 const sampleBox = document.getElementById("sampleBox");
+const sampleDiv = document.getElementById("sampleDiv");
+
+// hide sample select initially
+sampleDiv.style.display = 'none';
 
 // updates all plots
 const update_visuals = (e) => {
@@ -100,6 +104,8 @@ const update_abundant = () => {
 }
 
 const update_sample_box = () => {
+  sampleDiv.style.display = 'initial';
+
   // Delete existing options
   const options = document.querySelectorAll('#sampleBox option');
   options.forEach(o => o.remove());
@@ -127,6 +133,11 @@ const update_sample_box = () => {
 
   // Make the first sample be selected by default
   sampleBox.value = sampleBox.options.length > 1 ? 0 : -1;
+
+  if (Math.min(sample_names.length, num_cols - 1) <= 1) {
+    sampleDiv.style.display = 'none';
+    // sampleDiv.style.visibility = 'hidden';
+  }
 }
 
 update_visuals();
