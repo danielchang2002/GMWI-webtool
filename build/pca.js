@@ -35,10 +35,11 @@ export function plot_pca(ele, data, sample, metric) {
   ele.innerHTML += caption;
 
   const phens = pca_data["meta"]["encodings"][metric];
+  phens.push("Nonhealthy");
 
   // Hover effects
   for (const phen of phens) {
-    d3.select(`#${phen}_square-text`)
+    d3.selectAll(`#${phen}_square-text`)
     .on("mouseover", function(){handle_mouseover(phen, phens)})
     .on("mouseout", function(){handle_mouseout(phen, phens)})
 
