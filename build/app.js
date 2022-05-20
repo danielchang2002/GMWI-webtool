@@ -15,7 +15,7 @@ const inputFile = document.getElementById("inputFile");
 const inputText = document.getElementById("inputText");
 const index_box = document.getElementById("indexBox");
 const pop_box = document.getElementById("popBox");
-const pop_box_bar = document.getElementById("popBoxBar");
+// const pop_box_bar = document.getElementById("popBoxBar");
 const metric_form = document.getElementById("compMetric");
 const rank_bar = document.getElementById("rankBar");
 const title = document.getElementById("title");
@@ -64,7 +64,7 @@ const update_hist = () => {
 // updates figure 2
 export const update_bar = () => {
   const text = inputText.value;
-  const pop_bar = pop_box_bar.value;
+  const pop_bar = pop_box.value;
   const rank = rank_bar.value;
   const barData = bar_data[rank][pop_bar];
   const sample_bar = sampleBox.value == -1 ? [] 
