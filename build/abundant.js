@@ -1,4 +1,4 @@
-import {percentiles} from "./data.js"
+import { medians } from "./data.js"
 
 
 export function plot_abundant(ele, sample) {
@@ -12,9 +12,9 @@ export function plot_abundant(ele, sample) {
         <th scope="col">Rank</th>
         <th scope="col">Most Abundant Taxon</th>
         <th scope="col">Relative Abundance</th>
-        <th scope="col">Percentile (Healthy)</th>
-        <th scope="col">Percentile (Nonhealthy)</th>
-        <th scope="col">Percentile (All)</th>
+        <th scope="col">Median (Healthy)</th>
+        <th scope="col">Median (Nonhealthy)</th>
+        <th scope="col">Median (All)</th>
       </tr>
         ${(ranks.map((rank, idx) => get_row(rank, sample, idx, empty))).join("")}
     </tbody>
@@ -49,36 +49,21 @@ function get_row(rank, sample, idx, empty) {
   const name = most_abundant[0];
   const abundance = most_abundant[1];
 
-  // Get the percentile
-  const perc_h = get_perc(percentiles[name]['h'], abundance);
-  const perc_n = get_perc(percentiles[name]['n'], abundance);
-  const perc_a = get_perc(percentiles[name]['a'], abundance);
+  // Get the median
+  const m_h = (medians[name]['h'] * 100).toFixed(3);
+  const m_n = (medians[name]['n'] * 100).toFixed(3);
+  const m_a = (medians[name]['a'] * 100).toFixed(3);
 
   return (
       `<tr>
         <th scope="row" style="black">${toTitleCase(rank)}</th>
         <td>${name.split(/\w__/)[1].replace("_", " ")}</td>
         <td>${(abundance * 100).toFixed(3) + "%"}</td>
-        <td>${`${perc_h}<sup>th<sup>`}</td>
-        <td>${`${perc_n}<sup>th<sup>`}</td>
-        <td>${`${perc_a}<sup>th<sup>`}</td>
+        <td>${`${m_h}`}%</td>
+        <td>${`${m_n}`}%</td>
+        <td>${`${m_a}`}%</td>
       </tr>`
   );
-}
-
-const get_perc = (percs, abundance) => {
-  let perc;
-  let first_larger_idx = 0;
-  while (first_larger_idx <= 10 && percs[first_larger_idx] <= abundance) {
-    first_larger_idx++;
-  }
-
-  if (first_larger_idx === 0) {return 0;}
-  if (first_larger_idx === 11) {return 100;}
-
-  const dist = (abundance - percs[first_larger_idx - 1]) / (percs[first_larger_idx] - percs[first_larger_idx - 1]);
-  perc = 10 * (first_larger_idx - 1) + dist * 10;
-  return perc.toFixed(2);
 }
 
 // https://stackoverflow.com/a/196991/14772896

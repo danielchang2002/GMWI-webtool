@@ -28,7 +28,7 @@ export function plot_bar(ele, data, sample, rank) {
 
   // hover events
   for (const tax of final_data.map((ele) => ele["taxon"])) {
-    d3.selectAll(`#${tax}_bar`)
+    d3.selectAll(`#${rank}_${tax}_bar`)
       .on("mouseover", function () {
         handle_mouseover(tax, taxons);
       })
@@ -40,12 +40,12 @@ export function plot_bar(ele, data, sample, rank) {
     // .on("mouseover", function(){handle_mouseover(tax, taxons)})
     // .on("mouseout", function(){handle_mouseout(tax, taxons)});
 
-    d3.selectAll(`#${tax}_square-text`)
+    d3.selectAll(`#${rank}_${tax}_square-text`)
       .on("mouseover", function () {
-        handle_mouseover(tax, taxons);
+        handle_mouseover(tax, taxons, rank);
       })
       .on("mouseout", function () {
-        handle_mouseout(tax, taxons);
+        handle_mouseout(tax, taxons, rank);
       });
   }
 }
@@ -69,7 +69,7 @@ const preprocess = (data, sample) => {
 
     const reduced_data_filled = [
       ...reduced_data,
-      { pop: reduced_data[0].pop, taxon: "Others", abundance: 1 - data_sum },
+      { pop: reduced_data[0].pop, taxon: `Others`, abundance: 1 - data_sum },
     ];
 
     final_data = reduced_data_filled;
@@ -122,30 +122,30 @@ const preprocess = (data, sample) => {
   return [final_data, taxons];
 };
 
-const handle_mouseover = (taxon, taxons) => {
+const handle_mouseover = (taxon, taxons, rank) => {
   // highlight taxon
   for (const tax of taxons) {
     if (tax !== taxon) {
       // d3.selectAll(`#${tax}_bar`).attr("opacity", "0.5")
       // d3.selectAll(`#${tax}_square`).attr("opacity", "0.5")
-      d3.selectAll(`#${tax}_bar`).attr("filter", "brightness(50%)");
-      d3.selectAll(`#${tax}_square`).attr("filter", "brightness(50%)");
-      d3.selectAll(`#${tax}_square-text`).attr("opacity", "0.5");
+      d3.selectAll(`#${rank}_${tax}_bar`).attr("filter", "brightness(50%)");
+      d3.selectAll(`#${rank}_${tax}_square`).attr("filter", "brightness(50%)");
+      d3.selectAll(`#${rank}_${tax}_square-text`).attr("opacity", "0.5");
     }
   }
-  d3.selectAll(`#${taxon}_text`).attr("opacity", "1");
+  d3.selectAll(`#${rank}_${taxon}_text`).attr("opacity", "1");
 };
 
-const handle_mouseout = (taxon, taxons) => {
+const handle_mouseout = (taxon, taxons, rank) => {
   // unhighlight taxon
   for (const tax of taxons) {
     // d3.selectAll(`#${tax}_bar`).attr("opacity", "1")
     // d3.selectAll(`#${tax}_square`).attr("opacity", "1")
-    d3.selectAll(`#${tax}_bar`).attr("filter", "brightness(100%)");
-    d3.selectAll(`#${tax}_square`).attr("filter", "brightness(100%)");
-    d3.selectAll(`#${tax}_square-text`).attr("opacity", "1");
+    d3.selectAll(`#${rank}_${tax}_bar`).attr("filter", "brightness(100%)");
+    d3.selectAll(`#${rank}_${tax}_square`).attr("filter", "brightness(100%)");
+    d3.selectAll(`#${rank}_${tax}_square-text`).attr("opacity", "1");
   }
-  d3.selectAll(`#${taxon}_text`).attr("opacity", "0");
+  d3.selectAll(`#${rank}_${taxon}_text`).attr("opacity", "0");
 };
 
 const get_caption = (pop, rank, sample) => {
@@ -299,7 +299,7 @@ function StackedBarChart(
     .attr("y", ([y1, y2]) => Math.min(yScale(y1), yScale(y2)))
     .attr("height", ([y1, y2]) => Math.abs(yScale(y1) - yScale(y2)))
     .attr("width", xScale.bandwidth())
-    .attr("id", ({ i }) => `${data[i]["taxon"]}_bar`);
+    .attr("id", ({ i }) => `${rank}_${data[i]["taxon"]}_bar`);
 
   if (title) bar.append("title").text(({ i }) => title(i));
 
@@ -361,7 +361,7 @@ function StackedBarChart(
       .style("fill", colors[i])
       .style("stroke", "black")
       .style("stroke-width", 1)
-      .attr("id", `${taxons[i]}_square`);
+      .attr("id", `${rank}_${taxons[i]}_square`);
 
     const text =
       taxons[i] != "Others" ? taxons[i].slice(3, taxons[i].length) : "Others";
@@ -372,7 +372,7 @@ function StackedBarChart(
       .text(text)
       .style("font-size", "15px")
       .attr("alignment-baseline", "middle")
-      .attr("id", `${taxons[i]}_square-text`);
+      .attr("id", `${rank}_${taxons[i]}_square-text`);
 
     const x_tool = x;
     const y_tool = y_start + (1.2 * taxons.length - 1) * space + 20;
@@ -395,7 +395,7 @@ function StackedBarChart(
       .style("font-size", "15px")
       .attr("alignment-baseline", "middle")
       .attr("opacity", "0")
-      .attr("id", `${taxons[i]}_text`);
+      .attr("id", `${rank}_${taxons[i]}_text`);
 
     const sample = data.filter(
       (ele) => ele["pop"] === "Sample" && ele["taxon"] == taxons[i]
@@ -415,7 +415,7 @@ function StackedBarChart(
       .style("font-size", "15px")
       .attr("alignment-baseline", "middle")
       .attr("opacity", "0")
-      .attr("id", `${taxons[i]}_text`);
+      .attr("id", `${rank}_${taxons[i]}_text`);
   }
 
   return Object.assign(svg.node(), { scales: { color } });
