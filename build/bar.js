@@ -30,10 +30,10 @@ export function plot_bar(ele, data, sample, rank) {
   for (const tax of final_data.map((ele) => ele["taxon"])) {
     d3.selectAll(`#${rank}_${tax}_bar`)
       .on("mouseover", function () {
-        handle_mouseover(tax, taxons);
+        handle_mouseover(tax, taxons, rank);
       })
       .on("mouseout", function () {
-        handle_mouseout(tax, taxons);
+        handle_mouseout(tax, taxons, rank);
       });
 
     // d3.selectAll(`#${tax}_square`)

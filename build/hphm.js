@@ -7,7 +7,10 @@ export function plot_hphm(ele, sample) {
   const empty = JSON.stringify(sample) === "{}";
 
   ele.innerHTML = (
-  `<table>
+  `
+  <h2 class="text-center">G️MHI Species</h1>
+  <br>
+  <table>
     <tbody>
       <tr>
         <th scope="col">Species Name</th>
@@ -15,7 +18,6 @@ export function plot_hphm(ele, sample) {
         <th scope="col">Relative Abundance</th>
         <th scope="col">Median (Healthy)</th>
         <th scope="col">Median (Nonhealthy)</th>
-        <th scope="col">Median (All)</th>
       </tr>
       ${get_rows(hp, sample, "green", empty)}
       ${get_rows(hm, sample, "#a00", empty)}
@@ -40,7 +42,6 @@ const get_rows = (features, sample, color, empty) => Array.from(features).map(s 
       <td>${empty ? "-" : (s in sample ? ra_to_perc(sample[s]) : "-")}</td>
       <td>${ra_to_perc(medians[s]['h'])}</td>
       <td>${ra_to_perc(medians[s]['n'])}</td>
-      <td>${ra_to_perc(medians[s]['a'])}</td>
     </tr>`
     )).join("")
 
