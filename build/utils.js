@@ -27,7 +27,9 @@ export const get_carousel = (name, num_slides) => {
 const next_rank = { k: "p", p: "c", c: "o", o: "f", f: "g", g: "s", s: "t" };
 const get_filter_function = (rank) => (line) =>
   line.includes(rank.charAt(0) + "__") &&
-  !line.includes(next_rank[rank.charAt(0)] + "__");
+  !line.includes(next_rank[rank.charAt(0)] + "__") && 
+  true;
+
 const get_taxon_extractor = (rank) => (line) =>
   new RegExp(String.raw`${rank.charAt(0)}__\w*`).exec(line)[0];
 
@@ -57,7 +59,12 @@ export const parse_file = (text, rank, idx) => {
       [name]: ab,
     };
   };
-  const obj = filtered.reduce(reducer, {});
+  let obj = {};
+  try {
+    obj = filtered.reduce(reducer, {});
+  } catch (error) {
+    console.error(error);
+  }
   return obj;
 };
 

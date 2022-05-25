@@ -199,6 +199,19 @@ clear_button.onclick = (e) => {
 };
 
 submit_button.onclick = (e) => {
+  // Check if shit file
+  const text = inputText.value;
+  const species = parse_file(text, "species", 0);
+  if (JSON.stringify(species) === "{}") {
+    if (text != "") {
+      alert("Input file/text is not valid MetaPhlAn output");
+    }
+    else {
+      alert("Please upload/paste MetaPhlAn output first");
+    }
+    return;
+  }
+
   update_visuals();
 };
 
@@ -227,14 +240,19 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 })
 
 export_button.onclick = () => {
+  // Check if shit file
   const text = inputText.value;
-  const samples = [...Array(sampleBox.options.length - 1).keys()].map(idx => (
-    parse_file(text, "species", idx)
-  ));
-  if (samples.length === 0 || JSON.stringify(samples[0]) === "{}") {
-    alert("Please upload MetaPhlAn output first");
+  const species = parse_file(text, "species", 0);
+  if (JSON.stringify(species) === "{}") {
+    if (text != "") {
+      alert("Input file/text is not valid MetaPhlAn output");
+    }
+    else {
+      alert("Please upload/paste MetaPhlAn output first");
+    }
     return;
   }
+
   const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
   const richness = samples.map(sample => indicies['Richness'](sample));
   const evenness = samples.map(sample => indicies['Evenness'](sample));
