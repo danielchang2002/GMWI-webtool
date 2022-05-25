@@ -9,7 +9,7 @@ export function plot_histogram(ele, score, data, index, pop, perc) {
     "Inverse Simpson": "Inverse Simpson Diversity",
   };
   ele.innerHTML = "";
-  const hist = Histogram(data, score, perc, {
+  const hist = Histogram(data, score, perc, index, {
     xLabel: label[index],
   });
   ele.appendChild(hist);
@@ -33,6 +33,7 @@ function Histogram(
   data,
   score, // index score
   percentile,
+  index,
   {
     value = (d) => d, // convenience alias for x
     domain, // convenience alias for xDomain
@@ -96,7 +97,8 @@ function Histogram(
     // .attr("width", width)
     // .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
-    .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+    .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
+    .attr("id", `histogram-${index}`);
 
   svg
     .append("g")

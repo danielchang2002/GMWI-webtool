@@ -1,6 +1,6 @@
 // driver code
 
-import { get_percentile, get_carousel, get_tabs } from "./utils.js";
+import { get_percentile, get_carousel, get_tabs, get_svg_blob } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { plot_bar } from "./bar.js";
 import { plot_hphm } from "./hphm.js";
@@ -29,6 +29,7 @@ const ex_butt = document.getElementById("example");
 const clear_button = document.getElementById("clear");
 const submit_button = document.getElementById("submit");
 const export_button = document.getElementById("export");
+const export_plots_button = document.getElementById("exportPlots");
 const sampleBox = document.getElementById("sampleBox");
 const sampleDiv = document.getElementById("sampleDiv");
 
@@ -90,6 +91,20 @@ export const update_bar = () => {
 
 // updates figure 3
 const update_pca = () => {
+  // const title = "pca";
+  // const metric_list = ["Phenotype", "Phenotype_all"];
+  // const metric_list_passed = ["Health Status", "Phenotype"];
+  // const narrow = true;
+  // const tabs = get_tabs(title, metric_list_passed, narrow);
+  // pca.innerHTML = tabs;
+  // const text = inputText.value;
+  // const species = sampleBox.value == -1 ? {}
+  //   : parse_file(text, "species", parseInt(sampleBox.value));
+  // for (let i = 0; i < metric_list.length; i++) {
+  //   const metric = metric_list[i];
+  //   const ele = document.getElementById(`${title}-pills-${i}`);
+  //   plot_pca(ele, pca_data["scatter"], species, metric);
+  // }
   const name = "pca";
   const metric_list = ["Phenotype", "Phenotype_all"];
   const num_slides = metric_list.length;
@@ -203,7 +218,7 @@ submit_button.onclick = (e) => {
   const text = inputText.value;
   const species = parse_file(text, "species", 0);
   if (JSON.stringify(species) === "{}") {
-    if (text != "") {
+    if (text !== "") {
       alert("Input file/text is not valid MetaPhlAn output");
       return;
     }
@@ -242,14 +257,16 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 export_button.onclick = () => {
   // Check if shit file
   const text = inputText.value;
-  const species = parse_file(text, "species", 0);
-  if (JSON.stringify(species) === "{}") {
-    if (text != "") {
-      alert("Input file/text is not valid MetaPhlAn output");
-    }
-    else {
-      alert("Please upload/paste MetaPhlAn output first");
-    }
+  if (text === "") {
+    alert("Please upload/paste MetaPhlAn output first");
+    return;
+  }
+
+  const samples = [...Array(sampleBox.options.length - 1).keys()].map(idx => (
+    parse_file(text, "species", idx)
+  ));
+  if (samples.length == 0 || JSON.stringify(samples[0]) === "{}") {
+    alert("Input file/text is not valid MetaPhlAn output");
     return;
   }
 
@@ -267,6 +284,36 @@ export_button.onclick = () => {
 
   var blob = new Blob(output,
   { type: "text/plain;charset=utf-8" });
-  saveAs(blob, "gmhi_analysis.csv");
+  let name = "gmhi_analysis.csv";
+  if (sample_names.length === 1) name = sample_names[0];
+  saveAs(blob, name);
+}
 
+export_plots_button.onclick = () => {
+  const svg_IDS = [
+    "histogram-GMHI",
+    "histogram-Shannon",
+    "histogram-Richness",
+    "histogram-Evenness",
+    "histogram-Inverse Simpson",
+    "bar-phylum",
+    "bar-class",
+    "bar-order",
+    "bar-family",
+    "pca-Phenotype",
+    "pca-Phenotype_all",
+  ];
+
+  const zip = new JSZip();
+
+  for (const id of svg_IDS) {
+    const svg = document.getElementById(id);
+    const b = get_svg_blob(svg);
+    zip.file(id + ".svg", b);
+  }
+
+  zip.generateAsync({type:"blob"})
+  .then(function (blob) {
+      saveAs(blob, "gmhi_plots.zip");
+  });
 }

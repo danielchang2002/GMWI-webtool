@@ -28,17 +28,7 @@ merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 
 3. Upload (merged) MetaPhlAn output to [GMHI webtool](https://danielchang2002.github.io/GMHI/)
 
-4. Change settings
-
-5. Click display
-
-6. Look at plots
-
-7. Export index information
-
-## Demo
-
-![demo](images/demo.gif)
+4. Profit
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge

@@ -185,3 +185,7 @@ header {
 .grey {
   background-color : #f2f2f2;
 }
+
+text {
+  font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
+}

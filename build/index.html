@@ -41,6 +41,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js" integrity="sha512-xcHCGC5tQ0SHlRX8Anbz6oy/OullASJkEhb4gjkneVpGE3/QGYejf14CUO5n5q5paiHfRFTa9HKgByxzidw2Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js"
       integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg=="
@@ -154,13 +155,16 @@
             </select>
             <br/>
 
-            <button type="button" id="submit" class="btn btn-outline-primary">
+            <button type="button" id="submit" class="btn btn-outline-primary btn-sm">
               Display
             </button>
-            <button type="button" id="export" class="btn btn-outline-success">
+            <button type="button" id="export" class="btn btn-outline-success btn-sm">
               Export as CSV
             </button>
-            <button type="button" id="clear" class="btn btn-outline-danger">
+            <button type="button" id="exportPlots" class="btn btn-outline-info btn-sm">
+              Export Plots
+            </button>
+            <button type="button" id="clear" class="btn btn-outline-danger btn-sm">
               Reset
             </button>
           </div>
