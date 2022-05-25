@@ -206,9 +206,9 @@ submit_button.onclick = (e) => {
     if (text != "") {
       alert("Input file/text is not valid MetaPhlAn output");
     }
-    else {
-      alert("Please upload/paste MetaPhlAn output first");
-    }
+    // else {
+    //   alert("Please upload/paste MetaPhlAn output first");
+    // }
     return;
   }
 
