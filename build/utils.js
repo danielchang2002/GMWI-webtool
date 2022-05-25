@@ -1,6 +1,29 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
+export const get_tabs = (title, names) => {
+  let carousel = `<ul class="nav nav-pills mb-3 nav-justified" id="${title}-pills-tab" role="tablist">`
+
+  for (let i = 0; i < names.length; i++) {
+    let name = names[i];
+    name = name.replace(" ", "_");
+    carousel += `
+  <li class="nav-item" role="presentation">
+    <button class="nav-link ${i === 0 ? "active" : ""}" id="${title}-pills-${i}-tab" data-bs-toggle="pill" data-bs-target="#${title}-pills-${i}" type="button" role="tab" aria-controls="${title}-pills-${i}" aria-selected="true">${name.replace("_", " ")}</button>
+  </li>
+  `;
+  }
+  carousel += `</ul> <div class="tab-content" id="pills-tabContent">`;
+
+  for (let i = 0; i < names.length; i++) {
+    let name = names[i];
+    name = name.replace(" ", "_");
+    carousel += `<div class="tab-pane fade show ${i === 0 ? "active" : ""}" id="${title}-pills-${i}" role="tabpanel" aria-labelledby="${title}-pills-${i}-tab">${name}</div>`
+  }
+  carousel += "</div>";
+  return carousel;
+}
+
 export const get_carousel = (name, num_slides) => {
   let carousel = `<div id="${name}_carousel" class="carousel slide carousel-dark" data-bs-ride="carousel", data-bs-interval="false">
   <div class="carousel-inner">`;

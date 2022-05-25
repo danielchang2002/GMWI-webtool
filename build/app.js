@@ -1,6 +1,6 @@
 // driver code
 
-import { get_percentile, get_carousel } from "./utils.js";
+import { get_percentile, get_carousel, get_tabs } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { plot_bar } from "./bar.js";
 import { plot_hphm } from "./hphm.js";
@@ -46,12 +46,11 @@ const update_visuals = (e) => {
 
 // updates figure 1
 const update_hist = () => {
-  const name = "hist";
+  const title = "hist";
   const index_list = ["GMHI", "Richness", "Evenness", "Shannon", "Inverse Simpson"];
-  const num_slides = index_list.length;
-  const carousel = get_carousel(name, num_slides);
-  histogram.innerHTML = carousel;
-  for (let i = 0; i < num_slides; i++) {
+  const tabs = get_tabs(title, index_list);
+  histogram.innerHTML = tabs;
+  for (let i = 0; i < index_list.length; i++) {
     const text = inputText.value;
     const index = index_list[i];
     const pop = pop_box.value;
@@ -64,26 +63,27 @@ const update_hist = () => {
       sampleBox.value == -1 ? null : indicies[index](species);
     const perc =
       sampleBox.value == -1 ? null : get_percentile(data, score);
-    const ele = document.getElementById(`${name}_${i}`);
+    const ele = document.getElementById(`${title}-pills-${i}`);
     plot_histogram(ele, score, data, index, pop, perc);
   }
+
+
 };
 
 // updates figure 2
 export const update_bar = () => {
-  const name = "bar";
-  const rank_list = ["phylum", "class", "order", "family"];
-  const num_slides = rank_list.length;
-  const carousel = get_carousel(name, num_slides);
-  bar.innerHTML = carousel;
+  const title = "bar";
+  const rank_list = ["Phylum", "Class", "Order", "Family"];
+  const tabs = get_tabs(title, rank_list);
+  bar.innerHTML = tabs;
   const text = inputText.value;
   const pop_bar = pop_box.value;
-  for (let i = 0; i < num_slides; i++) {
-    const rank = rank_list[i];
+  for (let i = 0; i < rank_list.length; i++) {
+    const rank = rank_list[i].toLowerCase();
     const barData = bar_data[rank][pop_bar];
     const sample_bar = sampleBox.value == -1 ? [] 
       : get_taxon_bar_list(parse_file(text, rank, parseInt(sampleBox.value)));
-    const ele = document.getElementById(`${name}_${i}`);
+    const ele = document.getElementById(`${title}-pills-${i}`);
     plot_bar(ele, barData, sample_bar, rank);
   }
 };
