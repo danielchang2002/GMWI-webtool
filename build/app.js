@@ -195,7 +195,7 @@ clear_button.onclick = (e) => {
 
   update_sample_box();
 
-  update_visuals();
+  update_visuals()
 };
 
 submit_button.onclick = (e) => {
@@ -205,11 +205,11 @@ submit_button.onclick = (e) => {
   if (JSON.stringify(species) === "{}") {
     if (text != "") {
       alert("Input file/text is not valid MetaPhlAn output");
+      return;
     }
     // else {
     //   alert("Please upload/paste MetaPhlAn output first");
     // }
-    return;
   }
 
   update_visuals();
