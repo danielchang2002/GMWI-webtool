@@ -1,6 +1,6 @@
 // driver code
 
-import { get_percentile, get_carousel, get_tabs, get_svg_blob } from "./utils.js";
+import { get_percentile, get_carousel, get_tabs, } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { plot_bar } from "./bar.js";
 import { plot_hphm } from "./hphm.js";
@@ -13,16 +13,10 @@ import { indicies } from "./indicies.js";
 // get element references
 const inputFile = document.getElementById("inputFile");
 const inputText = document.getElementById("inputText");
-const index_box = document.getElementById("indexBox");
 const pop_box = document.getElementById("popBox");
-// const pop_box_bar = document.getElementById("popBoxBar");
-const metric_form = document.getElementById("compMetric");
-const rank_bar = document.getElementById("rankBar");
-const title = document.getElementById("title");
 const hphm = document.getElementById("hphm");
 const abundant = document.getElementById("abundant");
 const histogram = document.getElementById("histogram");
-const histogram_caption = document.getElementById("histogram_caption");
 const bar = document.getElementById("bar");
 const pca = document.getElementById("pca");
 const ex_butt = document.getElementById("example");
@@ -32,6 +26,8 @@ const export_button = document.getElementById("export");
 const export_plots_button = document.getElementById("exportPlots");
 const sampleBox = document.getElementById("sampleBox");
 const sampleDiv = document.getElementById("sampleDiv");
+
+window.jsPDF = window.jspdf.jsPDF;
 
 // hide sample select initially
 sampleDiv.style.display = 'none';
@@ -49,7 +45,20 @@ const update_visuals = (e) => {
 const update_hist = () => {
   const title = "hist";
   const index_list = ["GMHI", "Richness", "Evenness", "Shannon", "Inverse Simpson"];
-  const tabs = get_tabs(title, index_list);
+  let active = 0;
+
+  // find the active one (if exists)
+  const list = document.getElementById(`${title}-pills-tab`);
+  if (list !== null) {
+    const items = list.getElementsByTagName("li");
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].getElementsByTagName("button")[0].classList.contains("active")) {
+        active = i;
+      }
+    }
+  }
+
+  const tabs = get_tabs(title, index_list, active);
   histogram.innerHTML = tabs;
   for (let i = 0; i < index_list.length; i++) {
     const text = inputText.value;
@@ -67,15 +76,25 @@ const update_hist = () => {
     const ele = document.getElementById(`${title}-pills-${i}`);
     plot_histogram(ele, score, data, index, pop, perc);
   }
-
-
 };
 
 // updates figure 2
 export const update_bar = () => {
   const title = "bar";
   const rank_list = ["Phylum", "Class", "Order", "Family"];
-  const tabs = get_tabs(title, rank_list);
+  let active = 0;
+
+  // find the active one (if exists)
+  const list = document.getElementById(`${title}-pills-tab`);
+  if (list !== null) {
+    const items = list.getElementsByTagName("li");
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].getElementsByTagName("button")[0].classList.contains("active")) {
+        active = i;
+      }
+    }
+  }
+  const tabs = get_tabs(title, rank_list, active);
   bar.innerHTML = tabs;
   const text = inputText.value;
   const pop_bar = pop_box.value;
@@ -91,24 +110,23 @@ export const update_bar = () => {
 
 // updates figure 3
 const update_pca = () => {
-  // const title = "pca";
-  // const metric_list = ["Phenotype", "Phenotype_all"];
-  // const metric_list_passed = ["Health Status", "Phenotype"];
-  // const narrow = true;
-  // const tabs = get_tabs(title, metric_list_passed, narrow);
-  // pca.innerHTML = tabs;
-  // const text = inputText.value;
-  // const species = sampleBox.value == -1 ? {}
-  //   : parse_file(text, "species", parseInt(sampleBox.value));
-  // for (let i = 0; i < metric_list.length; i++) {
-  //   const metric = metric_list[i];
-  //   const ele = document.getElementById(`${title}-pills-${i}`);
-  //   plot_pca(ele, pca_data["scatter"], species, metric);
-  // }
   const name = "pca";
   const metric_list = ["Phenotype", "Phenotype_all"];
   const num_slides = metric_list.length;
-  const carousel = get_carousel(name, num_slides);
+  let active = 0;
+
+  // find the active one (if exists)
+  const list = document.getElementsByClassName(`carousel-inner`);
+  if (list.length !== 0) {
+    const items = list[0].getElementsByTagName("div");
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].classList.contains("active")) {
+        active = i;
+      }
+    }
+  }
+
+  const carousel = get_carousel(name, num_slides, active);
   pca.innerHTML = carousel;
   const text = inputText.value;
   const species = sampleBox.value == -1 ? {}
@@ -222,24 +240,10 @@ submit_button.onclick = (e) => {
       alert("Input file/text is not valid MetaPhlAn output");
       return;
     }
-    // else {
-    //   alert("Please upload/paste MetaPhlAn output first");
-    // }
   }
 
   update_visuals();
 };
-
-// Trigger plot update for side bar forms
-// index_box.onchange = update_hist;
-// pop_box.onchange = update_hist;
-
-// pop_box_bar.onchange = update_bar;
-// rank_bar.onchange = update_bar;
-
-// inputText.oninput = update_sample_box;
-
-// metric_form.onchange = update_pca;
 
 ex_butt.onclick = () => {
   inputText.value = example;
@@ -289,31 +293,45 @@ export_button.onclick = () => {
   saveAs(blob, name);
 }
 
-export_plots_button.onclick = () => {
-  const svg_IDS = [
-    "histogram-GMHI",
-    "histogram-Shannon",
-    "histogram-Richness",
-    "histogram-Evenness",
-    "histogram-Inverse Simpson",
-    "bar-phylum",
-    "bar-class",
-    "bar-order",
-    "bar-family",
-    "pca-Phenotype",
-    "pca-Phenotype_all",
+export_plots_button.onclick = export_plots;
+
+function export_plots() {
+  const svg_ids_and_names = [
+    ["hist-pills-0", "GMHI-histogram"],
+    ["hist-pills-1", "Richness-histogram"],
+    // ["hist-pills-2", "Evenness-histogram"],
+    // ["hist-pills-3", "Shannon-histogram"],
+    // ["hist-pills-4", "Inverse_Simpson-histogram"],
   ];
 
   const zip = new JSZip();
 
-  for (const id of svg_IDS) {
-    const svg = document.getElementById(id);
-    const b = get_svg_blob(svg);
-    zip.file(id + ".svg", b);
+  for (const [id, name] of svg_ids_and_names) {
+    const ele = document.getElementById(id);
+    html2canvas(ele,
+      {
+        scale: 8,
+      }
+      ).then(function(canvas) {
+      const w = canvas.width;
+      const h = canvas.height;
+      const img = canvas.toDataURL();
+      // saveAs(img, "test");
+
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: [420 * 2, 594 * 2]
+      });
+      const width = 420 * 2 - 40 * 2;
+      const height = width * h / w;
+      pdf.addImage(img, 'png', 40, 40, width, height);
+      zip.file(name + ".pdf", pdf.output("blob"));
+      // pdf.save(name + ".pdf");
+    });
   }
 
-  zip.generateAsync({type:"blob"})
-  .then(function (blob) {
-      saveAs(blob, "gmhi_plots.zip");
+  zip.generateAsync({type:'blob'}).then(function(content) {
+    saveAs(content, 'gmhi_plots.zip');
   });
 }

@@ -1,216 +1,15 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
-export const get_svg_blob = (svgEl) => {
-  // svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-  var svgData = svgEl.innerHTML;
-  var head = '<svg title="graph" version="1.1" xmlns="http://www.w3.org/2000/svg">';
-
-  const style = `<style> .footer {
-    color: #ccc;
-    /* position: fixed; */
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-  }
-  
-  #sideButton {
-    position: sticky !important;
-    top: 0 !important;
-  }
-  
-  .tick {
-    font-family : "Latin Modern" !important;
-  }
-  
-  .bottom-link {
-    color: inherit;
-  }
-  
-  .hide {
-    z-index: -5;
-  }
-  
-  .btn-close {
-    margin-right: 10px;
-    margin-top: 10px;
-  }
-  
-  red {
-    color: #a00 !important;
-  }
-  
-  #example {
-    color: #a00 !important;
-    text-decoration: underline;
-  }
-  
-  * {
-    box-shadow: none !important;
-  }
-  
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  *::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  * {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
-  
-  header {
-    margin-bottom: 100px;
-  }
-  
-  .setting {
-    margin-bottom: 80px;
-  }
-  
-  .fig {
-    margin-bottom: 150px;
-  }
-  
-  /* latex font */
-  
-  @font-face {
-    font-family: "Latin Modern";
-    font-style: normal;
-    font-weight: normal;
-    font-display: swap;
-    src: url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.woff2")
-        format("woff2"),
-      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.woff")
-        format("woff"),
-      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.ttf")
-        format("truetype");
-  }
-  
-  @font-face {
-    font-family: "Latin Modern";
-    font-style: normal;
-    font-weight: bold;
-    font-display: swap;
-    src: url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.woff2")
-        format("woff2"),
-      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.woff")
-        format("woff"),
-      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.ttf")
-        format("truetype");
-  }
-  
-  body {
-    font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
-    overscroll-behavior-y: none;
-  }
-  
-  
-  /* table stuff */
-  
-  /* Better tables */
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: auto;
-    max-width: 100%;
-    border-top: 2.27px solid black;
-    border-bottom: 2.27px solid black;
-    /* display: block; */
-    overflow-x: auto; /* does not work because element is not block */
-    /* white-space: nowrap; */
-    counter-increment: caption;
-  }
-  /* add bottom border on column table headings  */
-  table tr > th[scope='col'] {
-    border-bottom: 1.36px solid black;
-  }
-  /* add right border on row table headings  */
-  table tr > th[scope='row'] {
-    border-right: 1.36px solid black;
-  }
-  table > tbody > tr:first-child > td,
-  table > tbody > tr:first-child > th {
-    border-top: 1.36px solid black;
-  }
-  table > tbody > tr:last-child > td,
-  table > tbody > tr:last-child > th {
-    border-bottom: 1.36px solid black;
-  }
-  
-  th,
-  td {
-    text-align: left;
-    padding: 0.5rem;
-    line-height: 1.1;
-  }
-  /* Table caption */
-  caption {
-    text-align: left;
-    font-size: 0.923em;
-    /* border-bottom: 2pt solid #000; */
-    padding: 0 0.25em 0.25em;
-    width: 100%;
-    margin-left: 0;
-  }
-  
-  caption::before {
-    content: 'Table ' counter(caption) '. ';
-    font-weight: bold;
-  }
-  
-  /* allow scroll on the x-axis */
-  .scroll-wrapper {
-    overflow-x: auto;
-  }
-  
-  /* if a table is wrapped in a scroll wrapper,
-    the table cells shouldn't wrap */
-  .scroll-wrapper > table td {
-    white-space: nowrap;
-  }
-  
-  td {
-    text-align: center;
-  }
-  
-  .carousel-control-prev {
-    margin-left: -90px;
-    margin-top: -100px;
-  }
-  
-  .carousel-control-next {
-    margin-right: -80px;
-    margin-top: -100px;
-  }
-  
-  header {
-    border-radius: 25px;
-    background-color: #E0FFFF; 
-  }
-  
-  .grey {
-    background-color : #f2f2f2;
-  }
-  
-  text {
-    font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
-  }</style>`;
-  
-  var svgBlob = new Blob([head, style, svgData, "</svg>"], {type:"image/svg+xml;charset=utf-8"});
-  return svgBlob;
-}
-
-export const get_tabs = (title, names, narrow) => {
-  let carousel = `<ul class="nav nav-pills mb-3 ${narrow ? "" : "nav-justified"} justify-content-center" id="${title}-pills-tab" role="tablist">`
+export const get_tabs = (title, names, active) => {
+  let carousel = `<ul class="nav nav-tabs mb-3 nav-justified justify-content-center" id="${title}-pills-tab" role="tablist">`
 
   for (let i = 0; i < names.length; i++) {
     let name = names[i];
     name = name.replace(" ", "_");
     carousel += `
   <li class="nav-item" role="presentation">
-    <button class="nav-link ${i === 0 ? "active" : ""}" id="${title}-pills-${i}-tab" data-bs-toggle="pill" data-bs-target="#${title}-pills-${i}" type="button" role="tab" aria-controls="${title}-pills-${i}" aria-selected="true">${name.replace("_", " ")}</button>
+    <button class="nav-link ${i === active ? "active" : ""}" id="${title}-pills-${i}-tab" data-bs-toggle="pill" data-bs-target="#${title}-pills-${i}" type="button" role="tab" aria-controls="${title}-pills-${i}" aria-selected="true">${name.replace("_", " ")}</button>
   </li>
   `;
   }
@@ -219,18 +18,18 @@ export const get_tabs = (title, names, narrow) => {
   for (let i = 0; i < names.length; i++) {
     let name = names[i];
     name = name.replace(" ", "_");
-    carousel += `<div class="tab-pane fade show ${i === 0 ? "active" : ""}" id="${title}-pills-${i}" role="tabpanel" aria-labelledby="${title}-pills-${i}-tab">${name}</div>`
+    carousel += `<div class="tab-pane fade show ${i === active ? "active" : ""}" id="${title}-pills-${i}" role="tabpanel" aria-labelledby="${title}-pills-${i}-tab">${name}</div>`
   }
   carousel += "</div>";
   return carousel;
 }
 
-export const get_carousel = (name, num_slides) => {
+export const get_carousel = (name, num_slides, active) => {
   let carousel = `<div id="${name}_carousel" class="carousel slide carousel-dark" data-bs-ride="carousel", data-bs-interval="false">
   <div class="carousel-inner">`;
   for (let i = 0; i < num_slides; i++) {
     carousel += `
-    <div class="carousel-item ${i === 0 ? "active" : ""}" id="${name}_${i}">
+    <div class="carousel-item ${i === active ? "active" : ""}" id="${name}_${i}">
       blank
     </div>`;
   }

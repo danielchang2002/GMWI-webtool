@@ -21,6 +21,8 @@
   },
   "homepage": "https://danielchang2002.github.io/GMHI",
   "dependencies": {
-    "gh-pages": "^3.2.3"
+    "gh-pages": "^3.2.3",
+    "jspdf": "^2.5.1",
+    "svg2pdf.js": "^2.2.0"
   }
 }
