@@ -110,32 +110,61 @@ export const update_bar = () => {
 
 // updates figure 3
 const update_pca = () => {
-  const name = "pca";
-  const metric_list = ["Phenotype", "Phenotype_all"];
-  const num_slides = metric_list.length;
+  // const name = "pca";
+  // const metric_list = ["Phenotype", "Phenotype_all"];
+  // const num_slides = metric_list.length;
+  // let active = 0;
+
+  // // find the active one (if exists)
+  // const list = document.getElementsByClassName(`carousel-inner`);
+  // if (list.length !== 0) {
+  //   const items = list[0].getElementsByTagName("div");
+  //   for (let i = 0; i < items.length; i++) {
+  //     if (items[i].classList.contains("active")) {
+  //       active = i;
+  //     }
+  //   }
+  // }
+
+  // const carousel = get_carousel(name, num_slides, active);
+  // pca.innerHTML = carousel;
+  // const text = inputText.value;
+  // const species = sampleBox.value == -1 ? {}
+  //   : parse_file(text, "species", parseInt(sampleBox.value));
+  // for (let i = 0; i < num_slides; i++) {
+  //   const metric = metric_list[i];
+  //   const ele = document.getElementById(`${name}_${i}`);
+  //   plot_pca(ele, pca_data["scatter"], species, metric);
+  // }
+  const title = "pca";
+  const metric_list = ["Health Status", "Phenotype"];
+  const metric_list_true = ["Phenotype", "Phenotype_all"];
   let active = 0;
 
   // find the active one (if exists)
-  const list = document.getElementsByClassName(`carousel-inner`);
-  if (list.length !== 0) {
-    const items = list[0].getElementsByTagName("div");
+  const list = document.getElementById(`${title}-pills-tab`);
+  if (list !== null) {
+    const items = list.getElementsByTagName("li");
     for (let i = 0; i < items.length; i++) {
-      if (items[i].classList.contains("active")) {
+      if (items[i].getElementsByTagName("button")[0].classList.contains("active")) {
         active = i;
       }
     }
   }
 
-  const carousel = get_carousel(name, num_slides, active);
-  pca.innerHTML = carousel;
+  const tabs = get_tabs(title, metric_list, active);
+  pca.innerHTML = tabs;
+
   const text = inputText.value;
   const species = sampleBox.value == -1 ? {}
     : parse_file(text, "species", parseInt(sampleBox.value));
-  for (let i = 0; i < num_slides; i++) {
-    const metric = metric_list[i];
-    const ele = document.getElementById(`${name}_${i}`);
+  for (let i = 0; i < metric_list_true.length; i++) {
+    const metric = metric_list_true[i];
+    const ele = document.getElementById(`${title}-pills-${i}`);
     plot_pca(ele, pca_data["scatter"], species, metric);
   }
+
+
 };
 
 const update_hphm = () => {
