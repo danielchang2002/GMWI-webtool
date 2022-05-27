@@ -1,6 +1,41 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
+export const get_export_plot_link = (ele, name) => {
+  const a = document.createElement('a');
+  a.setAttribute("href", "#!");
+  a.innerText = "Export me!";
+  a.onclick = () => export_plot(ele, name);
+  return a;
+}
+
+const export_plot = (ele, name) => {
+  html2canvas(ele, {scale : 8,
+    onclone : function(doc) {
+      const eles = doc.getElementsByTagName("a");
+      for (const e of eles) {
+        e.innerHTML = "";
+      }
+    }  
+  }).then(
+    function(canvas) {
+    console.log("exporting...");
+    const w = canvas.width;
+    const h = canvas.height;
+    const img_url = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: [420 * 2, 594 * 2]
+    });
+    const width = 420 * 2 - 40 * 2;
+    const height = width * h / w;
+    pdf.addImage(img_url, 'png', 40, 40, width, height);
+    pdf.save(name + ".pdf");
+  })
+}
+
 export const get_tabs = (title, names, active) => {
   let carousel = `<ul class="nav nav-tabs mb-3 nav-justified justify-content-center" id="${title}-pills-tab" role="tablist">`
 
@@ -21,29 +56,6 @@ export const get_tabs = (title, names, active) => {
     carousel += `<div class="tab-pane fade show ${i === active ? "active" : ""}" id="${title}-pills-${i}" role="tabpanel" aria-labelledby="${title}-pills-${i}-tab">${name}</div>`
   }
   carousel += "</div>";
-  return carousel;
-}
-
-export const get_carousel = (name, num_slides, active) => {
-  let carousel = `<div id="${name}_carousel" class="carousel slide carousel-dark" data-bs-ride="carousel", data-bs-interval="false">
-  <div class="carousel-inner">`;
-  for (let i = 0; i < num_slides; i++) {
-    carousel += `
-    <div class="carousel-item ${i === active ? "active" : ""}" id="${name}_${i}">
-      blank
-    </div>`;
-  }
-  carousel += `
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#${name}_carousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#${name}_carousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>`;
   return carousel;
 }
 

@@ -1,4 +1,5 @@
 import { gmhi_model, pca_data } from "./data.js";
+import { get_export_plot_link } from "./utils.js";
 
 export function plot_pca(ele, data, sample, metric) {
   ele.innerHTML = "";
@@ -33,6 +34,9 @@ export function plot_pca(ele, data, sample, metric) {
   ele.appendChild(scatter);
   const caption = get_caption(metric, sample);
   ele.innerHTML += caption;
+  const metric_to_name = {Phenotype : "Health-Status", Phenotype_all : "Phenotype"};
+  const a = get_export_plot_link(ele, `${metric}-pca`);
+  ele.appendChild(a);
 
   const phens = pca_data["meta"]["encodings"][metric];
   phens.push("Nonhealthy");
@@ -82,9 +86,9 @@ const get_vector = (species) => {
 const get_caption = (metric, sample) => {
   const nonhealthy_color =
     metric === "Phenotype" ? "(orange)" : "(other colors)";
-  let string = `<br/><br/><b>PCA. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients.`;
+  let string = `<br/><br/><b>PCA. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients. `;
   if (JSON.stringify(sample) !== "{}") {
-    string += " The input sample (teal) is projected and highlighted.";
+    string += " The input sample (teal) is projected and highlighted. ";
   }
   return string;
 };

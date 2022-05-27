@@ -1,6 +1,6 @@
 // driver code
 
-import { get_percentile, get_carousel, get_tabs, } from "./utils.js";
+import { get_percentile, get_tabs, } from "./utils.js";
 import { plot_histogram } from "./histogram.js";
 import { plot_bar } from "./bar.js";
 import { plot_hphm } from "./hphm.js";
@@ -23,7 +23,7 @@ const ex_butt = document.getElementById("example");
 const clear_button = document.getElementById("clear");
 const submit_button = document.getElementById("submit");
 const export_button = document.getElementById("export");
-const export_plots_button = document.getElementById("exportPlots");
+// const export_plots_button = document.getElementById("exportPlots");
 const sampleBox = document.getElementById("sampleBox");
 const sampleDiv = document.getElementById("sampleDiv");
 
@@ -320,47 +320,4 @@ export_button.onclick = () => {
   let name = "gmhi_analysis.csv";
   if (sample_names.length === 1) name = sample_names[0];
   saveAs(blob, name);
-}
-
-export_plots_button.onclick = export_plots;
-
-function export_plots() {
-  const svg_ids_and_names = [
-    ["hist-pills-0", "GMHI-histogram"],
-    ["hist-pills-1", "Richness-histogram"],
-    // ["hist-pills-2", "Evenness-histogram"],
-    // ["hist-pills-3", "Shannon-histogram"],
-    // ["hist-pills-4", "Inverse_Simpson-histogram"],
-  ];
-
-  const zip = new JSZip();
-
-  for (const [id, name] of svg_ids_and_names) {
-    const ele = document.getElementById(id);
-    html2canvas(ele,
-      {
-        scale: 8,
-      }
-      ).then(function(canvas) {
-      const w = canvas.width;
-      const h = canvas.height;
-      const img = canvas.toDataURL();
-      // saveAs(img, "test");
-
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        format: [420 * 2, 594 * 2]
-      });
-      const width = 420 * 2 - 40 * 2;
-      const height = width * h / w;
-      pdf.addImage(img, 'png', 40, 40, width, height);
-      zip.file(name + ".pdf", pdf.output("blob"));
-      // pdf.save(name + ".pdf");
-    });
-  }
-
-  zip.generateAsync({type:'blob'}).then(function(content) {
-    saveAs(content, 'gmhi_plots.zip');
-  });
 }

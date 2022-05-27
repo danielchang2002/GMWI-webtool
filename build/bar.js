@@ -1,4 +1,4 @@
-import { update_bar } from "./app.js";
+import { get_export_plot_link } from "./utils.js";
 
 export function plot_bar(ele, data, sample, rank) {
   ele.innerHTML = "";
@@ -25,6 +25,8 @@ export function plot_bar(ele, data, sample, rank) {
   ele.appendChild(bar);
   const caption = get_caption(data[0].pop, rank, sample);
   ele.innerHTML += caption;
+  const a = get_export_plot_link(ele, `${rank}-Stacked-bar`);
+  ele.appendChild(a);
 
   // hover events
   for (const tax of final_data.map((ele) => ele["taxon"])) {
@@ -157,9 +159,9 @@ const get_caption = (pop, rank, sample) => {
   let string;
   const figname = "Taxonomic Distribution";
   if (sample.length == 0) {
-    string = `<br/><br/><b>${figname}. </b> Distribution of the average relative abundances of the gut microbiomes of ${desc[pop]} patients at the ${rank} level.`;
+    string = `<br/><br/><b>${figname}. </b> Distribution of the average relative abundances of the gut microbiomes of ${desc[pop]} patients at the ${rank} level. `;
   } else {
-    string = `<br/><br/><b>${figname}. </b> Distribution of the relative abundances of the input sample (left) and average relative abundances of the gut microbiomes of ${desc[pop]} patients (right) at the ${rank} level.`;
+    string = `<br/><br/><b>${figname}. </b> Distribution of the relative abundances of the input sample (left) and average relative abundances of the gut microbiomes of ${desc[pop]} patients (right) at the ${rank} level. `;
   }
   return string;
 };

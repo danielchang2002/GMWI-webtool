@@ -7,6 +7,10 @@
   text-align: center;
 }
 
+a {
+  color: #a00 !important;
+}
+
 #sideButton {
   position: sticky !important;
   top: 0 !important;
@@ -30,12 +34,11 @@
 }
 
 red {
-  color: #a00 !important;
+  color: #a00;
 }
 
 #example {
-  color: #a00 !important;
-  text-decoration: underline;
+  color: #a00;
 }
 
 * {

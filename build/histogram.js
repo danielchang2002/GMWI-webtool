@@ -1,4 +1,5 @@
 import { colors } from "./data.js";
+import { get_export_plot_link } from "./utils.js";
 
 export function plot_histogram(ele, score, data, index, pop, perc) {
   const label = {
@@ -15,16 +16,18 @@ export function plot_histogram(ele, score, data, index, pop, perc) {
   ele.appendChild(hist);
   const caption = get_caption(pop, index, score, perc, label);
   ele.innerHTML += caption;
+  const a = get_export_plot_link(ele, `${index}-Histogram`);
+  ele.appendChild(a);
 }
 
 const get_caption = (pop, index, score, perc, label) => {
   const num = { healthy: 2754, nonhealthy: 2272, all: 5026 };
   const popDesc = `${num[pop]} ${
     pop == "all" ? "healthy and nonhealthy" : pop
-  } patients.`;
+  } patients. `;
   let string = `<br/><br/><b>Ecological Index. </b> ${label[index]} scores of the gut microbiomes of ${popDesc}`;
   if (score != null) {
-    string += ` The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc}<sup>th</sup> percentile of a population of ${popDesc}`;
+    string += `The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc}<sup>th</sup> percentile of a population of ${popDesc}`;
   }
   return string;
 };

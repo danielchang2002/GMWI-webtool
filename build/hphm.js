@@ -1,4 +1,5 @@
 import { gmhi_model, medians } from "./data.js"
+import { get_export_plot_link } from "./utils.js";
 
 export function plot_hphm(ele, sample) {
   const hp = gmhi_model['health_abundant']
@@ -27,11 +28,13 @@ export function plot_hphm(ele, sample) {
 
   const num_hp = Object.keys(sample).filter(ele => hp.has(ele)).length;
   const num_hm = Object.keys(sample).filter(ele => hm.has(ele)).length;
-  let caption = `<br/><b>GMHI Species. </b> Presence/absence of health prevalent (green) and health scarce (red) species.`
+  let caption = `<br/><b>GMHI Species. </b> Presence/absence of health prevalent (green) and health scarce (red) species. `
   if (!empty) {
-    caption += ` The input sample has ${num_hp} out of 7 health prevalent and ${num_hm} out of 43 health scarce species.`
+    caption += ` The input sample has ${num_hp} out of 7 health prevalent and ${num_hm} out of 43 health scarce species. `
   }
   ele.innerHTML += caption;
+  const a = get_export_plot_link(ele, `GMHI-species`);
+  ele.appendChild(a);
 
 }
 
