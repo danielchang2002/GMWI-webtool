@@ -27,8 +27,6 @@ export function plot_abundant(ele, sample) {
 
   let caption = `<br/><b>Most Abundant Taxa.</b> The input sample's top 3 most abundant taxa at each taxonomic rank. `
   ele.innerHTML += caption;
-  const a = get_export_plot_link(ele, `most-abundant-taxa`);
-  ele.appendChild(a);
 
 }
 

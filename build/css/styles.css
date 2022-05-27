@@ -20,6 +20,10 @@ a {
   font-family : "Latin Modern" !important;
 }
 
+.wait {
+  cursor: wait
+}
+
 .bottom-link {
   color: inherit;
 }

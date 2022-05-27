@@ -33,8 +33,6 @@ export function plot_hphm(ele, sample) {
     caption += ` The input sample has ${num_hp} out of 7 health prevalent and ${num_hm} out of 43 health scarce species. `
   }
   ele.innerHTML += caption;
-  const a = get_export_plot_link(ele, `GMHI-species`);
-  ele.appendChild(a);
 
 }
 

@@ -1,16 +1,39 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
-export const get_export_plot_link = (ele, name) => {
+export function get_export_plot_link(ele, name) {
   const a = document.createElement('a');
   a.setAttribute("href", "#!");
   a.innerText = "Export me!";
-  a.onclick = () => export_plot(ele, name);
+
+  a.onclick = () => {
+    export_plot(ele, name);
+  }
   return a;
 }
 
-const export_plot = (ele, name) => {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function export_plot(ele, name) {
+  for (const ele of document.querySelectorAll("*")) {
+    ele.classList.add("wait");
+  }
+  console.log("done setting css");
+  await sleep(100);
+  console.log("done sleeping");
+  console.log("Start export");
+  const start = performance.now();
+  const pca = document.getElementById("pca");
+  const isPCA = pca.contains(ele);
   html2canvas(ele, {scale : 8,
+    ignoreElements : function(element) {
+      const ignore = !isPCA && (element.id == pca || pca.contains(element));
+      return ignore;
+      // const ignore = element.id !== ele.id && !ele.contains(element) && !element.contains(ele);
+      // return ignore;
+    },
     onclone : function(doc) {
       const eles = doc.getElementsByTagName("a");
       for (const e of eles) {
@@ -19,20 +42,27 @@ const export_plot = (ele, name) => {
     }  
   }).then(
     function(canvas) {
-    console.log("exporting...");
-    const w = canvas.width;
-    const h = canvas.height;
-    const img_url = canvas.toDataURL("image/png");
+      console.log("Finished canvas conversion");
+      const w = canvas.width;
+      const h = canvas.height;
+      const img = canvas.toDataURL("image/jpeg", 1.0)
+      console.log("Finished converting to jpeg");
 
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: [420 * 2, 594 * 2]
-    });
-    const width = 420 * 2 - 40 * 2;
-    const height = width * h / w;
-    pdf.addImage(img_url, 'png', 40, 40, width, height);
-    pdf.save(name + ".pdf");
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: [420 * 2, 594 * 2]
+        });
+        const width = 420 * 2 - 40 * 2;
+        const height = width * h / w;
+        pdf.addImage(img, 'png', 40, 40, width, height);
+        console.log("Added image");
+        pdf.save(name + ".pdf");
+        const duration = performance.now() - start;
+        console.log(duration);
+        for (const ele of document.querySelectorAll("*")) {
+          ele.classList.remove("wait");
+        }
   })
 }
 
