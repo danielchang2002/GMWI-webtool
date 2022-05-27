@@ -7,7 +7,7 @@ export function get_export_plot_link(ele, name) {
   a.innerText = "Export me!";
 
   a.onclick = () => {
-    export_plot(ele, name);
+    export_plot(a, ele, name);
   }
   return a;
 }
@@ -16,10 +16,11 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function export_plot(ele, name) {
+async function export_plot(self, ele, name) {
   for (const ele of document.querySelectorAll("*")) {
     ele.classList.add("wait");
   }
+  self.innerText = "Exporting..."
   console.log("done setting css");
   await sleep(100);
   console.log("done sleeping");
@@ -63,6 +64,7 @@ async function export_plot(ele, name) {
         for (const ele of document.querySelectorAll("*")) {
           ele.classList.remove("wait");
         }
+        self.innerText = "Export me!"
   })
 }
 
