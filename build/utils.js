@@ -1,13 +1,16 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
-export function get_export_plot_link(ele, name) {
+export function get_export_plot_link(ele, name, svg) {
   const a = document.createElement('a');
   a.setAttribute("href", "#!");
   a.innerText = "Export me!";
 
   a.onclick = () => {
-    export_plot(a, ele, name);
+    const zip = new JSZip();
+    const b = get_svg_blob(svg);
+    zip.file(name + ".svg", b);
+    export_plot(a, ele, name, zip);
   }
   return a;
 }
@@ -16,7 +19,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function export_plot(self, ele, name) {
+async function export_plot(self, ele, name, zip) {
   for (const ele of document.querySelectorAll("*")) {
     ele.classList.add("wait");
   }
@@ -46,26 +49,219 @@ async function export_plot(self, ele, name) {
       console.log("Finished canvas conversion");
       const w = canvas.width;
       const h = canvas.height;
-      const img = canvas.toDataURL("image/jpeg", 1.0)
-      console.log("Finished converting to jpeg");
-
-        const pdf = new jsPDF({
-          orientation: "portrait",
-          unit: "mm",
-          format: [420 * 2, 594 * 2]
+      const img = canvas.toBlob(function(blob){
+        zip.file(name + ".png", blob);
+        zip.generateAsync({type:"blob"})
+        .then(function(content) {
+            saveAs(content, name + ".zip");
+            for (const ele of document.querySelectorAll("*")) {
+              ele.classList.remove("wait");
+            }
+            self.innerText = "Export me!"
         });
-        const width = 420 * 2 - 40 * 2;
-        const height = width * h / w;
-        pdf.addImage(img, 'png', 40, 40, width, height);
-        console.log("Added image");
-        pdf.save(name + ".pdf");
-        const duration = performance.now() - start;
-        console.log(duration);
-        for (const ele of document.querySelectorAll("*")) {
-          ele.classList.remove("wait");
-        }
-        self.innerText = "Export me!"
+      });
   })
+}
+
+export const get_svg_blob = (svgEl) => {
+  // svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  var svgData = svgEl.innerHTML;
+  var head = '<svg title="graph" version="1.1" xmlns="http://www.w3.org/2000/svg">';
+
+  const style = `<style> .footer {
+    color: #ccc;
+    /* position: fixed; */
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  #sideButton {
+    position: sticky !important;
+    top: 0 !important;
+  }
+  
+  .tick {
+    font-family : "Latin Modern" !important;
+  }
+  
+  .bottom-link {
+    color: inherit;
+  }
+  
+  .hide {
+    z-index: -5;
+  }
+  
+  .btn-close {
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  
+  red {
+    color: #a00 !important;
+  }
+  
+  #example {
+    color: #a00 !important;
+    text-decoration: underline;
+  }
+  
+  * {
+    box-shadow: none !important;
+  }
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  * {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  header {
+    margin-bottom: 100px;
+  }
+  
+  .setting {
+    margin-bottom: 80px;
+  }
+  
+  .fig {
+    margin-bottom: 150px;
+  }
+  
+  /* latex font */
+  
+  @font-face {
+    font-family: "Latin Modern";
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+    src: url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.woff2")
+        format("woff2"),
+      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.woff")
+        format("woff"),
+      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-regular.ttf")
+        format("truetype");
+  }
+  
+  @font-face {
+    font-family: "Latin Modern";
+    font-style: normal;
+    font-weight: bold;
+    font-display: swap;
+    src: url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.woff2")
+        format("woff2"),
+      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.woff")
+        format("woff"),
+      url("https://raw.githubusercontent.com/vincentdoerig/latex-css/master/fonts/LM-bold.ttf")
+        format("truetype");
+  }
+  
+  body {
+    font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
+    overscroll-behavior-y: none;
+  }
+  
+  
+  /* table stuff */
+  
+  /* Better tables */
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: auto;
+    max-width: 100%;
+    border-top: 2.27px solid black;
+    border-bottom: 2.27px solid black;
+    /* display: block; */
+    overflow-x: auto; /* does not work because element is not block */
+    /* white-space: nowrap; */
+    counter-increment: caption;
+  }
+  /* add bottom border on column table headings  */
+  table tr > th[scope='col'] {
+    border-bottom: 1.36px solid black;
+  }
+  /* add right border on row table headings  */
+  table tr > th[scope='row'] {
+    border-right: 1.36px solid black;
+  }
+  table > tbody > tr:first-child > td,
+  table > tbody > tr:first-child > th {
+    border-top: 1.36px solid black;
+  }
+  table > tbody > tr:last-child > td,
+  table > tbody > tr:last-child > th {
+    border-bottom: 1.36px solid black;
+  }
+  
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem;
+    line-height: 1.1;
+  }
+  /* Table caption */
+  caption {
+    text-align: left;
+    font-size: 0.923em;
+    /* border-bottom: 2pt solid #000; */
+    padding: 0 0.25em 0.25em;
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  caption::before {
+    content: 'Table ' counter(caption) '. ';
+    font-weight: bold;
+  }
+  
+  /* allow scroll on the x-axis */
+  .scroll-wrapper {
+    overflow-x: auto;
+  }
+  
+  /* if a table is wrapped in a scroll wrapper,
+    the table cells shouldn't wrap */
+  .scroll-wrapper > table td {
+    white-space: nowrap;
+  }
+  
+  td {
+    text-align: center;
+  }
+  
+  .carousel-control-prev {
+    margin-left: -90px;
+    margin-top: -100px;
+  }
+  
+  .carousel-control-next {
+    margin-right: -80px;
+    margin-top: -100px;
+  }
+  
+  header {
+    border-radius: 25px;
+    background-color: #E0FFFF; 
+  }
+  
+  .grey {
+    background-color : #f2f2f2;
+  }
+  
+  text {
+    font-family: "Latin Modern", Georgia, Cambria, "Times New Roman", Times, serif;
+  }</style>`;
+
+  var svgBlob = new Blob([head, style, svgData, "</svg>"], {type:"image/svg+xml;charset=utf-8"});
+  return svgBlob;
 }
 
 export const get_tabs = (title, names, active) => {

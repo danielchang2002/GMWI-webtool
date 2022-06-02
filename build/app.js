@@ -27,8 +27,6 @@ const export_button = document.getElementById("export");
 const sampleBox = document.getElementById("sampleBox");
 const sampleDiv = document.getElementById("sampleDiv");
 
-window.jsPDF = window.jspdf.jsPDF;
-
 // hide sample select initially
 sampleDiv.style.display = 'none';
 

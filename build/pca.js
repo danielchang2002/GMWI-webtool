@@ -35,7 +35,7 @@ export function plot_pca(ele, data, sample, metric) {
   const caption = get_caption(metric, sample);
   ele.innerHTML += caption;
   const metric_to_name = {Phenotype : "Health-Status", Phenotype_all : "Phenotype"};
-  const a = get_export_plot_link(ele, `${metric}-pca`);
+  const a = get_export_plot_link(ele, `${metric}-pca`, scatter);
   ele.appendChild(a);
 
   const phens = pca_data["meta"]["encodings"][metric];

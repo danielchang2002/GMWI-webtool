@@ -16,7 +16,7 @@ export function plot_histogram(ele, score, data, index, pop, perc) {
   ele.appendChild(hist);
   const caption = get_caption(pop, index, score, perc, label);
   ele.innerHTML += caption;
-  const a = get_export_plot_link(ele, `${index}-Histogram`);
+  const a = get_export_plot_link(ele, `${index}-Histogram`, hist);
   ele.appendChild(a);
 }
 

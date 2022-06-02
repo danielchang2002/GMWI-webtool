@@ -9,9 +9,10 @@ export function plot_hphm(ele, sample) {
 
   ele.innerHTML = (
   `
-  <h2 class="text-center">G️MHI Species</h1>
+  <h2 class="text-center">G️MHI Species</h2>
   <br>
-  <table>
+  <div class="">
+  <table class="">
     <tbody>
       <tr>
         <th scope="col">Species Name</th>
@@ -23,7 +24,9 @@ export function plot_hphm(ele, sample) {
       ${get_rows(hp, sample, "green", empty)}
       ${get_rows(hm, sample, "#a00", empty)}
     </tbody>
-  </table>`
+  </table>
+  </div>
+  `
   );
 
   const num_hp = Object.keys(sample).filter(ele => hp.has(ele)).length;

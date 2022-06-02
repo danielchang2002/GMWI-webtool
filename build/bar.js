@@ -25,7 +25,7 @@ export function plot_bar(ele, data, sample, rank) {
   ele.appendChild(bar);
   const caption = get_caption(data[0].pop, rank, sample);
   ele.innerHTML += caption;
-  const a = get_export_plot_link(ele, `${rank}-Stacked-bar`);
+  const a = get_export_plot_link(ele, `${rank}-Stacked-bar`, bar);
   ele.appendChild(a);
 
   // hover events
