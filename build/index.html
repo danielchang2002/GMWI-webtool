@@ -41,7 +41,7 @@
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js" integrity="sha512-xcHCGC5tQ0SHlRX8Anbz6oy/OullASJkEhb4gjkneVpGE3/QGYejf14CUO5n5q5paiHfRFTa9HKgByxzidw2Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.0/jszip.min.js" integrity="sha512-xcHCGC5tQ0SHlRX8Anbz6oy/OullASJkEhb4gjkneVpGE3/QGYejf14CUO5n5q5paiHfRFTa9HKgByxzidw2Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> -->
     <script src="html2canvas.min.js"></script>
     <script type="module" src="app.js" defer></script>
@@ -94,10 +94,10 @@
           <div class="setting">
             <h4><b>Input Data </b></h4>
             <p>
-              Upload/paste MetaPhlAn output file (.txt)
+              Upload or paste MetaPhlAn output file (.txt)
 
                 <!-- tooltip -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Please upload/paste the taxonomic profile resulting from running MetaPhlAn on your metagenome .fastq files.">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="The required MetaPhlAn output data is the unedited .txt taxonomic profile(s) resulting from running MetaPhlAn on metagenome .fastq files(s).">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                   <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
                 </svg>
@@ -114,7 +114,7 @@
             <br />
 
             <!-- <a href="#!" class="" id="example">Example data</a> -->
-            <button type="button" id="example" class="btn btn-outline-info">
+            <button type="button" id="example" class="btn btn-outline-primary">
               Example data
             </button>
 
@@ -129,7 +129,7 @@
             <div class="" id="sampleDiv">
               <label for="sampleBox">Select sample
                 <!-- tooltip -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Your MetaPhlAn output file has multiple samples, please select a sample to analyze.
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="If your MetaPhlAn output file has multiple samples, please select one sample for analysis.
                 ">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                   <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
@@ -142,10 +142,10 @@
               <br />
             </div>
             
-            <label for="popBox">Choose health status for analyses
+            <label for="popBox">Select health status for analyses
 
               <!-- tooltip -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Please select whether you would like to compare the input sample with healthy, nonhealthy, or all samples in the pooled dataset used to determine GMHI (For the first two plots only)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Please select whether you would like to compare the input sample with healthy samples, nonhealthy samples, or all samples in the pooled gut microbiome dataset. This selection pertains to the first two plots only.">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
               </svg>
@@ -188,13 +188,13 @@
           <!-- title -->
           <header class="">
             <br>
-            <h1 class="display-6 text-center">Gut Microbiome Health Index️</h1>
+            <h1 class="display-6 text-center">Gut Microbiome Health Index️ &beta;</h1>
             <br>
                 <p>
                   Gut Microbiome Health Index️ (GMHI) is a biologically-interpretable mathematical formula for predicting the likelihood of disease independent of the clinical diagnosis.
-                  GMHI depends on health-prevalent and health-scarce species sets determined and validated using a pooled dataset of 5,026 stool shotgun metagenomic samples from 43 independent studies.
-                  Read the 
-                  <a href="https://www.nature.com/articles/s41467-020-18476-8" target="_blank">original paper</a>
+                  GMHI is computed from sets of health-prevalent and health-scarce microbial species, which were determined and validated using a pooled dataset of 5,026 stool shotgun metagenomes from 43 independent studies. 
+                  Read the original paper
+                  <a href="https://www.nature.com/articles/s41467-020-18476-8" target="_blank">here</a>.
                 </p>
             <br>
           </header>
