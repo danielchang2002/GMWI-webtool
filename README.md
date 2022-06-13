@@ -7,11 +7,12 @@
 
 ## Description
 
-An [interactive web-app](https://danielchang2002.github.io/GMHI) that analyzes gut microbiome samples.
+A [user-friendly tool](https://danielchang2002.github.io/GMHI) for assessing health through metagenomic gut microbiome profiling
+
 
 ## Usage
 
-1. Run [MetaPhlAn](https://github.com/biobakery/MetaPhlAn) on your fastq file(s)
+1. Run [MetaPhlAn](https://github.com/biobakery/MetaPhlAn) on your metagenome .fastq file(s)
 
 ```bash
 metaphlan metagenome_1.fastq --input_type fastq -o profiled_metagenome_1.txt
@@ -26,9 +27,9 @@ metaphlan metagenome_n.fastq --input_type fastq -o profiled_metagenome_n.txt
 merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 ```
 
-3. Upload (merged) MetaPhlAn output to [GMHI webtool](https://danielchang2002.github.io/GMHI/)
+3. Upload (merged) MetaPhlAn output to [GMHI-webtool](https://danielchang2002.github.io/GMHI/)
 
-4. Profit
+4. Profit 🤑
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
