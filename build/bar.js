@@ -1,4 +1,4 @@
-import { get_export_plot_link } from "./utils.js";
+import { get_export_svg_link, get_export_png_link } from "./utils.js";
 
 export function plot_bar(ele, data, sample, rank) {
   ele.innerHTML = "";
@@ -25,7 +25,10 @@ export function plot_bar(ele, data, sample, rank) {
   ele.appendChild(bar);
   const caption = get_caption(data[0].pop, rank, sample);
   ele.innerHTML += caption;
-  const a = get_export_plot_link(ele, `${rank}-Stacked-bar`, bar);
+  let a = get_export_svg_link(`${rank}-Stacked-bar`, bar);
+  ele.appendChild(a);
+  ele.insertAdjacentHTML('beforeend', " ");
+  a = get_export_png_link(`${rank}-Stacked-bar`, ele);
   ele.appendChild(a);
 
   // hover events
@@ -121,6 +124,16 @@ const preprocess = (data, sample) => {
     final_data = reduced_data_filled.concat(reduced_sample_filled);
     taxons = taxons.concat(["Others"]);
   }
+
+  // Sort the taxons in alphabetical order (but "Others" is first)
+  const alpha = (a, b) => {
+    if (a === "Others") return 1;
+    if (a < b) return 1;
+    if (a > b) return -1;
+    return 0;
+  }
+  taxons.sort(alpha);
+
   return [final_data, taxons];
 };
 
@@ -159,9 +172,9 @@ const get_caption = (pop, rank, sample) => {
   let string;
   const figname = "Taxonomic Distribution";
   if (sample.length == 0) {
-    string = `<br/><br/><b>${figname}. </b> Distribution of the average relative abundances of the gut microbiomes of ${desc[pop]} patients at the ${rank} level. `;
+    string = `<br/><br/><b>${figname}. </b> Distribution of the average relative abundances of the gut microbes of ${desc[pop]} persons at the ${rank} level. `;
   } else {
-    string = `<br/><br/><b>${figname}. </b> Distribution of the relative abundances of the input sample (left) and average relative abundances of the gut microbiomes of ${desc[pop]} patients (right) at the ${rank} level. `;
+    string = `<br/><br/><b>${figname}. </b> Distribution of the relative abundances of the input sample microbes (left) and average relative abundances of the gut microbes of ${desc[pop]} persons (right) at the ${rank} level. `;
   }
   return string;
 };

@@ -274,7 +274,7 @@ submit_button.onclick = (e) => {
 
 ex_butt.onclick = () => {
   inputText.value = example;
-  // inputFile.value = "example_MetaPhlAn_output.txt";
+  inputFile.value = "";
   update_sample_box();
 };
 
@@ -283,6 +283,10 @@ ex_butt.onclick = () => {
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl)
 })
 
 export_button.onclick = () => {

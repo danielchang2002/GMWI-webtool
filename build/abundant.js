@@ -1,5 +1,4 @@
 import { medians } from "./data.js"
-import { get_export_plot_link } from "./utils.js";
 
 
 export function plot_abundant(ele, sample) {
@@ -16,16 +15,16 @@ export function plot_abundant(ele, sample) {
         <th scope="col">Rank</th>
         <th scope="col">Most Abundant Taxa</th>
         <th scope="col">Relative Abundance</th>
-        <th scope="col">Median (Healthy)</th>
-        <th scope="col">Median (Nonhealthy)</th>
-        <th scope="col">Median (All)</th>
+        <th scope="col">Median in Healthy</th>
+        <th scope="col">Median in Nonhealthy</th>
+        <th scope="col">Median in All</th>
       </tr>
         ${(ranks.map((rank, idx) => get_row(rank, sample, idx, empty))).join("")}
     </tbody>
   </table>`
   );
 
-  let caption = `<br/><b>Most Abundant Taxa.</b> The input sample's top 3 most abundant taxa at each taxonomic rank. `
+  let caption = `<br/><b>Most Abundant Taxa.</b> Top 3 of the most abundant taxa in the input sample.`
   ele.innerHTML += caption;
 
 }

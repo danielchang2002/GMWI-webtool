@@ -94,16 +94,14 @@
           <div class="setting">
             <h4><b>Input Data </b></h4>
             <p>
-              Upload MetaPhlAn output
+              Upload/paste MetaPhlAn output file (.txt)
 
-              <!-- tooltip -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-              </svg>
-
+                <!-- tooltip -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Please upload/paste the taxonomic profile resulting from running MetaPhlAn on your metagenome .fastq files.">
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                  <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                </svg>
             </p>
-            <a href="#!" class="" id="example">Example data</a>
             <br />
             <input
               class="form-control"
@@ -113,13 +111,26 @@
             />
             <br />
             <textarea class="form-control" id="inputText" rows="6"></textarea>
+            <br />
 
+            <!-- <a href="#!" class="" id="example">Example data</a> -->
+            <button type="button" id="example" class="btn btn-outline-info">
+              Example data
+            </button>
+
+            <button type="button" id="clear" class="btn btn-outline-danger">
+              Clear
+            </button>
+            <br />
+            <br />
+            <br />
             <br />
 
             <div class="" id="sampleDiv">
               <label for="sampleBox">Select sample
                 <!-- tooltip -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Your MetaPhlAn output file has multiple samples, please select a sample to analyze.
+                ">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                   <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
                 </svg>
@@ -131,10 +142,10 @@
               <br />
             </div>
             
-            <label for="popBox">Comparison population
+            <label for="popBox">Choose health status for analyses
 
               <!-- tooltip -->
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="<em>Tooltip</em> <u>with</u> <b>HTML</b>">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" transform="translate(0, -1)" title="Please select the health status population from the pooled dataset used by Gupta <i>et. al</i> to compare with the input sample for the first two plots.">
                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                 <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
               </svg>
@@ -151,18 +162,18 @@
             </select>
             <br/>
 
-            <button type="button" id="submit" class="btn btn-outline-primary btn-sm">
-              Display
+            <button type="button" id="submit" class="btn btn-outline-primary">
+              Display results
             </button>
-            <button type="button" id="export" class="btn btn-outline-success btn-sm">
+            <button type="button" id="export" class="btn btn-outline-success">
               Export as CSV
             </button>
             <!-- <button type="button" id="exportPlots" class="btn btn-outline-info btn-sm">
               Export Plots
             </button> -->
-            <button type="button" id="clear" class="btn btn-outline-danger btn-sm">
+            <!-- <button type="button" id="clear" class="btn btn-outline-danger btn-sm">
               Clear
-            </button>
+            </button> -->
           </div>
           <!-- end input -->
         </div>
@@ -177,7 +188,14 @@
           <!-- title -->
           <header class="">
             <br>
-            <h1 class="display-6 text-center">💩 Gut Microbiome Health Index 🛠️</h1>
+            <h1 class="display-6 text-center">Gut Microbiome Health Index️</h1>
+            <br>
+                <p>
+                  Gut Microbiome Health Index️ (GMHI) is a biologically-interpretable mathematical formula for predicting the likelihood of disease independent of the clinical diagnosis.
+                  GMHI depends on health-prevalent and health-scarce species sets determined and validated using a pooled dataset of 5,026 stool shotgun metagenomic samples from 43 independent studies.
+                  Read the 
+                  <a href="https://www.nature.com/articles/s41467-020-18476-8" target="_blank">original paper</a>
+                </p>
             <br>
           </header>
 
@@ -194,7 +212,6 @@
     <!-- start footer  -->
     <footer class="footer">
       <div class="container text-center">
-        <p class="text-muted">
           <a
             style="text-decoration: none"
             href="https://github.com/danielchang2002/GMHI"
@@ -214,7 +231,8 @@
             </svg>
             source</a
           >
-        </p>
+          <br/>
+          <br/>
       </div>
     </footer>
     <!-- end footer -->

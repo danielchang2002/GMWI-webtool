@@ -2,7 +2,7 @@
   color: #ccc;
   /* position: fixed; */
   left: 0;
-  bottom: 0;
+  bottom: 100 !important;
   width: 100%;
   text-align: center;
 }
@@ -42,9 +42,9 @@ red {
   color: #a00;
 }
 
-#example {
+/* #example {
   color: #a00;
-}
+} */
 
 * {
   box-shadow: none !important;
@@ -187,7 +187,15 @@ td {
 
 header {
   border-radius: 25px;
-  background-color: #E0FFFF; 
+  /* background-color: #E0FFFF;  */
+}
+
+p {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  margin-top: 1rem;
 }
 
 .grey {

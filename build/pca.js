@@ -1,5 +1,5 @@
 import { gmhi_model, pca_data } from "./data.js";
-import { get_export_plot_link } from "./utils.js";
+import { get_export_svg_link, get_export_png_link } from "./utils.js";
 
 export function plot_pca(ele, data, sample, metric) {
   ele.innerHTML = "";
@@ -35,7 +35,10 @@ export function plot_pca(ele, data, sample, metric) {
   const caption = get_caption(metric, sample);
   ele.innerHTML += caption;
   const metric_to_name = {Phenotype : "Health-Status", Phenotype_all : "Phenotype"};
-  const a = get_export_plot_link(ele, `${metric}-pca`, scatter);
+  let a = get_export_svg_link(`${metric}-pca`, scatter);
+  ele.appendChild(a);
+  ele.insertAdjacentHTML('beforeend', " ");
+  a = get_export_png_link(`${metric}-pca`, ele);
   ele.appendChild(a);
 
   const phens = pca_data["meta"]["encodings"][metric];
@@ -46,23 +49,38 @@ export function plot_pca(ele, data, sample, metric) {
     d3.selectAll(`#${phen}_square-text`)
     .on("mouseover", function(){handle_mouseover(phen, phens)})
     .on("mouseout", function(){handle_mouseout(phen, phens)})
-
-    // d3.select(`#${phen}_dot`)
-    // .on("mouseover", function(){handle_mouseover(phen, phens)})
-    // .on("mouseout", function(){handle_mouseout(phen, phens)})
   }
+}
 
+const short_to_long = {
+      "Nonhealthy" : "Nonhealthy",
+      "Healthy" : "Healthy",
+      'ACVD' : "Atherosclerotic cardiovascular disease",
+      'AS' : "Ankylosing spondylitis",
+      'CRC' : "Colorectal cancer", 
+      'CD' : "Crohn's disease",
+      'IGT' : "Impaired glucose tolerance",
+      'LC' : "Leptomeningeal carcinomatosis",
+      'NAFLD' : "Nonalcoholic fatty liver disease",
+      'OB' : "Obesity",
+      'OW' : "Overweight",
+      'RA' : "Rheumatoid arthritis",
+      'SA' : "Symptomatic atherosclerosis",
+      'T2D' : "Type 2 diabetes",
+      'UC': "Ulcerative colitis",
+      'UW' : "Underweight",
+      'AA' : "Advanced adenoma"
 }
 
 const handle_mouseover = (phen, phens) => {
     for (const p of phens) {
       if (p === phen) {
         d3.selectAll(`#${p}_dot`).attr("style", "opacity: 1;")
+        d3.selectAll(`#${p}_long`).attr("style", "opacity: 1")
       }
       else {
         d3.selectAll(`#${p}_dot`).attr("style", "opacity: 0.1;")
         d3.selectAll(`#${p}_square`).attr("opacity", "0.5")
-        // d3.selectAll(`#${p}_square`).attr("filter", "brightness(50%)");
         d3.selectAll(`#${p}_square-text`).attr("opacity", "0.5");
       }
     }
@@ -72,8 +90,8 @@ const handle_mouseout = (phen, phens) => {
     for (const p of phens) {
       d3.selectAll(`#${p}_dot`).attr("style", "opacity: 0.8;")
       d3.selectAll(`#${p}_square`).attr("opacity", "1")
-      // d3.selectAll(`#${p}_square`).attr("filter", "brightness(100%)")
       d3.selectAll(`#${p}_square-text`).attr("opacity", "1");
+      d3.selectAll(`#${p}_long`).attr("style", "opacity: 0")
     }
 }
 
@@ -86,7 +104,7 @@ const get_vector = (species) => {
 const get_caption = (metric, sample) => {
   const nonhealthy_color =
     metric === "Phenotype" ? "(orange)" : "(other colors)";
-  let string = `<br/><br/><b>PCA. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} patients. `;
+  let string = `<br/><br/><b>PCA. </b> Principal component analysis (PCA) of the gut microbiomes of 5026 healthy (blue) and nonhealthy ${nonhealthy_color} persons. `;
   if (JSON.stringify(sample) !== "{}") {
     string += " The input sample (teal) is projected and highlighted. ";
   }
@@ -331,6 +349,16 @@ function Scatterplot(
       .style("font-size", "15px")
       .attr("alignment-baseline", "middle")
       .attr("id", `${encoding[i]}_square-text`);
+
+    svg
+      .append("text")
+      .attr("x", 100)
+      .attr("y", 50)
+      .text(short_to_long[text])
+      .style("font-size", "15px")
+      .attr("alignment-baseline", "middle")
+      .attr("opacity", 0)
+      .attr("id", `${text}_long`);
   }
 
   if (sample !== null) {

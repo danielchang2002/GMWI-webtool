@@ -1,16 +1,26 @@
 import { indicies } from "./indicies.js";
 import { index_data, gmhi_model } from "./data.js";
 
-export function get_export_plot_link(ele, name, svg) {
+export function get_export_svg_link(name, svg) {
   const a = document.createElement('a');
   a.setAttribute("href", "#!");
-  a.innerText = "Export me!";
+  a.innerText = "Export as .svg";
 
   a.onclick = () => {
-    const zip = new JSZip();
+    console.log("hi");
     const b = get_svg_blob(svg);
-    zip.file(name + ".svg", b);
-    export_plot(a, ele, name, zip);
+    saveAs(b, name + ".svg");
+  }
+  return a;
+}
+
+export function get_export_png_link(name, ele) {
+  const a = document.createElement('a');
+  a.setAttribute("href", "#!");
+  a.innerText = "Export as .png";
+
+  a.onclick = () => {
+    export_plot(a, ele, name)
   }
   return a;
 }
@@ -19,11 +29,11 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function export_plot(self, ele, name, zip) {
+async function export_plot(self, ele, name) {
   for (const ele of document.querySelectorAll("*")) {
     ele.classList.add("wait");
   }
-  self.innerText = "Exporting..."
+  // self.innerText = "Exporting..."
   console.log("done setting css");
   await sleep(100);
   console.log("done sleeping");
@@ -50,15 +60,11 @@ async function export_plot(self, ele, name, zip) {
       const w = canvas.width;
       const h = canvas.height;
       const img = canvas.toBlob(function(blob){
-        zip.file(name + ".png", blob);
-        zip.generateAsync({type:"blob"})
-        .then(function(content) {
-            saveAs(content, name + ".zip");
-            for (const ele of document.querySelectorAll("*")) {
-              ele.classList.remove("wait");
-            }
-            self.innerText = "Export me!"
-        });
+        saveAs(blob, name + ".png");
+        for (const ele of document.querySelectorAll("*")) {
+          ele.classList.remove("wait");
+        }
+        // self.innerText = "Export me!"
       });
   })
 }

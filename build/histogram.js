@@ -1,5 +1,5 @@
 import { colors } from "./data.js";
-import { get_export_plot_link } from "./utils.js";
+import { get_export_svg_link, get_export_png_link } from "./utils.js";
 
 export function plot_histogram(ele, score, data, index, pop, perc) {
   const label = {
@@ -16,7 +16,10 @@ export function plot_histogram(ele, score, data, index, pop, perc) {
   ele.appendChild(hist);
   const caption = get_caption(pop, index, score, perc, label);
   ele.innerHTML += caption;
-  const a = get_export_plot_link(ele, `${index}-Histogram`, hist);
+  let a = get_export_svg_link(`${index}-Histogram`, hist);
+  ele.appendChild(a);
+  ele.insertAdjacentHTML('beforeend', " ");
+  a = get_export_png_link(`${index}-Histogram`, ele);
   ele.appendChild(a);
 }
 
@@ -24,10 +27,10 @@ const get_caption = (pop, index, score, perc, label) => {
   const num = { healthy: 2754, nonhealthy: 2272, all: 5026 };
   const popDesc = `${num[pop]} ${
     pop == "all" ? "healthy and nonhealthy" : pop
-  } patients. `;
-  let string = `<br/><br/><b>Ecological Index. </b> ${label[index]} scores of the gut microbiomes of ${popDesc}`;
+  } persons. `;
+  let string = `<br/><br/><b>Ecological Index. </b> ${label[index]} of the gut microbiomes of ${popDesc}`;
   if (score != null) {
-    string += `The input sample has a ${label[index]} score of ${score} (highlighted bin), and is in the ${perc}<sup>th</sup> percentile of a population of ${popDesc}`;
+    string += `The input sample has a${(index === "Inverse Simpson" ? "n " : " ") + label[index]} of ${score} (highlighted bin), and is in the ${perc}<sup>th</sup> percentile of a population of ${popDesc}`;
   }
   return string;
 };
@@ -62,7 +65,7 @@ function Histogram(
     yType = d3.scaleLinear, // type of y-scale
     yDomain, // [ymin, ymax]
     yRange = [height - marginBottom, marginTop], // [bottom, top]
-    yLabel = "Patient Count", // a label for the y-axis
+    yLabel = "Person Count", // a label for the y-axis
     yFormat, // a format specifier string for the y-axis
     color = "currentColor", // bar fill color
   } = {}
@@ -239,7 +242,7 @@ function Histogram(
       .attr("text-anchor", "middle")
       .attr("x", top_x_box)
       .attr("y", top_y - 28)
-      .text(`Sample score: ${score}`);
+      .text(`Input sample: ${score}`);
 
     svg
       .append("text")
