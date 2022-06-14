@@ -261,6 +261,11 @@ clear_button.onclick = (e) => {
 submit_button.onclick = (e) => {
   // Check if shit file
   const text = inputText.value;
+  if (text === "") {
+    alert("Please upload or paste MetaPhlAn output data first");
+    return;
+  }
+
   const species = parse_file(text, "species", 0);
   if (JSON.stringify(species) === "{}") {
     if (text !== "") {
@@ -293,7 +298,7 @@ export_button.onclick = () => {
   // Check if shit file
   const text = inputText.value;
   if (text === "") {
-    alert("Please upload/paste MetaPhlAn output first");
+    alert("Please upload or paste MetaPhlAn output data first");
     return;
   }
 

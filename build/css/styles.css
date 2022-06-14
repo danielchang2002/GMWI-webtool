@@ -1,14 +1,15 @@
+
+a {
+  color: #a00;
+}
+
 .footer {
-  color: #ccc;
+  color: black !important;
   /* position: fixed; */
   left: 0;
   bottom: 100 !important;
   width: 100%;
   text-align: center;
-}
-
-a {
-  color: #a00 !important;
 }
 
 #sideButton {
