@@ -275,6 +275,11 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 export_button.onclick = () => {
   if (shit_file()) return;
 
+  const text = inputText.value;
+  const samples = [...Array(sampleBox.options.length - 1).keys()].map(idx => (
+    parse_file(text, "species", idx)
+  ));
+
   const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
   const richness = samples.map(sample => indicies['Richness'](sample));
   const evenness = samples.map(sample => indicies['Evenness'](sample));
