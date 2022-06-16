@@ -72,7 +72,7 @@ function get_row(rank, sample, idx, empty) {
 
   const rowHead = `<th scope="row" style="black">${toTitleCase(rank)}</th>`
   
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < Math.min(3, level_sorted.length); i++) {
     const most_abundant = level_sorted[i];
     const name = most_abundant[0];
     const abundance = most_abundant[1];

@@ -108,32 +108,6 @@ export const update_bar = () => {
 
 // updates figure 3
 const update_pca = () => {
-  // const name = "pca";
-  // const metric_list = ["Phenotype", "Phenotype_all"];
-  // const num_slides = metric_list.length;
-  // let active = 0;
-
-  // // find the active one (if exists)
-  // const list = document.getElementsByClassName(`carousel-inner`);
-  // if (list.length !== 0) {
-  //   const items = list[0].getElementsByTagName("div");
-  //   for (let i = 0; i < items.length; i++) {
-  //     if (items[i].classList.contains("active")) {
-  //       active = i;
-  //     }
-  //   }
-  // }
-
-  // const carousel = get_carousel(name, num_slides, active);
-  // pca.innerHTML = carousel;
-  // const text = inputText.value;
-  // const species = sampleBox.value == -1 ? {}
-  //   : parse_file(text, "species", parseInt(sampleBox.value));
-  // for (let i = 0; i < num_slides; i++) {
-  //   const metric = metric_list[i];
-  //   const ele = document.getElementById(`${name}_${i}`);
-  //   plot_pca(ele, pca_data["scatter"], species, metric);
-  // }
   const title = "pca";
   const metric_list = ["Health Status", "Phenotype"];
   const metric_list_true = ["Phenotype", "Phenotype_all"];
@@ -233,8 +207,6 @@ inputFile.onchange = (e) => {
   reader.onload = (e) => {
     const text = reader.result;
     inputText.value = text;
-    // update_visuals();
-    // inputFile.value = "";
     update_sample_box();
   };
 };
@@ -258,22 +230,28 @@ clear_button.onclick = (e) => {
   update_visuals()
 };
 
-submit_button.onclick = (e) => {
+const shit_file = () => {
   // Check if shit file
   const text = inputText.value;
   if (text === "") {
     alert("Please upload or paste MetaPhlAn output data first");
-    return;
+    return true;
   }
 
-  const species = parse_file(text, "species", 0);
-  if (JSON.stringify(species) === "{}") {
+  const phylum = parse_file(text, "phylum", 0);
+  if (JSON.stringify(phylum) === "{}") {
     if (text !== "") {
       alert("Input file/text is not valid MetaPhlAn output");
-      return;
+      return true;
     }
   }
 
+  return false;
+}
+
+submit_button.onclick = (e) => {
+
+  if (shit_file()) return;
   update_visuals();
 };
 
@@ -295,20 +273,7 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 })
 
 export_button.onclick = () => {
-  // Check if shit file
-  const text = inputText.value;
-  if (text === "") {
-    alert("Please upload or paste MetaPhlAn output data first");
-    return;
-  }
-
-  const samples = [...Array(sampleBox.options.length - 1).keys()].map(idx => (
-    parse_file(text, "species", idx)
-  ));
-  if (samples.length == 0 || JSON.stringify(samples[0]) === "{}") {
-    alert("Input file/text is not valid MetaPhlAn output");
-    return;
-  }
+  if (shit_file()) return;
 
   const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
   const richness = samples.map(sample => indicies['Richness'](sample));
