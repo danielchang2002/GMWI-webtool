@@ -5,14 +5,17 @@ const get_inv_simpsons = (obj) =>
     1 / Object.keys(obj).reduce((prev, curr) => prev + obj[curr] * obj[curr], 0)
   ).toFixed(2);
 
-const get_shannon = (obj) =>
+const get_shannon_precise = (obj) =>
   Object.keys(obj)
     .reduce((prev, curr) => prev - obj[curr] * Math.log(obj[curr]), 0)
+
+const get_shannon = (obj) =>
+  get_shannon_precise(obj)
     .toFixed(2);
 
 const get_richness = (obj) => Object.keys(obj).length;
 
-const get_evenness = (obj) => (get_shannon(obj) / Math.log(313)).toFixed(4);
+const get_evenness = (obj) => (get_shannon_precise(obj) / Math.log(313)).toFixed(4);
 
 const get_gmhi = (obj) => {
   const psi_mh = psi(obj, gmhi_model["health_abundant"]);
@@ -22,7 +25,7 @@ const get_gmhi = (obj) => {
 
 const psi = (sample, set) => {
   const new_obj = get_reduced(sample, set);
-  return (get_richness(new_obj) / set.size) * get_shannon(new_obj) + 0.00001;
+  return (get_richness(new_obj) / set.size) * get_shannon_precise(new_obj) + 0.00001;
 };
 
 const get_reduced = (sample, set) =>
