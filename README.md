@@ -12,7 +12,7 @@ A [user-friendly tool](https://danielchang2002.github.io/GMHI) for assessing hea
 
 ## Usage
 
-1. Run [MetaPhlAn2](https://github.com/biobakery/MetaPhlAn) on your metagenome .fastq file(s)
+1. Run [MetaPhlAn2](https://github.com/biobakery/MetaPhlAn2) on your metagenome .fastq file(s)
 
 ```bash
 metaphlan2 metagenome_1.fastq --input_type fastq -o profiled_metagenome_1.txt
