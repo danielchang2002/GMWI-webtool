@@ -1,8 +1,4 @@
-# GMHI-webtool: a user-friendly tool for assessing health through metagenomic gut microbiome profiling
-
-Supplementary Data
-
-## Pipeline
+# Pipeline
 
 Prior to using GMHI-webtool, users must profile their stool metagenomes (.fastq).
 The following is the pipeline used to preprocess and profile the stool metagenomes used to compute GMHI. 
