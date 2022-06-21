@@ -1,3 +1,0 @@
-# Demo images
-
-Demo images
