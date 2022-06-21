@@ -12,29 +12,8 @@ A [user-friendly tool](https://danielchang2002.github.io/GMHI) for assessing hea
 
 ## Usage
 
-<<<<<<< HEAD
 Profile your metagenome .fastq file(s), then upload the taxonomic profile to GMHI-webtool.
 Please read the [supplementary materials](https://github.com/danielchang2002/GMHI/supplementary) for a detailed description of running the pipeline.
-=======
-1. Run [MetaPhlAn2](https://github.com/biobakery/MetaPhlAn2) on your metagenome .fastq file(s)
-
-```bash
-metaphlan2.py metagenome_1.fastq --input_type fastq -o profiled_metagenome_1.txt
-metaphlan2.py metagenome_2.fastq --input_type fastq -o profiled_metagenome_2.txt
-...
-metaphlan2.py metagenome_n.fastq --input_type fastq -o profiled_metagenome_n.txt
-```
-
-2. Merge outputs (if multiple) into a single file
-
-```bash
-merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
-```
-
-3. Upload (merged) MetaPhlAn2 output to [GMHI-webtool](https://danielchang2002.github.io/GMHI/)
-
-4. Profit 🤑
->>>>>>> 3a82cbf007cc976137b6a839f77353e4e10ec697
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
