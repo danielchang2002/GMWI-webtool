@@ -92,12 +92,14 @@ bedtools bamtofastq -i human_sorted.bam -fq human1.fastq -fq2 human2.fastq
 ```bash
 cat adapter1.txt adapter2.txt TruSeq3-PE.fa > adapters.txt
 
-trimmomatic PE -threads $N_JOBS human1.fastq human2.fastq -baseout QC.fastq.gz ILLUMINACLIP:adapters.txt:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 MINLEN:60
+trimmomatic PE -threads $N_JOBS human1.fastq human2.fastq -baseout QC.fastq.gz \
+ILLUMINACLIP:adapters.txt:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 MINLEN:60
 ```
 
 6. Profile the metagenome
 ```bash
-metaphlan2.py QC_1P.fastq.gz,QC_2P.fastq.gz --bowtie2db $CLADE_MARKERS --bowtie2out --index mpa_v20_m200 --nproc $N_JOBS --input_type fastq -o profiled_metagenome.txt
+metaphlan2.py QC_1P.fastq.gz,QC_2P.fastq.gz --bowtie2db $CLADE_MARKERS \
+--bowtie2out --index mpa_v20_m200 --nproc $N_JOBS --input_type fastq -o profiled_metagenome.txt
 ```
 
 After running the pipeline, users can upload the taxonomic profile "profiled_metagenome.txt" to GMHI-webtool.

@@ -13,7 +13,7 @@ A [user-friendly tool](https://danielchang2002.github.io/GMHI) for assessing hea
 ## Usage
 
 Profile your metagenome .fastq file(s), then upload the taxonomic profile to GMHI-webtool.
-Please read the [supplementary materials](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description of running the pipeline.
+Please read the [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description of running the required pipeline, as well as the data used to build GMHI-webtool.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
