@@ -22,4 +22,4 @@ $$E = \frac{H'}{ln(S)}$$
 ## Inverse Simpson Diversity
 Inverse Simpson $I$:
 
-$$I = \frac{1}{\sum_{i=1}^{R}ln(p_i)}$$
+$$I = \frac{1}{\sum_{i=1}^{R} ln(p_i)}$$
