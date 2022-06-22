@@ -1,4 +1,4 @@
-# [GMHI Webtool](https://danielchang2002.github.io/GMHI) 💩
+# [GMHI Webtool](https://gmhi-webtool.github.io/) 💩
 
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -7,7 +7,7 @@
 
 ## Description
 
-A [user-friendly tool](https://danielchang2002.github.io/GMHI) for assessing health through metagenomic gut microbiome profiling
+A [user-friendly tool](https://gmhi-webtool.github.io/) for assessing health through metagenomic gut microbiome profiling
 
 
 ## Usage
