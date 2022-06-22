@@ -5,7 +5,7 @@ The following is the pipeline used to preprocess and profile the stool metagenom
 Users should follow this pipeline closely to ensure GMHI is computed correctly.
 For brevity, this pipeline assumes that paired end metagenomes are used.
 
-0. Setup
+1. Setup
 ```bash
 # make sure the paired end metagenome files are available
 ls 
@@ -39,12 +39,12 @@ GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT" > TruSeq3-PE.fa
 
 ```
 
-1. Repair fastq files using bbmap
+2. Repair fastq files using bbmap
 ```bash
 repair.sh in1=in1.fastq in2=in2.fastq out1=repaired1.fastq out2=repaired2.fastq outs=garbage
 ```
 
-2. Quality check and identification of overrepresented sequences
+3. Quality check and identification of overrepresented sequences
 
 ```bash
 fastqc repaired1.fastq
@@ -53,7 +53,7 @@ unzip repaired1_fastq.zip
 unzip repaired2_fastq.zip
 ```
 
-3. Extract overrepresented sequences (probable adapter sequences) from FastQC outputs
+4. Extract overrepresented sequences (probable adapter sequences) from FastQC outputs
 ```bash
 for f in repaired1_fastqc/fastqc_data.txt; do
     echo $f `grep -A100 ">>Overrepresented sequences" $f | \
@@ -75,7 +75,7 @@ for f in repaired2_fastqc/fastqc_data.txt; do
     awk 'NF > 0';
 done > adapter2.txt
 ```
-4. Remove human contaminants
+5. Remove human contaminants
 ```bash
 bowtie2 -p $N_JOBS -x $HUMAN_REFERENCE_GENOME -1 repaired1.fastq -2 repaired2.fastq -S mapped.sam
 
@@ -88,7 +88,7 @@ samtools sort -n human.bam human_sorted -@ $N_JOBS
 bedtools bamtofastq -i human_sorted.bam -fq human1.fastq -fq2 human2.fastq
 ```
 
-5. Remove adapter sequences and low quality reads
+6. Remove adapter sequences and low quality reads
 ```bash
 cat adapter1.txt adapter2.txt TruSeq3-PE.fa > adapters.txt
 
@@ -96,7 +96,7 @@ trimmomatic PE -threads $N_JOBS human1.fastq human2.fastq -baseout QC.fastq.gz \
 ILLUMINACLIP:adapters.txt:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 MINLEN:60
 ```
 
-6. Profile the metagenome
+7. Profile the metagenome
 ```bash
 metaphlan2.py QC_1P.fastq.gz,QC_2P.fastq.gz --bowtie2db $CLADE_MARKERS \
 --bowtie2out --index mpa_v20_m200 --nproc $N_JOBS --input_type fastq -o profiled_metagenome.txt
