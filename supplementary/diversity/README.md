@@ -9,7 +9,7 @@ Let $c = 0.00001$ be the presence threshold.
 Richness R is the number of species in the sample where $p_i > c$.
 
 ## Shannon Diversity
-Shannon diversity $H' = \sum_{i=1}^{R}p_i ln(p_i)$.
+$H' = -\sum_{i=1}^{R}p_i ln(p_i)$
 
 ## Evenness
 
