@@ -11,6 +11,7 @@ Richness R is the number of species with relative abundance greater than the pre
 $$R = \sum_{\forall i}[p_i > c]$$
 
 ## Shannon Diversity
+Shannon diversity $H'$:
 
 $$H' = -\sum_{i=1}^{R}p_i ln(p_i)$$
 
@@ -20,6 +21,9 @@ Evenness E is defined as:
 $$E = \frac{H'}{ln(S)}$$
 
 ## Inverse Simpson Diversity
-Inverse Simpson $I$:
 
-$$I = \frac{1}{\sum_{i=1}^{R} ln(p_i)}$$
+Simpson Diversity $\lambda$:
+$$\lambda = \sum_{i=1}^{R} ln(p_i)$$
+
+Inverse Simpson $I$:
+$$I = \frac{1}{\lambda}$$
