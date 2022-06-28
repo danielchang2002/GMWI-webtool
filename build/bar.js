@@ -413,14 +413,14 @@ function StackedBarChart(
       .attr("id", `${rank}_${taxons[i]}_text`);
 
     const sample = data.filter(
-      (ele) => ele["pop"] === "Sample" && ele["taxon"] == taxons[i]
+      (ele) => ele["pop"] === "Input Sample" && ele["taxon"] == taxons[i]
     );
 
     if (sample.length === 0) {
       continue;
     }
 
-    const sample_text = `Sample: ${(sample[0]["abundance"] * 100).toFixed(2)}%`;
+    const sample_text = `Input Sample: ${(sample[0]["abundance"] * 100).toFixed(2)}%`;
 
     svg
       .append("text")
