@@ -345,5 +345,5 @@ export const get_percentile = (values, score) =>
 
   // for sample
 export const get_taxon_bar_list = (taxons) => {
-  return Object.keys(taxons).map(key => ({pop : "Sample", taxon : key, abundance : taxons[key]}));
+  return Object.keys(taxons).map(key => ({pop : "Input Sample", taxon : key, abundance : taxons[key]}));
 }

@@ -5,11 +5,10 @@ export function plot_bar(ele, data, sample, rank) {
 
   let xDomain = [data[0].pop];
   if (sample.length != 0) {
-    xDomain = ["Sample"].concat(xDomain);
+    xDomain = ["Input Sample"].concat(xDomain);
   }
 
   const [final_data, taxons] = preprocess(data, sample);
-  // console.log(final_data, taxons);
 
   const bar = StackedBarChart(final_data, rank, {
     x: (d) => d.pop,
@@ -113,7 +112,7 @@ const preprocess = (data, sample) => {
 
     const reduced_sample_filled = [
       ...reduced_sample,
-      { pop: "Sample", taxon: "Others", abundance: 1 - sample_sum },
+      { pop: "Input Sample", taxon: "Others", abundance: 1 - sample_sum },
     ];
     const reduced_data_filled = [
       ...reduced_data,
