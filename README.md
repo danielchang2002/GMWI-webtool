@@ -7,8 +7,7 @@
 
 ## Description
 
-A [user-friendly tool](https://gmhi-webtool.github.io/) for assessing health through metagenomic gut microbiome profiling
-
+A [user-friendly browser application](https://gmhi-webtool.github.io/) for assessing health through metagenomic gut microbiome profiling
 
 ## Usage
 
