@@ -1,6 +1,6 @@
 # Data
 
-This directory contains supplementary data for [GMHI-webtool: a user-friendly tool for assessing health through metagenomic gut microbiome profiling](https://google.com)
+This directory contains supplementary data for [GMHI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling](https://google.com)
 
 GMHI-webtool uses the following data computed from healthy, nonhealthy, and all samples in the pooled dataset used to compute GMHI.
 
