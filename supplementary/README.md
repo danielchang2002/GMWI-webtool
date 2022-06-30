@@ -4,4 +4,4 @@ This directory contains supplementary information for [GMHI-webtool: a user-frie
 * Read about the [data](https://github.com/danielchang2002/GMHI/tree/main/supplementary/data)
 * Read about the [pipeline](https://github.com/danielchang2002/GMHI/tree/main/supplementary/pipeline).
 * Read about the [α-diversities](https://github.com/danielchang2002/GMHI/tree/main/supplementary/diversity).
-* Or read the [supplementary PDF](https://github.com/danielchang2002/GMHI/tree/main/supplementary/supplementary_v5.pdf)
+* Or read the [supplementary PDF](https://github.com/danielchang2002/GMHI/tree/main/supplementary/supplementary_v6.pdf)
