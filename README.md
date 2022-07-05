@@ -9,6 +9,8 @@
 
 A [user-friendly browser application](https://gmhi-webtool.github.io/) for assessing health through metagenomic gut microbiome profiling
 
+Read the (preprint) paper [here](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1).
+
 ## Usage
 
 Profile your metagenome .fastq file(s), then upload the taxonomic profile to GMHI-webtool.
