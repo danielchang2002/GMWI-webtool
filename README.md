@@ -10,9 +10,7 @@
 A [user-friendly browser application](https://gmhi-webtool.github.io/) for assessing health through metagenomic gut microbiome profiling
 
 If you use [GMHI-webtool](https://gmhi-webtool.github.io/), please cite:
-
 [GMHI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1)
-
 Daniel Chang, Vinod K. Gupta, Benjamin Hur, Kevin Y. Cunningham, Jaeyun Sung. (preprint)
 
 ## Usage
