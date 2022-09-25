@@ -9,7 +9,7 @@
 
 A user-friendly [browser application](https://gmhi-webtool.github.io/) for calculating the [Gut Microbiome Health Index (GMHI)](https://www.nature.com/articles/s41467-020-18476-8) on a stool metagenome sample. 
 
-When using [GMHI-webtool](https://gmhi-webtool.github.io/), please cite: Daniel Chang *et al*., [GMHI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling.](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1) (bioRxiv preprint)
+When using [GMHI-webtool](https://gmhi-webtool.github.io/), please cite: Daniel Chang *et al*., [GMHI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1) (bioRxiv preprint).
 
 ## Usage
 
