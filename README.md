@@ -7,17 +7,13 @@
 
 ## Description
 
-A [user-friendly browser application](https://gmhi-webtool.github.io/) for assessing health through metagenomic gut microbiome profiling
+A user-friendly [browser application](https://gmhi-webtool.github.io/) for calculating the [Gut Microbiome Health Index](https://www.nature.com/articles/s41467-020-18476-8). If you use [GMHI-webtool](https://gmhi-webtool.github.io/), please cite:
 
-If you use [GMHI-webtool](https://gmhi-webtool.github.io/), please cite:
-
-[GMHI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling.](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1)
-*Daniel Chang, Vinod K. Gupta, Benjamin Hur, Kevin Y. Cunningham, Jaeyun Sung.* (preprint)
+Daniel Chang *et al*., [GMHI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling.](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1) (bioRxiv preprint)
 
 ## Usage
 
-Profile your metagenome .fastq file(s), then upload the taxonomic profile to GMHI-webtool.
-Please read the [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description of running the required pipeline, as well as the data used to build GMHI-webtool.
+Please run MetaPhlAn2 on your shotgun metagenome sample (.fastq file(s)). Then, simply copy/paste or upload the MetaPhlAn2 output file (.txt) onto GMHI-webtool. Please see the [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data used to build GMHI-webtool.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
