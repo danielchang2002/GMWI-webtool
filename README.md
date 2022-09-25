@@ -13,7 +13,7 @@ When using [GMHI-webtool](https://gmhi-webtool.github.io/), please cite: Daniel 
 
 ## Usage
 
-First, run MetaPhlAn2 on a stool metagenome sample (.fastq file(s)). Then, simply copy/paste or upload the MetaPhlAn2 output file (.txt) onto the designated space on the left side of the page. See [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data files used to build GMHI-webtool.
+First, run MetaPhlAn2 on a stool metagenome sample (.fastq file(s)). Then, simply upload the MetaPhlAn2 output file (.txt) in the designated space on the left side of the page. See [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data files used to build GMHI-webtool.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
