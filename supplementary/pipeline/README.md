@@ -1,9 +1,6 @@
 # Pipeline
 
-Prior to using GMHI-webtool, users must profile their stool metagenomes (.fastq).
-The following is the pipeline used to preprocess and profile the stool metagenomes used to compute GMHI. 
-Users should follow this pipeline closely to ensure GMHI is computed correctly.
-For brevity, this pipeline assumes that paired end metagenomes are used.
+Prior to using GMHI-webtool, users must run MetaPhlAn2 on their stool metagenome sample (.fastq). The following describes the pipeline used to preprocess and profile stool metagenomes. Users should follow this pipeline closely to ensure GMHI is computed correctly. For brevity, this pipeline assumes that paired-end sequences are used.
 
 1. Setup
 ```bash
