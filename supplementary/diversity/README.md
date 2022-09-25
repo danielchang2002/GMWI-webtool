@@ -17,7 +17,7 @@ $$H' = -\sum_{i=1}^{R}p_i ln(p_i)$$
 
 ## Evenness
 Let $S$ be the total possible number of species in a sample (313).
-Evenness E is defined as:
+Evenness $E$ is defined as:
 $$E = \frac{H'}{ln(S)}$$
 
 ## Inverse Simpson Diversity
