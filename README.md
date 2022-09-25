@@ -7,13 +7,13 @@
 
 ## Description
 
-A user-friendly [browser application](https://gmhi-webtool.github.io/) for calculating the [Gut Microbiome Health Index](https://www.nature.com/articles/s41467-020-18476-8). If you use [GMHI-webtool](https://gmhi-webtool.github.io/), please cite:
+A user-friendly [browser application](https://gmhi-webtool.github.io/) for calculating the [Gut Microbiome Health Index](https://www.nature.com/articles/s41467-020-18476-8) on a stool metagenome sample. 
 
-Daniel Chang *et al*., [GMHI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling.](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1) (bioRxiv preprint)
+When using [GMHI-webtool](https://gmhi-webtool.github.io/), please cite: Daniel Chang *et al*., [GMHI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling.](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1) (bioRxiv preprint)
 
 ## Usage
 
-Please run MetaPhlAn2 on your shotgun metagenome sample (.fastq file(s)). Then, simply copy/paste or upload the MetaPhlAn2 output file (.txt) onto GMHI-webtool. Please see the [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data used to build GMHI-webtool.
+First, run MetaPhlAn2 on a stool metagenome sample (.fastq file(s)). Then, simply copy/paste or upload the MetaPhlAn2 output file (.txt) onto the designated space on the left side of the page. See the [supplementary information](https://github.com/danielchang2002/GMHI/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data used to build GMHI-webtool.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMHI.svg?style=for-the-badge
