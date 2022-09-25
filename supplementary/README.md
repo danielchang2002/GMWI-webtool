@@ -1,5 +1,5 @@
 # Supplementary Information
-This directory contains supplementary information for [GMHI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1).
+This directory contains supplementary information for [GMHI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1).
 
 * Read about the [data](https://github.com/danielchang2002/GMHI/tree/main/supplementary/data)
 * Read about the [pipeline](https://github.com/danielchang2002/GMHI/tree/main/supplementary/pipeline).
