@@ -311,7 +311,7 @@ export const parse_file = (text, rank, idx) => {
   const filtered = list.filter(filter_function);
 
   const taxon_name = get_taxon_extractor(rank);
-  const abundance = (line) => parseFloat(line.match(/(\d)+\.(\d)+/g)[idx]) / 100;
+  const abundance = (line) => parseFloat(line.split("\t")[idx + 1]) / 100;
 
   const min_val = 0.00001;
   const reducer = (prev, curr) => {
