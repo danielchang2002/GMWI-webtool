@@ -1,13 +1,10 @@
 # Pipeline
 
-Prior to using GMHI-webtool, users must profile their stool metagenomes (.fastq).
-The following is the pipeline used to preprocess and profile the stool metagenomes used to compute GMHI. 
-Users should follow this pipeline closely to ensure GMHI is computed correctly.
-For brevity, this pipeline assumes that paired end metagenomes are used.
+Prior to using GMHI-webtool, users must run MetaPhlAn2 on their stool metagenome samples (.fastq). The following describes the pipeline used to preprocess and profile stool metagenomes. Users should follow this pipeline closely to ensure GMHI is computed correctly. For brevity, this pipeline assumes that paired-end sequences are used.
 
 1. Setup
 ```bash
-# make sure the paired end metagenome files are available
+# make sure the paired-end metagenome sequencing files are available
 ls 
 .
 ├── in1.fastq
@@ -75,7 +72,7 @@ for f in repaired2_fastqc/fastqc_data.txt; do
     awk 'NF > 0';
 done > adapter2.txt
 ```
-5. Remove human contaminants
+5. Remove human DNA contaminants
 ```bash
 bowtie2 -p $N_JOBS -x $HUMAN_REFERENCE_GENOME -1 repaired1.fastq -2 repaired2.fastq -S mapped.sam
 
@@ -96,15 +93,15 @@ trimmomatic PE -threads $N_JOBS human1.fastq human2.fastq -baseout QC.fastq.gz \
 ILLUMINACLIP:adapters.txt:2:30:10:2:keepBothReads LEADING:3 TRAILING:3 MINLEN:60
 ```
 
-7. Profile the metagenome
+7. Profile the taxonomic composition of the metagenome
 ```bash
 metaphlan2.py QC_1P.fastq.gz,QC_2P.fastq.gz --bowtie2db $CLADE_MARKERS \
 --bowtie2out --index mpa_v20_m200 --nproc $N_JOBS --input_type fastq -o profiled_metagenome.txt
 ```
 
-After running the pipeline, users can upload the taxonomic profile "profiled_metagenome.txt" to GMHI-webtool.
+After running this pipeline, users can upload the MetaPhlAn2 output file, i.e., taxonomic profile "profiled_metagenome.txt" onto GMHI-webtool.
 
-Users can use MetaPhlAn2 to merge multiple taxonomic profiles 
+Note that users can use MetaPhlAn2 to merge multiple taxonomic profiles ...
 ```bash
 ls
 .
@@ -114,4 +111,4 @@ ls
 
 merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 ```
-And upload the merged file "merged_abundance_table.txt" to GMHI-webtool.
+... and upload the merged file "merged_abundance_table.txt" onto GMHI-webtool.
