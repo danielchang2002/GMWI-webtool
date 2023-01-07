@@ -1,5 +1,5 @@
 import { indicies } from "./indicies.js";
-import { index_data, gmhi_model } from "./data.js";
+import { index_data, gmwi_model } from "./data.js";
 
 export function get_export_svg_link(name, svg) {
   const a = document.createElement('a');
@@ -320,7 +320,7 @@ export const parse_file = (text, rank, idx) => {
     if (ab < min_val) {
       return { ...prev };
     }
-    if (rank == "species" && !gmhi_model["features"].has(name)) {
+    if (rank == "species" && !gmwi_model["features"].has(name)) {
       return { ...prev };
     }
     return {

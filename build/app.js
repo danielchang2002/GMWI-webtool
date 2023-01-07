@@ -42,7 +42,7 @@ const update_visuals = (e) => {
 // updates figure 1
 const update_hist = () => {
   const title = "hist";
-  const index_list = ["GMHI", "Richness", "Evenness", "Shannon", "Inverse Simpson"];
+  const index_list = ["GMWI", "Richness", "Evenness", "Shannon", "Inverse Simpson"];
   let active = 0;
 
   // find the active one (if exists)
@@ -276,7 +276,7 @@ export_button.onclick = () => {
     parse_file(text, "species", idx)
   ));
 
-  const gmhi_scores = samples.map(sample => indicies['GMHI'](sample));
+  const gmwi_scores = samples.map(sample => indicies['GMWI'](sample));
   const richness = samples.map(sample => indicies['Richness'](sample));
   const evenness = samples.map(sample => indicies['Evenness'](sample));
   const shannon = samples.map(sample => indicies['Shannon'](sample));
@@ -284,13 +284,13 @@ export_button.onclick = () => {
   const sample_names = text.split("\n")[0].split("\t").slice(1);
 
   const output = [...Array(sampleBox.options.length - 1).keys()].map((
-    i => `${sample_names[i]}, ${gmhi_scores[i]}, ${richness[i]}, ${evenness[i]}, ${shannon[i]}, ${inverse_simpson[i]}\n`
+    i => `${sample_names[i]}, ${gmwi_scores[i]}, ${richness[i]}, ${evenness[i]}, ${shannon[i]}, ${inverse_simpson[i]}\n`
   ));
-  output[0] = "Sample, GMHI, Richness, Evenness, Shannon, Inverse Simpson\n" + output[0];
+  output[0] = "Sample, GMWI, Richness, Evenness, Shannon, Inverse Simpson\n" + output[0];
 
   var blob = new Blob(output,
   { type: "text/plain;charset=utf-8" });
-  let name = "gmhi_analysis.csv";
+  let name = "gmwi_analysis.csv";
   if (sample_names.length === 1) name = sample_names[0];
   saveAs(blob, name);
 }

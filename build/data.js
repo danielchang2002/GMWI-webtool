@@ -9357,7 +9357,7 @@ k__Bacteria|p__Verrucomicrobia|c__Verrucomicrobiae|o__Verrucomicrobiales|f__Verr
 `
 
 export const index_data = {
-  GMHI: {
+  GMWI: {
     healthy: [
       -0.3006, 1.4315, 0.4113, -0.341, -0.5574, -0.5284, -0.1907, -0.1329,
       -1.9224, -2.4162, -2.6481, -0.0894, 0.4399, 1.2746, -0.2547, -4.3578,
@@ -12017,7 +12017,7 @@ export const colors = [
   [0.2075, 0.2602, 0.6082],
 ];
 
-export const gmhi_model = {
+export const gmwi_model = {
   health_abundant: new Set([
     "s__Alistipes_senegalensis",
     "s__Bacteroidales_bacterium_ph8",

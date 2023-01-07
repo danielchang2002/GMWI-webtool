@@ -3,7 +3,7 @@ import { get_export_svg_link, get_export_png_link } from "./utils.js";
 
 export function plot_histogram(ele, score, data, index, pop, perc) {
   const label = {
-    GMHI: "Gut Microbiome Health Index (GMHI)",
+    GMWI: "Gut Microbiome Wellness Index (GMWI)",
     Shannon: "Shannon Diversity Index",
     Richness: "Species Richness",
     Evenness: "Species Evenness",

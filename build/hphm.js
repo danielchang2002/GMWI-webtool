@@ -1,8 +1,8 @@
-import { gmhi_model, medians } from "./data.js"
+import { gmwi_model, medians } from "./data.js"
 
 export function plot_hphm(ele, sample) {
-  const hp = gmhi_model['health_abundant']
-  const hm = gmhi_model['health_scarce']
+  const hp = gmwi_model['health_abundant']
+  const hm = gmwi_model['health_scarce']
 
   const empty = JSON.stringify(sample) === "{}";
 

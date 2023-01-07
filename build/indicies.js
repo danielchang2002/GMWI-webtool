@@ -1,4 +1,4 @@
-import { gmhi_model } from "./data.js";
+import { gmwi_model } from "./data.js";
 
 const get_inv_simpsons = (obj) =>
   (
@@ -17,9 +17,9 @@ const get_richness = (obj) => Object.keys(obj).length;
 
 const get_evenness = (obj) => (get_shannon_precise(obj) / Math.log(313)).toFixed(4);
 
-const get_gmhi = (obj) => {
-  const psi_mh = psi(obj, gmhi_model["health_abundant"]);
-  const psi_mn = psi(obj, gmhi_model["health_scarce"]);
+const get_gmwi = (obj) => {
+  const psi_mh = psi(obj, gmwi_model["health_abundant"]);
+  const psi_mn = psi(obj, gmwi_model["health_scarce"]);
   return Math.log10(psi_mh / psi_mn).toFixed(4);
 };
 
@@ -37,7 +37,7 @@ const get_reduced = (sample, set) =>
   }, {});
 
 export const indicies = {
-  GMHI: get_gmhi,
+  GMWI: get_gmwi,
   Richness: get_richness,
   Evenness: get_evenness,
   Shannon: get_shannon,

@@ -1,4 +1,4 @@
-import { gmhi_model, pca_data } from "./data.js";
+import { gmwi_model, pca_data } from "./data.js";
 import { get_export_svg_link, get_export_png_link } from "./utils.js";
 
 export function plot_pca(ele, data, sample, metric) {
@@ -96,7 +96,7 @@ const handle_mouseout = (phen, phens) => {
 }
 
 const get_vector = (species) => {
-  const features = Array.from(gmhi_model["features"]);
+  const features = Array.from(gmwi_model["features"]);
   const vector = math.matrix(features.map((feat) => (feat in species ? 1 : 0)));
   return vector;
 };
