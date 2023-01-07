@@ -1,6 +1,6 @@
 # Pipeline
 
-Prior to using GMHI-webtool, users must run MetaPhlAn2 on their stool metagenome samples (.fastq). The following describes the pipeline used to preprocess and profile stool metagenomes. Users should follow this pipeline closely to ensure GMHI is computed correctly. For brevity, this pipeline assumes that paired-end sequences are used.
+Prior to using GMWI-webtool, users must run MetaPhlAn2 on their stool metagenome samples (.fastq). The following describes the pipeline used to preprocess and profile stool metagenomes. Users should follow this pipeline closely to ensure GMWI is computed correctly. For brevity, this pipeline assumes that paired-end sequences are used.
 
 1. Setup
 ```bash
@@ -99,7 +99,7 @@ metaphlan2.py QC_1P.fastq.gz,QC_2P.fastq.gz --bowtie2db $CLADE_MARKERS \
 --bowtie2out --index mpa_v20_m200 --nproc $N_JOBS --input_type fastq -o profiled_metagenome.txt
 ```
 
-After running this pipeline, users can upload the MetaPhlAn2 output file, i.e., taxonomic profile "profiled_metagenome.txt" onto GMHI-webtool.
+After running this pipeline, users can upload the MetaPhlAn2 output file, i.e., taxonomic profile "profiled_metagenome.txt" onto GMWI-webtool.
 
 Note that users can use MetaPhlAn2 to merge multiple taxonomic profiles ...
 ```bash
@@ -111,4 +111,4 @@ ls
 
 merge_metaphlan_tables.py profiled_metagenome*.txt > merged_abundance_table.txt
 ```
-... and upload the merged file "merged_abundance_table.txt" onto GMHI-webtool.
+... and upload the merged file "merged_abundance_table.txt" onto GMWI-webtool.
