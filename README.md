@@ -11,8 +11,7 @@ A user-friendly [browser application](https://gmwi-webtool.github.io/) for calcu
 
 If you use [GMWI-webtool](https://gmwi-webtool.github.io/), please cite:
 
-[GMWI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling](https://doi.org/10.1093/bioinformatics/btad061)
-Chang *et al.* *Bioinformatics* (2023).
+**Daniel Chang**, Vinod K. Gupta, Benjamin Hur, Kevin Y. Cunningham, and Jaeyun Sung. "[GMWI-webtool: A User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling](https://doi.org/10.1093/bioinformatics/btad061)". *Bioinformatics*, (2023).
 
 ## Usage
 
