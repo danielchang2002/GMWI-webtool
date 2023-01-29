@@ -1,5 +1,7 @@
 # Supplementary Information
-This directory contains supplementary information for [GMWI-webtool: a User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling](https://www.biorxiv.org/content/10.1101/2022.06.30.498296v1) (manuscript currently under review).
+This directory contains supplementary information for 
+[GMWI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling](https://doi.org/10.1093/bioinformatics/btad061)
+Chang *et al.* *Bioinformatics* (2023).
 
 * Read about the [data](https://github.com/danielchang2002/GMWI-webtool/tree/main/supplementary/data)
 * Read about the [pipeline](https://github.com/danielchang2002/GMWI-webtool/tree/main/supplementary/pipeline).
