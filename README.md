@@ -9,9 +9,11 @@
 
 A user-friendly [browser application](https://gmwi-webtool.github.io/) for calculating the [Gut Microbiome Wellness Index (GMWI)](https://www.nature.com/articles/s41467-020-18476-8) on a stool metagenome sample. 
 
+## Citation
+
 If you use [GMWI-webtool](https://gmwi-webtool.github.io/), please cite:
 
-**Daniel Chang**, Vinod K. Gupta, Benjamin Hur, Kevin Y. Cunningham, and Jaeyun Sung. "[GMWI-webtool: A User-friendly Browser Application for Assessing Health through Metagenomic Gut Microbiome Profiling](https://doi.org/10.1093/bioinformatics/btad061)". *Bioinformatics*, (2023).
+**Daniel Chang**, Vinod K Gupta, Benjamin Hur, Kevin Y Cunningham, Jaeyun Sung, GMWI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling, *Bioinformatics*, Volume 39, Issue 2, February 2023, btad061, https://doi.org/10.1093/bioinformatics/btad061
 
 ## Usage
 
