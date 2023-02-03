@@ -17,7 +17,7 @@ If you use [GMWI-webtool](https://gmwi-webtool.github.io/), please cite:
 
 ## Usage
 
-First, run MetaPhlAn2 on a stool shotgun metagenome sample (.fastq file(s)). Then, simply upload the MetaPhlAn2 output file (.txt) in the designated space on the lefthand side of the page. See [supplementary information](https://github.com/danielchang2002/GMWI-webtool/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data files used to build GMWI-webtool.
+First, run MetaPhlAn2 on a stool shotgun metagenome sample (.fastq file(s)). Then, simply upload the MetaPhlAn2 output file (.txt) in the designated space on the lefthand side of the page. See [Supplementary Information](https://github.com/danielchang2002/GMWI-webtool/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data files used to build GMWI-webtool.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMWI-webtool.svg?style=for-the-badge
