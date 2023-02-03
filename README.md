@@ -7,17 +7,17 @@
 
 ## Description
 
-A user-friendly [browser application](https://gmwi-webtool.github.io/) for calculating the [Gut Microbiome Wellness Index (GMWI)](https://www.nature.com/articles/s41467-020-18476-8) on a stool metagenome sample. 
+A user-friendly [browser application](https://gmwi-webtool.github.io/) for calculating the [Gut Microbiome Wellness Index (GMWI)](https://www.nature.com/articles/s41467-020-18476-8) from a taxonomic profile of a stool shotgun metagenome sample. 
 
 ## Citation
 
 If you use [GMWI-webtool](https://gmwi-webtool.github.io/), please cite:
 
-**Daniel Chang**, Vinod K Gupta, Benjamin Hur, Kevin Y Cunningham, Jaeyun Sung, GMWI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling, *Bioinformatics*, Volume 39, Issue 2, February 2023, btad061, https://doi.org/10.1093/bioinformatics/btad061
+**Daniel Chang**, Vinod K Gupta, Benjamin Hur, Kevin Y Cunningham, Jaeyun Sung, GMWI-webtool: a user-friendly browser application for assessing health through metagenomic gut microbiome profiling, *Bioinformatics*, Volume 39, Issue 2, February 2023, https://doi.org/10.1093/bioinformatics/btad061
 
 ## Usage
 
-First, run MetaPhlAn2 on a stool metagenome sample (.fastq file(s)). Then, simply upload the MetaPhlAn2 output file (.txt) in the designated space on the left side of the page. See [supplementary information](https://github.com/danielchang2002/GMWI-webtool/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data files used to build GMWI-webtool.
+First, run MetaPhlAn2 on a stool shotgun metagenome sample (.fastq file(s)). Then, simply upload the MetaPhlAn2 output file (.txt) in the designated space on the lefthand side of the page. See [supplementary information](https://github.com/danielchang2002/GMWI-webtool/tree/main/supplementary) for a detailed description about running the required pipeline, as well as the data files used to build GMWI-webtool.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [forks-shield]: https://img.shields.io/github/forks/danielchang2002/GMWI-webtool.svg?style=for-the-badge
